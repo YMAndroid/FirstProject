@@ -43,3 +43,6 @@ D:\上位机代码\上位机\上位机\UnmannedMonitor\UnmannedMonitor\bin\Debug
 D:\上位机代码\上位机\上位机\UnmannedMonitor\UnmannedMonitor\bin\Debug\Wisdom.Utils.dll
 D:\上位机代码\上位机\上位机\UnmannedMonitor\UnmannedMonitor\bin\Debug\log4net.xml
 D:\上位机代码\上位机\上位机\UnmannedMonitor\UnmannedMonitor\bin\Debug\Wisdom.Utils.xml
+D:\C#_projcet\Local_Git_Project\UnmannedMonitor\UnmannedMonitor\bin\Debug\UnmannedMonitor.exe.config
+D:\C#_projcet\Local_Git_Project\UnmannedMonitor\UnmannedMonitor\obj\Debug\UnmannedMonitor.exe
+D:\C#_projcet\Local_Git_Project\UnmannedMonitor\UnmannedMonitor\obj\Debug\UnmannedMonitor.pdb

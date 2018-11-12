@@ -108,7 +108,7 @@ namespace Factorys
             {
                 if (strArray[i].Contains("Num"))
                 {
-                    List<UnmannedData> listData=  SingleDataProcess(strArray[i]);
+                    List<UnmannedData> listData= SingleAkDataProcess(strArray[i]);
                     for(int j = 0; j < listData.Count; j++)
                     {
                         tempList.Add(listData[j]);
@@ -120,7 +120,7 @@ namespace Factorys
         }
 
         /// <summary>
-        /// 单条数据处理
+        /// 单条AK数据处理
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
@@ -132,12 +132,10 @@ namespace Factorys
 
 	        //00: S 49.54, R 5.46, V 0.02, A -12.05,S 1
 	        //01: S 55.62, R 2.09, V -0.04, A -3.29,S 1
-        public static List<UnmannedData> SingleDataProcess(string data)
+        public static List<UnmannedData> SingleAkDataProcess(string data)
         {
             //解析头 -- F 4690
-            string[] resultFHead = Regex.Split(data, "--- F ", RegexOptions.IgnoreCase);
-            string[] resultFHead1 = Regex.Split(resultFHead[1], "O", RegexOptions.IgnoreCase);
-            string framSystemNumber = resultFHead1[0];
+            string framSystemNumber = DecodeHeadData(data);
 
             //解析Ak --  
             string[] resultAkString = Regex.Split(data, "AK", RegexOptions.IgnoreCase);
@@ -164,6 +162,57 @@ namespace Factorys
                 nameDataList.Add(nameData);
             }
             return nameDataList;
+        }
+
+        /// <summary>
+        /// 单条BK数据处理
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        /// Num 1 fft 15380 sig 36227 clu 55 kf 139 
+        //--- F 4690 O 1/2/0! ---
+        //BK
+        //00: S 55.62, R 2.05, V 0.00, A -4.00
+        //AK
+
+        //00: S 49.54, R 5.46, V 0.02, A -12.05,S 1
+        //01: S 55.62, R 2.09, V -0.04, A -3.29,S 1
+        public static List<UnmannedData> SingleBkDataProcess(string data)
+        {
+            //解析头
+            string framSystemNumber = DecodeHeadData(data);
+            //解析BK --  
+            string[] resultFirstString = Regex.Split(data, "BK", RegexOptions.IgnoreCase);
+            //通过AK在分割
+            string[] resultSecondString = Regex.Split(resultFirstString[1], "AK", RegexOptions.IgnoreCase);
+            string[] strTemp = Regex.Split(resultSecondString[0], "\r\n\t", RegexOptions.IgnoreCase);
+            List<UnmannedData> nameDataList = new List<UnmannedData>();
+            for (int i = 0; i < strTemp.Length; i++)
+            {
+                if (string.IsNullOrEmpty(strTemp[i])) continue;
+                UnmannedData nameData = new UnmannedData();
+                string[] strS = Regex.Split(strTemp[i], ",", RegexOptions.IgnoreCase);
+                string[] strST = strS[0].Split('S');
+                string[] strSR = strS[1].Split('R');
+                string[] strSV = strS[2].Split('V');
+                string[] strSA = strS[3].Split('A');
+                nameData.S = strST[1];
+                nameData.R = strST[1];
+                nameData.V = strSV[1];
+                nameData.A = strSA[1];
+                nameData.DataType = "BK";
+                nameData.SysFrameNo = framSystemNumber;
+                nameDataList.Add(nameData);
+            }
+            return nameDataList;
+        }
+
+        public static string DecodeHeadData(string data)
+        {
+            //解析头 -- F 4690
+            string[] resultFHead = Regex.Split(data, "--- F ", RegexOptions.IgnoreCase);
+            string[] resultFHead1 = Regex.Split(resultFHead[1], "O", RegexOptions.IgnoreCase);
+            return resultFHead1[0];
         }
 
         public static string ByteToHex(byte[] bytes)
