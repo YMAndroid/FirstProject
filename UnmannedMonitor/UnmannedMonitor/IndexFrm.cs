@@ -69,9 +69,10 @@ namespace UnmannedMonitor
                 foreach(UnmannedData u in listNameData)
                 {
                     StringUtil.WriteCSV(u, txtFilePath.Text);
-                    ulist.Add(u);
-                    bindList();
+                    ulist.Add(u); 
                 }
+                bindList();
+                ulist.Clear();
                 ////存储csv内容
                 //if (data.StartsWith("Num"))
                 //{
@@ -196,12 +197,33 @@ namespace UnmannedMonitor
             return bitmap;
         }
 
+        private delegate void SetDtCallback(List<UnmannedData> dt);
+
+        private void SetDT(List<UnmannedData> dt)
+        {
+            // InvokeRequired需要比较调用线程ID和创建线程ID
+            // 如果它们不相同则返回true
+            if (this.dataGridView1.InvokeRequired)
+            {
+                SetDtCallback d = new SetDtCallback(SetDT);
+                this.Invoke(d, new object[] { dt });
+            }
+            else
+            {
+                this.dataGridView1.DataSource = ulist.Where(d => d.DataType == "AK").ToList();
+            }
+        }
+
         /// <summary>
         /// 绑定列表
         /// </summary>
         private void bindList()
         {
-            dataGridView1.DataSource = ulist.Where(d => d.DataType == "AK").ToList();
+            this.Invoke(new EventHandler(delegate
+            {
+                dataGridView1.DataSource = ulist.Where(d => d.DataType == "AK").ToList();
+            }));
+            //dataGridView1.DataSource = ulist.Where(d => d.DataType == "AK").ToList();
 
             foreach (DataGridViewColumn item in dataGridView1.Columns)
             {

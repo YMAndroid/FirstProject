@@ -42,6 +42,7 @@ namespace Factorys
             WriteHeader(sw);
             string txt = logtxt.V + "," + logtxt.A + "," + logtxt.R + "," + logtxt.P + "," + logtxt.S + "," + logtxt.CH + "," + logtxt.FrameState + "," + logtxt.SysFrameNo;
             sw.Write(txt);
+            sw.Close();
         }
 
         private static void WriteHeader(StreamWriter sw)
@@ -109,10 +110,13 @@ namespace Factorys
                 if (strArray[i].Contains("Num"))
                 {
                     List<UnmannedData> listData= SingleAkDataProcess(strArray[i]);
-                    for(int j = 0; j < listData.Count; j++)
+                    if(listData != null)
                     {
-                        tempList.Add(listData[j]);
-                    }
+                        for (int j = 0; j < listData.Count; j++)
+                        {
+                            tempList.Add(listData[j]);
+                        }
+                    }   
                 }
             }
 
@@ -139,29 +143,33 @@ namespace Factorys
 
             //解析Ak --  
             string[] resultAkString = Regex.Split(data, "AK", RegexOptions.IgnoreCase);
-            string[] strAkTemp = Regex.Split(resultAkString[1], "\r\n\t", RegexOptions.IgnoreCase);
-            List<UnmannedData> nameDataList = new List<UnmannedData>();
-            for(int i=0;i< strAkTemp.Length; i++)
+            if(resultAkString.Length > 1)
             {
-                if (string.IsNullOrEmpty(strAkTemp[i])) continue;
-                UnmannedData nameData = new UnmannedData();
-                string[] strS = Regex.Split(strAkTemp[i], ",", RegexOptions.IgnoreCase);
-                string[] strST = strS[0].Split('S');
-                string[] strSR = strS[1].Split('R');
-                string[] strSV = strS[2].Split('V');
-                string[] strSA = strS[3].Split('A');
-                string pass = @"[\t\r\n\s]";
-                string[] strSS = Regex.Replace(strS[4], pass, "").Split('S');
-                nameData.S = strST[1];
-                nameData.R = strST[1];
-                nameData.V = strSV[1];
-                nameData.A = strSA[1];
-                nameData.FrameState = strSS[1];
-                nameData.DataType = "AK";
-                nameData.SysFrameNo = framSystemNumber;
-                nameDataList.Add(nameData);
+                string[] strAkTemp = Regex.Split(resultAkString[1], "\r\n\t", RegexOptions.IgnoreCase);
+                List<UnmannedData> nameDataList = new List<UnmannedData>();
+                for (int i = 0; i < strAkTemp.Length; i++)
+                {
+                    if (string.IsNullOrEmpty(strAkTemp[i])) continue;
+                    UnmannedData nameData = new UnmannedData();
+                    string[] strS = Regex.Split(strAkTemp[i], ",", RegexOptions.IgnoreCase);
+                    string[] strST = strS[0].Split('S');
+                    string[] strSR = strS[1].Split('R');
+                    string[] strSV = strS[2].Split('V');
+                    string[] strSA = strS[3].Split('A');
+                    string pass = @"[\t\r\n\s]";
+                    string[] strSS = Regex.Replace(strS[4], pass, "").Split('S');
+                    nameData.S = strST[1];
+                    nameData.R = strST[1];
+                    nameData.V = strSV[1];
+                    nameData.A = strSA[1];
+                    nameData.FrameState = strSS[1];
+                    nameData.DataType = "AK";
+                    nameData.SysFrameNo = framSystemNumber;
+                    nameDataList.Add(nameData);
+                }
+                return nameDataList;
             }
-            return nameDataList;
+            return null;      
         }
 
         /// <summary>

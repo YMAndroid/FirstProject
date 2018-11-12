@@ -46,3 +46,17 @@ D:\上位机代码\上位机\上位机\UnmannedMonitor\UnmannedMonitor\bin\Debug
 D:\C#_projcet\Local_Git_Project\UnmannedMonitor\UnmannedMonitor\bin\Debug\UnmannedMonitor.exe.config
 D:\C#_projcet\Local_Git_Project\UnmannedMonitor\UnmannedMonitor\obj\Debug\UnmannedMonitor.exe
 D:\C#_projcet\Local_Git_Project\UnmannedMonitor\UnmannedMonitor\obj\Debug\UnmannedMonitor.pdb
+D:\C#_projcet\Local_Git_Project\UnmannedMonitor\UnmannedMonitor\bin\Debug\Wisdom.Utils.dll.log4net
+D:\C#_projcet\Local_Git_Project\UnmannedMonitor\UnmannedMonitor\bin\Debug\UnmannedMonitor.exe
+D:\C#_projcet\Local_Git_Project\UnmannedMonitor\UnmannedMonitor\bin\Debug\UnmannedMonitor.pdb
+D:\C#_projcet\Local_Git_Project\UnmannedMonitor\UnmannedMonitor\bin\Debug\Factorys.dll
+D:\C#_projcet\Local_Git_Project\UnmannedMonitor\UnmannedMonitor\bin\Debug\log4net.dll
+D:\C#_projcet\Local_Git_Project\UnmannedMonitor\UnmannedMonitor\bin\Debug\Wisdom.Utils.dll
+D:\C#_projcet\Local_Git_Project\UnmannedMonitor\UnmannedMonitor\bin\Debug\Factorys.pdb
+D:\C#_projcet\Local_Git_Project\UnmannedMonitor\UnmannedMonitor\bin\Debug\log4net.xml
+D:\C#_projcet\Local_Git_Project\UnmannedMonitor\UnmannedMonitor\bin\Debug\Wisdom.Utils.xml
+D:\C#_projcet\Local_Git_Project\UnmannedMonitor\UnmannedMonitor\obj\Debug\UnmannedMonitor.csprojResolveAssemblyReference.cache
+D:\C#_projcet\Local_Git_Project\UnmannedMonitor\UnmannedMonitor\obj\Debug\UnmannedMonitor.CameraFrm.resources
+D:\C#_projcet\Local_Git_Project\UnmannedMonitor\UnmannedMonitor\obj\Debug\UnmannedMonitor.IndexFrm.resources
+D:\C#_projcet\Local_Git_Project\UnmannedMonitor\UnmannedMonitor\obj\Debug\UnmannedMonitor.Properties.Resources.resources
+D:\C#_projcet\Local_Git_Project\UnmannedMonitor\UnmannedMonitor\obj\Debug\UnmannedMonitor.csproj.GenerateResource.Cache
