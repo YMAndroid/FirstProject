@@ -1,0 +1,15 @@
+D:\UnmannedMonitor\Factorys\bin\Debug\Factorys.dll
+D:\UnmannedMonitor\Factorys\bin\Debug\Factorys.pdb
+D:\UnmannedMonitor\Factorys\obj\Debug\Factorys.csproj.CoreCompileInputs.cache
+D:\UnmannedMonitor\Factorys\obj\Debug\Factorys.dll
+D:\UnmannedMonitor\Factorys\obj\Debug\Factorys.pdb
+D:\上位机\UnmannedMonitor\Factorys\bin\Debug\Factorys.dll
+D:\上位机\UnmannedMonitor\Factorys\bin\Debug\Factorys.pdb
+D:\上位机\UnmannedMonitor\Factorys\obj\Debug\Factorys.csproj.CoreCompileInputs.cache
+D:\上位机\UnmannedMonitor\Factorys\obj\Debug\Factorys.dll
+D:\上位机\UnmannedMonitor\Factorys\obj\Debug\Factorys.pdb
+D:\上位机代码\上位机\上位机\UnmannedMonitor\Factorys\bin\Debug\Factorys.dll
+D:\上位机代码\上位机\上位机\UnmannedMonitor\Factorys\bin\Debug\Factorys.pdb
+D:\上位机代码\上位机\上位机\UnmannedMonitor\Factorys\obj\Debug\Factorys.dll
+D:\上位机代码\上位机\上位机\UnmannedMonitor\Factorys\obj\Debug\Factorys.pdb
+D:\上位机代码\上位机\上位机\UnmannedMonitor\Factorys\obj\Debug\Factorys.csprojResolveAssemblyReference.cache

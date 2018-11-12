@@ -1,0 +1,5 @@
+D:\UnmannedMonitor\Factorys\bin\x86\Debug\Factorys.dll
+D:\UnmannedMonitor\Factorys\bin\x86\Debug\Factorys.pdb
+D:\UnmannedMonitor\Factorys\obj\x86\Debug\Factorys.csproj.CoreCompileInputs.cache
+D:\UnmannedMonitor\Factorys\obj\x86\Debug\Factorys.dll
+D:\UnmannedMonitor\Factorys\obj\x86\Debug\Factorys.pdb
