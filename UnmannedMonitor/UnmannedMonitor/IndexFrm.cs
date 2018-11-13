@@ -60,6 +60,7 @@ namespace UnmannedMonitor
         /// <param name="data"></param>
         private void CommonHelper_getResultEvent(string data)
         {
+            ulist.Clear();
             if (checkBox2.Checked)
             {
                 //存储txt内容
@@ -68,11 +69,11 @@ namespace UnmannedMonitor
                 List<UnmannedData> listNameData = StringUtil.MultipleDataSegmentation(data);
                 foreach(UnmannedData u in listNameData)
                 {
+                    ulist.Add(u);
+                    if (u.DataType.Equals("BK")) continue;
                     StringUtil.WriteCSV(u, txtFilePath.Text);
-                    ulist.Add(u); 
                 }
-                bindList();
-                ulist.Clear();
+                bindList();     
                 ////存储csv内容
                 //if (data.StartsWith("Num"))
                 //{
@@ -92,6 +93,11 @@ namespace UnmannedMonitor
                 //    bindList();
                 //}
             }
+        }
+
+        private void StopDeviceData()
+        {
+            bindList();
         }
 
         private int distance = 2;
@@ -210,7 +216,7 @@ namespace UnmannedMonitor
             }
             else
             {
-                this.dataGridView1.DataSource = ulist.Where(d => d.DataType == "AK").ToList();
+                this.dataGridView1.DataSource = ulist.Where(d => d.DataType.Equals("AK")).ToList();
             }
         }
 
@@ -221,7 +227,7 @@ namespace UnmannedMonitor
         {
             this.Invoke(new EventHandler(delegate
             {
-                dataGridView1.DataSource = ulist.Where(d => d.DataType == "AK").ToList();
+                dataGridView1.DataSource = ulist.Where(d => d.DataType.Equals("AK")).ToList();
             }));
             //dataGridView1.DataSource = ulist.Where(d => d.DataType == "AK").ToList();
 
@@ -236,7 +242,11 @@ namespace UnmannedMonitor
 
             if (checkBox1.Checked)
             {
-                dataGridView2.DataSource = ulist.Where(d => d.DataType == "BK").ToList();
+                this.Invoke(new EventHandler(delegate
+                {
+                    dataGridView2.DataSource = ulist.Where(d => d.DataType.Equals("BK")).ToList();
+                }));
+                //dataGridView2.DataSource = ulist.Where(d => d.DataType == "BK").ToList();
 
                 foreach (DataGridViewColumn item in dataGridView2.Columns)
                 {
@@ -264,6 +274,7 @@ namespace UnmannedMonitor
             Button btn = sender as Button;
             if (!isStart)
             {
+
                 isStart = true;
                 btn.Text = "Stop";
                 if (!commonHelper.OpenSerial(selectPort))
@@ -274,6 +285,7 @@ namespace UnmannedMonitor
                 {
                     MessageBox.Show("串口打开成功，等待接收数据！");
                     commonHelper.SendData("runtst -1");
+                    commonHelper.SetIsReceiveData(true);
                     commonHelper.getResultEvent += CommonHelper_getResultEvent;
                 }
             }
@@ -281,8 +293,10 @@ namespace UnmannedMonitor
             {
                 isStart = false;
                 btn.Text = "Start";
-                commonHelper.SendData("stptst");
+                //commonHelper.SendData("stptst");
+                //commonHelper.SetIsReceiveData(false);
                 commonHelper.CloseSerial();
+                StopDeviceData();
             }
         }
 

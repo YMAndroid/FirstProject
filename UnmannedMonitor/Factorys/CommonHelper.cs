@@ -15,6 +15,7 @@ namespace Factorys
     {
         public delegate void getResultHandel(string data);
         public event getResultHandel getResultEvent;
+        private Boolean isReceiveData = false;
 
         private SerialPort serialPort = new SerialPort();
         public CommonHelper()
@@ -28,6 +29,11 @@ namespace Factorys
         public void SetPortName(string portName)
         {
             serialPort.PortName = portName;
+        }
+
+        public void SetIsReceiveData(Boolean bol)
+        {
+            isReceiveData = bol;
         }
 
         public string[] GetCurrentComDevices()
@@ -77,21 +83,26 @@ namespace Factorys
         public void SendData(string data)
         {
             serialPort.DataReceived += SerialPort_DataReceived;
-            serialPort.Write(data);
+            if (serialPort.IsOpen && !isReceiveData)
+            {
+                serialPort.Write(data);
+            }  
         }
 
         public void SerialPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
-            
-            System.Threading.Thread.Sleep(100);
-            if (serialPort.IsOpen)
+            if (isReceiveData)
             {
-                byte[] buffer = new byte[serialPort.BytesToRead];
-                serialPort.Read(buffer, 0, buffer.Length);
-                string tempResult = StringUtil.ByteToHex(buffer);
-                string result = Encoding.Default.GetString(buffer);
-                //StringUtil.MultipleDataSegmentation(result);
-                getResultEvent?.Invoke(result);
+                System.Threading.Thread.Sleep(100);
+                if (serialPort.IsOpen)
+                {
+                    byte[] buffer = new byte[serialPort.BytesToRead];
+                    serialPort.Read(buffer, 0, buffer.Length);
+                    string tempResult = StringUtil.ByteToHex(buffer);
+                    string result = Encoding.Default.GetString(buffer);
+                    //StringUtil.MultipleDataSegmentation(result);
+                    getResultEvent?.Invoke(result);
+                }
             }
         }
     }

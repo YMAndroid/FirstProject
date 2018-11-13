@@ -105,21 +105,43 @@ namespace Factorys
             //根据数据中的特殊字符'#' 进行数据分割
             string[] strArray = data.Split('#');
             List<UnmannedData> tempList = new List<UnmannedData>();
+            List<UnmannedData> tempListAk = new List<UnmannedData>();
+            List<UnmannedData> tempListBk = new List<UnmannedData>();
             for (int i=0; i < strArray.Length; i++)
             {
                 if (strArray[i].Contains("Num"))
                 {
-                    List<UnmannedData> listData= SingleAkDataProcess(strArray[i]);
-                    if(listData != null)
+                    List<UnmannedData> listAkData= SingleAkDataProcess(strArray[i]);
+                    if(listAkData != null)
                     {
-                        for (int j = 0; j < listData.Count; j++)
+                        for (int j = 0; j < listAkData.Count; j++)
                         {
-                            tempList.Add(listData[j]);
+                            tempListAk.Add(listAkData[j]);
+                        }
+                    }
+
+                    List<UnmannedData> listBkData = SingleBkDataProcess(strArray[i]);
+                    
+                    if(listBkData != null)
+                    {
+                        for(int j = 0; j < listBkData.Count; j++)
+                        {
+                            tempListBk.Add(listBkData[j]);
                         }
                     }   
-                }
+                } 
             }
-
+            for(int i=0; i<tempListAk.Count;i++)
+            {
+                tempListAk[i].CH = i;
+                tempList.Add(tempListAk[i]);
+            }
+            for(int i = 0; i < tempListBk.Count; i++)
+            {
+                tempListBk[i].CH = i;
+                tempList.Add(tempListBk[i]);
+            }
+            
             return tempList;
         }
 
@@ -140,7 +162,7 @@ namespace Factorys
         {
             //解析头 -- F 4690
             string framSystemNumber = DecodeHeadData(data);
-
+            if (string.IsNullOrEmpty(framSystemNumber)) return null;
             //解析Ak --  
             string[] resultAkString = Regex.Split(data, "AK", RegexOptions.IgnoreCase);
             if(resultAkString.Length > 1)
@@ -152,14 +174,17 @@ namespace Factorys
                     if (string.IsNullOrEmpty(strAkTemp[i])) continue;
                     UnmannedData nameData = new UnmannedData();
                     string[] strS = Regex.Split(strAkTemp[i], ",", RegexOptions.IgnoreCase);
+                    if (strS.Length < 5) continue;//00: S 50.65, R 5.45, V 0.00, A -11.29,S 1
                     string[] strST = strS[0].Split('S');
                     string[] strSR = strS[1].Split('R');
                     string[] strSV = strS[2].Split('V');
                     string[] strSA = strS[3].Split('A');
                     string pass = @"[\t\r\n\s]";
                     string[] strSS = Regex.Replace(strS[4], pass, "").Split('S');
+                    if (strST.Length < 2 || strSR.Length < 2 || strSV.Length < 2 || strSA.Length < 2) continue;
+
                     nameData.S = strST[1];
-                    nameData.R = strST[1];
+                    nameData.R = strSR[1];
                     nameData.V = strSV[1];
                     nameData.A = strSA[1];
                     nameData.FrameState = strSS[1];
@@ -189,36 +214,47 @@ namespace Factorys
         {
             //解析头
             string framSystemNumber = DecodeHeadData(data);
+            if (string.IsNullOrEmpty(framSystemNumber)) return null;
             //解析BK --  
             string[] resultFirstString = Regex.Split(data, "BK", RegexOptions.IgnoreCase);
-            //通过AK在分割
-            string[] resultSecondString = Regex.Split(resultFirstString[1], "AK", RegexOptions.IgnoreCase);
-            string[] strTemp = Regex.Split(resultSecondString[0], "\r\n\t", RegexOptions.IgnoreCase);
-            List<UnmannedData> nameDataList = new List<UnmannedData>();
-            for (int i = 0; i < strTemp.Length; i++)
+            if(resultFirstString.Length > 1)
             {
-                if (string.IsNullOrEmpty(strTemp[i])) continue;
-                UnmannedData nameData = new UnmannedData();
-                string[] strS = Regex.Split(strTemp[i], ",", RegexOptions.IgnoreCase);
-                string[] strST = strS[0].Split('S');
-                string[] strSR = strS[1].Split('R');
-                string[] strSV = strS[2].Split('V');
-                string[] strSA = strS[3].Split('A');
-                nameData.S = strST[1];
-                nameData.R = strST[1];
-                nameData.V = strSV[1];
-                nameData.A = strSA[1];
-                nameData.DataType = "BK";
-                nameData.SysFrameNo = framSystemNumber;
-                nameDataList.Add(nameData);
+                string[] resultSecondString = Regex.Split(resultFirstString[1], "AK", RegexOptions.IgnoreCase);
+                if (resultSecondString.Length < 2) return null;
+                string[] strTemp = Regex.Split(resultSecondString[0], "\r\n\t", RegexOptions.IgnoreCase);
+                List<UnmannedData> nameDataList = new List<UnmannedData>();
+                for (int i = 0; i < strTemp.Length; i++)
+                {
+                    if (string.IsNullOrEmpty(strTemp[i])) continue;
+                    UnmannedData nameData = new UnmannedData();
+                    string[] strS = Regex.Split(strTemp[i], ",", RegexOptions.IgnoreCase);
+                    if (strS.Length < 4) continue;//00: S 55.62, R 2.05, V 0.00, A -4.00
+                    string[] strST = strS[0].Split('S');
+                    string[] strSR = strS[1].Split('R');
+                    string[] strSV = strS[2].Split('V');
+                    string[] strSA = strS[3].Split('A');
+                    if (strST.Length < 2 || strSR.Length < 2 || strSV.Length < 2 || strSA.Length < 2) continue;
+                    nameData.S = strST[1];
+                    nameData.R = strSR[1];
+                    nameData.V = strSV[1];
+                    nameData.A = strSA[1];
+                    nameData.DataType = "BK";
+                    nameData.SysFrameNo = framSystemNumber;
+                    nameDataList.Add(nameData);
+                }
+                return nameDataList;
             }
-            return nameDataList;
+            else
+            {
+                return null;
+            }
         }
 
         public static string DecodeHeadData(string data)
         {
             //解析头 -- F 4690
             string[] resultFHead = Regex.Split(data, "--- F ", RegexOptions.IgnoreCase);
+            if (resultFHead.Length < 2) return null;
             string[] resultFHead1 = Regex.Split(resultFHead[1], "O", RegexOptions.IgnoreCase);
             return resultFHead1[0];
         }
@@ -238,7 +274,7 @@ namespace Factorys
 
     public class UnmannedData
     {
-        public string CH { get; set; }
+        public int CH { get; set; }
         public string R { get; set; }
         public string V { get; set; }
         public string A { get; set; }
