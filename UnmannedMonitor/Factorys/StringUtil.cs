@@ -116,6 +116,8 @@ namespace Factorys
                     {
                         for (int j = 0; j < listAkData.Count; j++)
                         {
+                            if ( (j + 1 != listAkData.Count) &&  listAkData[j].SysFrameNo.Equals(listAkData[j + 1].SysFrameNo))
+                                continue;
                             tempListAk.Add(listAkData[j]);
                         }
                     }
@@ -126,6 +128,8 @@ namespace Factorys
                     {
                         for(int j = 0; j < listBkData.Count; j++)
                         {
+                            if ((j + 1 != listBkData.Count) && listBkData[j].SysFrameNo.Equals(listBkData[j + 1].SysFrameNo))
+                                continue;
                             tempListBk.Add(listBkData[j]);
                         }
                     }   
@@ -183,11 +187,12 @@ namespace Factorys
                     string[] strSS = Regex.Replace(strS[4], pass, "").Split('S');
                     if (strST.Length < 2 || strSR.Length < 2 || strSV.Length < 2 || strSA.Length < 2) continue;
 
-                    nameData.S = strST[1];
-                    nameData.R = strSR[1];
-                    nameData.V = strSV[1];
-                    nameData.A = strSA[1];
-                    nameData.FrameState = strSS[1];
+                    nameData.P = double.Parse(strST[1]);
+                    nameData.R = double.Parse(strSR[1]);
+                    nameData.V = double.Parse(strSV[1]);
+                    nameData.A = double.Parse(strSA[1]);
+                    nameData.S = Convert.ToInt32(strSS[1]);
+                    nameData.FrameState = Convert.ToInt32(strSS[1]);
                     nameData.DataType = "AK";
                     nameData.SysFrameNo = framSystemNumber;
                     nameDataList.Add(nameData);
@@ -234,10 +239,10 @@ namespace Factorys
                     string[] strSV = strS[2].Split('V');
                     string[] strSA = strS[3].Split('A');
                     if (strST.Length < 2 || strSR.Length < 2 || strSV.Length < 2 || strSA.Length < 2) continue;
-                    nameData.S = strST[1];
-                    nameData.R = strSR[1];
-                    nameData.V = strSV[1];
-                    nameData.A = strSA[1];
+                    nameData.P = double.Parse(strST[1]);
+                    nameData.R = double.Parse(strSR[1]);
+                    nameData.V = double.Parse(strSV[1]);
+                    nameData.A = double.Parse(strSA[1]);
                     nameData.DataType = "BK";
                     nameData.SysFrameNo = framSystemNumber;
                     nameDataList.Add(nameData);
@@ -275,13 +280,13 @@ namespace Factorys
     public class UnmannedData
     {
         public int CH { get; set; }
-        public string R { get; set; }
-        public string V { get; set; }
-        public string A { get; set; }
-        public string P { get; set; }
-        public string S { get; set; }
+        public double R { get; set; }
+        public double V { get; set; }
+        public double A { get; set; }
+        public double P { get; set; }
+        public int S { get; set; }
         public string SysFrameNo { get; set; }
-        public string FrameState { get; set; }
+        public int FrameState { get; set; }
         /// <summary>
         /// BK   AK
         /// </summary>

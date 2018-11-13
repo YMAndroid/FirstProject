@@ -73,7 +73,10 @@ namespace UnmannedMonitor
                     if (u.DataType.Equals("BK")) continue;
                     StringUtil.WriteCSV(u, txtFilePath.Text);
                 }
-                bindList();     
+                bindList();
+                //画板显示数据
+                PictureBoxShowData();    
+             
                 ////存储csv内容
                 //if (data.StartsWith("Num"))
                 //{
@@ -93,6 +96,11 @@ namespace UnmannedMonitor
                 //    bindList();
                 //}
             }
+        }
+
+        private void PictureBoxShowData()
+        {
+            loadPoint();
         }
 
         private void StopDeviceData()
@@ -337,16 +345,37 @@ namespace UnmannedMonitor
 
         void loadPoint()
         {
+
             while (true)
             {
                 //读取数据
-                Random rd = new Random();
-                double a = rd.Next(-90, 90);
-                double b = rd.Next(0, int.Parse(maxM.ToString())) * changeDistance(distance);
-                a = 90 - a;
-                PointF pointF = getNewPoint(p, a, b);
-                drawRectangle(pictureBox1, pointF, Brushes.Red);
 
+                //Random rd = new Random();
+                //double a = rd.Next(-90, 90);
+                //double b = rd.Next(0, int.Parse(maxM.ToString())) * changeDistance(distance);
+                //a = 90 - a;
+                for (int i=0;i<ulist.Count;i++)
+                {
+                    if (ulist[i].DataType.Equals("BK")) continue;
+                    double r = ulist[i].R * changeDistance(distance); //距离 --remove
+                    double a = ulist[i].A;//角度 --angle
+                    double v = ulist[i].V;
+                    PointF pointF = getNewPoint(p, a, r);
+                    if(v < 0)
+                    {
+                        //速度为负值 用绿色 --表示靠近目标
+                        drawRectangle(pictureBox1, pointF, Brushes.Green);
+                    }
+                    else if(v == 0)
+                    {
+                        //速度为0 用黄色 ---表示目标处于静止状态
+                        drawRectangle(pictureBox1, pointF, Brushes.Yellow);
+                    } else if(v > 0)
+                    {
+                        //速度为正值 用红色 ---表示远离目标
+                        drawRectangle(pictureBox1, pointF, Brushes.Red);
+                    }                   
+                }
                 //Thread.Sleep(500);
             }
         }
