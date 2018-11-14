@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -94,59 +95,72 @@ namespace Factorys
             WritePrivateProfileString(section, key, value, iniFilePath);
         }
 
+       
         /// <summary>
         /// 多条数据分割
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        public static List<UnmannedData> MultipleDataSegmentation(string data)
+        public static Dictionary<string, List<UnmannedData>> MultipleDataSegmentation(string data)
         {
+            //key 存放每一帧的标识 
+            Dictionary<string, List<UnmannedData>> dictionary = new Dictionary<string, List<UnmannedData>>();
             int count = data.Count(ch => ch == '#');
             //根据数据中的特殊字符'#' 进行数据分割
             string[] strArray = data.Split('#');
-            List<UnmannedData> tempList = new List<UnmannedData>();
+            
             List<UnmannedData> tempListAk = new List<UnmannedData>();
             List<UnmannedData> tempListBk = new List<UnmannedData>();
             for (int i=0; i < strArray.Length; i++)
             {
                 if (strArray[i].Contains("Num"))
                 {
+                    List<UnmannedData> tempList = new List<UnmannedData>();
                     List<UnmannedData> listAkData= SingleAkDataProcess(strArray[i]);
-                    if(listAkData != null)
+                    if(listAkData != null && listAkData.Count > 0)
                     {
+                       
                         for (int j = 0; j < listAkData.Count; j++)
                         {
-                            if ( (j + 1 != listAkData.Count) &&  listAkData[j].SysFrameNo.Equals(listAkData[j + 1].SysFrameNo))
-                                continue;
-                            tempListAk.Add(listAkData[j]);
+
+                            //if ((j + 1 != listAkData.Count) && listAkData[j].SysFrameNo.Equals(listAkData[j + 1].SysFrameNo))
+                            //    continue;
+                            tempList.Add(listAkData[j]);
                         }
                     }
 
                     List<UnmannedData> listBkData = SingleBkDataProcess(strArray[i]);
                     
-                    if(listBkData != null)
+                    if(listBkData != null && listBkData.Count > 0)
                     {
-                        for(int j = 0; j < listBkData.Count; j++)
+                        //dictionary.Add(listBkData[0].SysFrameNo+"_BK", listBkData);
+                        for (int j = 0; j < listBkData.Count; j++)
                         {
-                            if ((j + 1 != listBkData.Count) && listBkData[j].SysFrameNo.Equals(listBkData[j + 1].SysFrameNo))
-                                continue;
-                            tempListBk.Add(listBkData[j]);
+                            //if ((j + 1 != listBkData.Count) && listBkData[j].SysFrameNo.Equals(listBkData[j + 1].SysFrameNo))
+                            //    continue;
+                            tempList.Add(listBkData[j]);
                         }
-                    }   
+                    }
+                   
+                    if(tempList != null && tempList.Count > 0)
+                    {
+                        dictionary.Add(tempList[0].SysFrameNo, tempList);
+                        //tempList.Clear();
+                    }
                 } 
             }
-            for(int i=0; i<tempListAk.Count;i++)
-            {
-                tempListAk[i].CH = i;
-                tempList.Add(tempListAk[i]);
-            }
-            for(int i = 0; i < tempListBk.Count; i++)
-            {
-                tempListBk[i].CH = i;
-                tempList.Add(tempListBk[i]);
-            }
-            
-            return tempList;
+            //for (int i = 0; i < tempListAk.Count; i++)
+            //{
+            //    tempListAk[i].CH = i;
+            //    tempList.Add(tempListAk[i]);
+            //}
+            //for (int i = 0; i < tempListBk.Count; i++)
+            //{
+            //    tempListBk[i].CH = i;
+            //    tempList.Add(tempListBk[i]);
+            //}
+
+            return dictionary;
         }
 
         /// <summary>
@@ -185,13 +199,22 @@ namespace Factorys
                     string[] strSA = strS[3].Split('A');
                     string pass = @"[\t\r\n\s]";
                     string[] strSS = Regex.Replace(strS[4], pass, "").Split('S');
-                    if (strST.Length < 2 || strSR.Length < 2 || strSV.Length < 2 || strSA.Length < 2) continue;
+                    if (strST.Length < 2 || strSR.Length < 2 || strSV.Length < 2 
+                        || strSA.Length < 2 || strSS.Length < 2) continue;
 
-                    nameData.P = double.Parse(strST[1]);
-                    nameData.R = double.Parse(strSR[1]);
-                    nameData.V = double.Parse(strSV[1]);
-                    nameData.A = double.Parse(strSA[1]);
-                    nameData.S = Convert.ToInt32(strSS[1]);
+                    if (string.IsNullOrEmpty(strST[1]) || string.IsNullOrEmpty(strSR[1]) 
+                        || string.IsNullOrEmpty(strSV[1]) || string.IsNullOrEmpty(strSA[1])
+                        || string.IsNullOrEmpty(strSS[1])) continue;
+
+                    if (!IsNumeric(strST[1]) || !IsNumeric(strSR[1]) || !IsNumeric(strSV[1])
+                        || !IsNumeric(strSA[1]) || !IsNumeric(strSS[1])) continue;
+                    nameData.P = double.Parse(strST[1].Replace(" ", ""));
+                    nameData.R = double.Parse(strSR[1].Replace(" ", ""));
+                    nameData.V = double.Parse(strSV[1].Replace(" ", ""));
+                    nameData.A = double.Parse(strSA[1].Replace(" ", ""));
+
+                    nameData.S = Convert.ToInt32(strSS[1].Replace(" ", ""));
+                    nameData.CH = i;
                     nameData.FrameState = Convert.ToInt32(strSS[1]);
                     nameData.DataType = "AK";
                     nameData.SysFrameNo = framSystemNumber;
@@ -200,6 +223,19 @@ namespace Factorys
                 return nameDataList;
             }
             return null;      
+        }
+
+        public static bool IsNumeric(string value)
+        {
+            double d;
+            if (double.TryParse(value, out d))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         /// <summary>
@@ -238,12 +274,21 @@ namespace Factorys
                     string[] strSR = strS[1].Split('R');
                     string[] strSV = strS[2].Split('V');
                     string[] strSA = strS[3].Split('A');
-                    if (strST.Length < 2 || strSR.Length < 2 || strSV.Length < 2 || strSA.Length < 2) continue;
-                    nameData.P = double.Parse(strST[1]);
-                    nameData.R = double.Parse(strSR[1]);
-                    nameData.V = double.Parse(strSV[1]);
-                    nameData.A = double.Parse(strSA[1]);
+                    if (strST.Length < 2 || strSR.Length < 2 
+                        || strSV.Length < 2 || strSA.Length < 2 || strSA.Length < 2) continue;
+
+                    if (string.IsNullOrEmpty(strST[1]) || string.IsNullOrEmpty(strSR[1])
+                        || string.IsNullOrEmpty(strSV[1]) || string.IsNullOrEmpty(strSA[1])) continue;
+
+                    if (!IsNumeric(strST[1]) || !IsNumeric(strSR[1]) || !IsNumeric(strSV[1])
+                        || !IsNumeric(strSA[1])) continue;
+
+                    nameData.P = double.Parse(strST[1].Replace(" ", ""));
+                    nameData.R = double.Parse((strSR[1].Replace(" ","")));
+                    nameData.V = double.Parse(strSV[1].Replace(" ", ""));
+                    nameData.A = double.Parse(strSA[1].Replace(" ", ""));
                     nameData.DataType = "BK";
+                    nameData.CH = i;
                     nameData.SysFrameNo = framSystemNumber;
                     nameDataList.Add(nameData);
                 }

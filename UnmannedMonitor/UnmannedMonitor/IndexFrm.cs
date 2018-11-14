@@ -61,21 +61,26 @@ namespace UnmannedMonitor
         private void CommonHelper_getResultEvent(string data)
         {
             ulist.Clear();
+            if (!isStart) return; 
             if (checkBox2.Checked)
             {
                 //存储txt内容
                 StringUtil.WriteLog(data, txtFilePath.Text);
                 //存储CSV数据,并处理
-                List<UnmannedData> listNameData = StringUtil.MultipleDataSegmentation(data);
-                foreach(UnmannedData u in listNameData)
+                Dictionary<string, List<UnmannedData>> listNameData = StringUtil.MultipleDataSegmentation(data);
+                foreach (KeyValuePair<string, List<UnmannedData>> pair in listNameData)
                 {
-                    ulist.Add(u);
-                    if (u.DataType.Equals("BK")) continue;
-                    StringUtil.WriteCSV(u, txtFilePath.Text);
-                }
-                bindList();
+                    foreach (UnmannedData u in pair.Value)
+                    {
+                        ulist.Add(u);
+                        if (u.DataType.Equals("BK")) continue;
+                        StringUtil.WriteCSV(u, txtFilePath.Text);       
+                    }
+                    bindList();
+                }  
+                
                 //画板显示数据
-                PictureBoxShowData();    
+                //PictureBoxShowData();    
              
                 ////存储csv内容
                 //if (data.StartsWith("Num"))
@@ -149,6 +154,9 @@ namespace UnmannedMonitor
 
             for (int i = 1; i < 8; i++)
             {
+                double temp = i * num;
+                double temp1 = y - (i * xpaddings);
+                //double 
                 //画数值
                 g.DrawString((i * num).ToString(), new Font("宋体", 10), Brushes.Black, new PointF(0, y - (i * xpaddings) - 6));
                 //画刻度
@@ -233,30 +241,10 @@ namespace UnmannedMonitor
         /// </summary>
         private void bindList()
         {
-            this.Invoke(new EventHandler(delegate
+            this.BeginInvoke((Action)delegate ()
             {
-                dataGridView1.DataSource = ulist.Where(d => d.DataType.Equals("AK")).ToList();
-            }));
-            //dataGridView1.DataSource = ulist.Where(d => d.DataType == "AK").ToList();
-
-            foreach (DataGridViewColumn item in dataGridView1.Columns)
-            {
-                item.SortMode = DataGridViewColumnSortMode.NotSortable;
-                if (item.Name == "DataType" || item.Name == "FrameState" || item.Name == "SysFrameNo")
-                {
-                    item.Visible = false;
-                }
-            }
-
-            if (checkBox1.Checked)
-            {
-                this.Invoke(new EventHandler(delegate
-                {
-                    dataGridView2.DataSource = ulist.Where(d => d.DataType.Equals("BK")).ToList();
-                }));
-                //dataGridView2.DataSource = ulist.Where(d => d.DataType == "BK").ToList();
-
-                foreach (DataGridViewColumn item in dataGridView2.Columns)
+                dataGridView1.DataSource = ulist.Where(d => d.DataType == "AK").ToList();
+                foreach (DataGridViewColumn item in dataGridView1.Columns)
                 {
                     item.SortMode = DataGridViewColumnSortMode.NotSortable;
                     if (item.Name == "DataType" || item.Name == "FrameState" || item.Name == "SysFrameNo")
@@ -264,6 +252,55 @@ namespace UnmannedMonitor
                         item.Visible = false;
                     }
                 }
+
+                if (checkBox1.Checked)
+                {
+                    dataGridView2.DataSource = ulist.Where(p => p.DataType == "BK").ToList();
+                    foreach (DataGridViewColumn item in dataGridView2.Columns)
+                    {
+                        item.SortMode = DataGridViewColumnSortMode.NotSortable;
+                        if (item.Name == "DataType" || item.Name == "FrameState" || item.Name == "SysFrameNo")
+                        {
+                            item.Visible = false;
+                        }
+                    }
+                }
+            });
+            //this.Invoke(new EventHandler(delegate
+            //{
+            //    dataGridView1.DataSource = ulist.Where(d => d.DataType == "AK").ToList();
+            //}));
+            //dataGridView1.DataSource = ulist.Where(d => d.DataType == "AK").ToList();
+
+           
+            //bindBkList();
+            ulist.Clear();
+        }
+
+        private void bindBkList()
+        {
+            if (checkBox1.Checked)
+            {
+                this.BeginInvoke((Action)delegate ()
+                {
+                    dataGridView2.DataSource = ulist.Where(p => p.DataType == "BK").ToList();
+                    foreach (DataGridViewColumn item in dataGridView2.Columns)
+                    {
+                        item.SortMode = DataGridViewColumnSortMode.NotSortable;
+                        if (item.Name == "DataType" || item.Name == "FrameState" || item.Name == "SysFrameNo")
+                        {
+                            item.Visible = false;
+                        }
+                    }
+                });
+
+                //this.Invoke(new EventHandler(delegate
+                //{
+                //    dataGridView2.DataSource = ulist.Where(p => p.DataType == "BK").ToList();
+                //}));
+                //dataGridView2.DataSource = ulist.Where(d => d.DataType == "BK").ToList();
+
+               
             }
         }
 
@@ -302,9 +339,9 @@ namespace UnmannedMonitor
                 isStart = false;
                 btn.Text = "Start";
                 //commonHelper.SendData("stptst");
-                //commonHelper.SetIsReceiveData(false);
+                commonHelper.SetIsReceiveData(false);
                 commonHelper.CloseSerial();
-                StopDeviceData();
+                //StopDeviceData();
             }
         }
 
@@ -357,35 +394,32 @@ namespace UnmannedMonitor
                 //画 角度跟距离 pictureBox2
                 for (int i=0;i<ulist.Count;i++)
                 {
-                    double r = ulist[i].R * changeDistance(distance); //距离 --remove
+                    double r = ulist[i].R;// * changeDistance(distance); //距离 --remove
                     double a = ulist[i].A;//角度 --angle
                     double v = ulist[i].V;
                     if (ulist[i].DataType.Equals("AK"))
                     {
                         PointF pointF = getNewPoint(p, a, r);
+                        PointF pointS = getNewSpeedPoint(p, a, r);
                         if (v < 0)
                         {
                             //速度为负值 用绿色 --表示靠近目标
-                            drawRectangle(pictureBox2, pointF, Brushes.Green);
-                            drawRectangle(pictureBox1,)
+                            drawRectangle(pictureBox2, pointF, Brushes.Green);//显示速度 根据V 跟A换算
+                            drawRectangle(pictureBox1, pointS, Brushes.Green);//显示每个物体的距离 根据 R 跟 A 换算
                         }
                         else if (v == 0)
                         {
                             //速度为0 用黄色 ---表示目标处于静止状态
                             drawRectangle(pictureBox2, pointF, Brushes.Yellow);
+                            drawRectangle(pictureBox1, pointS, Brushes.Yellow);
                         }
                         else if (v > 0)
                         {
                             //速度为正值 用红色 ---表示远离目标
                             drawRectangle(pictureBox2, pointF, Brushes.Red);
+                            drawRectangle(pictureBox1, pointS, Brushes.Red);
                         }
                     }             
-                }
-
-                //画速度跟距离 pictureBox1
-                for (int i = 0; i < ulist.Count; i++)
-                {
-
                 }
                 //Thread.Sleep(500);
             }
@@ -437,14 +471,12 @@ namespace UnmannedMonitor
             return new PointF(pointB.X + xMargin, pointB.Y + yMargin);
         }
 
-        private PointF getNewSpeedPoint(PointF pointB, double angle, double bevel)
+        private PointF getNewSpeedPoint(PointF pointB, double v, double bevel)
         {
-            //在Flash中顺时针角度为正，逆时针角度为负
-            //换算过程中先将角度转为弧度
-            var radian = angle * Math.PI / 180;
-            var xMargin = float.Parse((Math.Cos(radian) * bevel).ToString());
-            var yMargin = -float.Parse((Math.Sin(radian) * bevel).ToString());
-            return new PointF(pointB.X + xMargin, pointB.Y + yMargin);
+           //显示Y轴的速度
+           //X 轴 始终为 0
+            var yMargin = (float)v;
+            return new PointF(pointB.X, pointB.Y + yMargin);
         }
 
         /// <summary>
