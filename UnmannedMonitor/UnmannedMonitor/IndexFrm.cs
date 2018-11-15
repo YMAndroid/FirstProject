@@ -35,7 +35,38 @@ namespace UnmannedMonitor
         private void IndexFrm_Load(object sender, EventArgs e)
         {
             txtFilePath.Text = StringUtil.ReadIniData("DataFile", "path");
+            InitSerial();
             bindList();
+        }
+
+
+        private SerialPort serialPort = new SerialPort();
+        public void InitSerial()
+        {
+            serialPort.StopBits = StopBits.One;
+            serialPort.BaudRate = 1000000;
+            serialPort.Parity = Parity.None;
+            serialPort.DataBits = 8;
+        }
+
+        public void SetSerialPortName(string portName)
+        {
+            if (!serialPort.IsOpen)
+            {
+                serialPort.PortName = portName;
+            }
+        }
+
+        public void OpenOrSerialPort()
+        {
+            
+            if (!serialPort.IsOpen)
+            {
+                serialPort.Open();
+            } else
+            {
+                serialPort.Close();
+            }
         }
 
         /// <summary>
@@ -43,8 +74,9 @@ namespace UnmannedMonitor
         /// </summary>
         private void InitComBoxPortName()
         {
-            string[] comDevices = commonHelper.GetCurrentComDevices();
-            if(comDevices != null)
+            //string[] comDevices = commonHelper.GetCurrentComDevices();
+            string[] comDevices = GetCurrentComDevices();
+            if (comDevices != null)
             {
                 foreach(string str in comDevices)
                 {
@@ -76,41 +108,54 @@ namespace UnmannedMonitor
                         if (u.DataType.Equals("BK")) continue;
                         StringUtil.WriteCSV(u, txtFilePath.Text);       
                     }
-                    bindList();
+                    SetDgvDataSourceAk(ulist);
+                    //bindList();
+                    if (checkBox1.Checked)
+                    {
+                        SetDgvDataSourceBk(ulist);
+                    }
+                    ulist.Clear();
                 }  
-                
-                //画板显示数据
-                //PictureBoxShowData();    
-             
-                ////存储csv内容
-                //if (data.StartsWith("Num"))
-                //{
-                //    //第一条数据开始
-                //    _data += data;
-                //}
-                //if (data.EndsWith("#"))
-                //{
-                //    //分析_data的数据并转换为对象显示和存储
-                //    UnmannedData udata = new UnmannedData();
-
-                //    ulist.Add(udata);
-
-                //    StringUtil.WriteCSV(udata, txtFilePath.Text);
-                //    _data = "";
-
-                //    bindList();
-                //}
             }
         }
 
-        private void PictureBoxShowData()
-        {
-            loadPoint();
-        }
 
-        private void StopDeviceData()
+        private void Comm_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
-            bindList();
+            if (!serialPort.IsOpen) return;
+            byte[] buffer = new byte[serialPort.BytesToRead];
+            serialPort.Read(buffer, 0, buffer.Length);
+            string tempResult = StringUtil.ByteToHex(buffer);
+            string data = Encoding.Default.GetString(buffer);
+
+            ulist.Clear();
+            if (!isStart) return;
+            if (checkBox2.Checked)
+            {
+                //存储txt内容
+                StringUtil.WriteLog(data, txtFilePath.Text);
+                //存储CSV数据,并处理
+                Dictionary<string, List<UnmannedData>> listNameData = StringUtil.MultipleDataSegmentation(data);
+                foreach (KeyValuePair<string, List<UnmannedData>> pair in listNameData)
+                {
+                    foreach (UnmannedData u in pair.Value)
+                    {
+                        ulist.Add(u);
+                        if (u.DataType.Equals("BK")) continue;
+                        StringUtil.WriteCSV(u, txtFilePath.Text);
+                    }
+                    SetDgvDataSourceAk(ulist);
+                    //bindList();
+                    if (checkBox1.Checked)
+                    {
+                        SetDgvDataSourceBk(ulist);
+                    }
+
+                    loadPoint();
+                    ulist.Clear();
+                }
+
+            }
         }
 
         private int distance = 2;
@@ -217,34 +262,84 @@ namespace UnmannedMonitor
             g.Save();
 
             return bitmap;
-        }
+        }      
 
-        private delegate void SetDtCallback(List<UnmannedData> dt);
-
-        private void SetDT(List<UnmannedData> dt)
+        delegate void DelegateAk(List<UnmannedData> table);
+        private void SetDgvDataSourceAk(List<UnmannedData> table)
         {
-            // InvokeRequired需要比较调用线程ID和创建线程ID
-            // 如果它们不相同则返回true
-            if (this.dataGridView1.InvokeRequired)
+            dataGridView1.ClearSelection();
+            if (dataGridView1.InvokeRequired)
             {
-                SetDtCallback d = new SetDtCallback(SetDT);
-                this.Invoke(d, new object[] { dt });
+                BeginInvoke(new DelegateAk(SetDgvDataSourceAk), new object[] { table.Where(d=> d.DataType == "AK").ToList() });
             }
             else
             {
-                this.dataGridView1.DataSource = ulist.Where(d => d.DataType.Equals("AK")).ToList();
+                dataGridView1.DataSource = table.Where(d => d.DataType == "AK").ToList();
+            }
+            foreach (DataGridViewColumn item in dataGridView2.Columns)
+            {
+                item.SortMode = DataGridViewColumnSortMode.NotSortable;
+                if (item.Name == "DataType" || item.Name == "FrameState" || item.Name == "SysFrameNo")
+                {
+                    item.Visible = false;
+                }
             }
         }
 
+        delegate void DelegateBk(List<UnmannedData> table);
+        private void SetDgvDataSourceBk(List<UnmannedData> table)
+        {
+            dataGridView2.ClearSelection();
+            if (dataGridView2.InvokeRequired)
+            {
+                BeginInvoke(new DelegateBk(SetDgvDataSourceBk), new object[] { table.Where(d => d.DataType == "BK").ToList() });
+            }
+            else
+            {
+                dataGridView2.DataSource = table.Where(d => d.DataType == "BK").ToList();
+            }
+            foreach (DataGridViewColumn item in dataGridView2.Columns)
+            {
+                item.SortMode = DataGridViewColumnSortMode.NotSortable;
+                if (item.Name == "DataType" || item.Name == "FrameState" || item.Name == "SysFrameNo")
+                {
+                    item.Visible = false;
+                }
+            }
+        }
+
+        //private List<>
         /// <summary>
         /// 绑定列表
         /// </summary>
         private void bindList()
         {
-            this.BeginInvoke((Action)delegate ()
+            this.Invoke(new EventHandler(delegate
             {
                 dataGridView1.DataSource = ulist.Where(d => d.DataType == "AK").ToList();
-                foreach (DataGridViewColumn item in dataGridView1.Columns)
+            }));
+
+            foreach (DataGridViewColumn item in dataGridView1.Columns)
+            {
+                item.SortMode = DataGridViewColumnSortMode.NotSortable;
+                if (item.Name == "DataType" || item.Name == "FrameState" || item.Name == "SysFrameNo")
+                {
+                    item.Visible = false;
+                }
+            }
+            bindBkList();
+            //ulist.Clear();
+        }
+
+        private void bindBkList()
+        {
+            if (checkBox1.Checked)
+            {
+                this.Invoke(new EventHandler(delegate
+                {
+                    dataGridView2.DataSource = ulist.Where(p => p.DataType == "BK").ToList();
+                }));
+                foreach (DataGridViewColumn item in dataGridView2.Columns)
                 {
                     item.SortMode = DataGridViewColumnSortMode.NotSortable;
                     if (item.Name == "DataType" || item.Name == "FrameState" || item.Name == "SysFrameNo")
@@ -252,56 +347,13 @@ namespace UnmannedMonitor
                         item.Visible = false;
                     }
                 }
-
-                if (checkBox1.Checked)
-                {
-                    dataGridView2.DataSource = ulist.Where(p => p.DataType == "BK").ToList();
-                    foreach (DataGridViewColumn item in dataGridView2.Columns)
-                    {
-                        item.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        if (item.Name == "DataType" || item.Name == "FrameState" || item.Name == "SysFrameNo")
-                        {
-                            item.Visible = false;
-                        }
-                    }
-                }
-            });
-            //this.Invoke(new EventHandler(delegate
-            //{
-            //    dataGridView1.DataSource = ulist.Where(d => d.DataType == "AK").ToList();
-            //}));
-            //dataGridView1.DataSource = ulist.Where(d => d.DataType == "AK").ToList();
-
-           
-            //bindBkList();
-            ulist.Clear();
+            }
         }
 
-        private void bindBkList()
+        public string[] GetCurrentComDevices()
         {
-            if (checkBox1.Checked)
-            {
-                this.BeginInvoke((Action)delegate ()
-                {
-                    dataGridView2.DataSource = ulist.Where(p => p.DataType == "BK").ToList();
-                    foreach (DataGridViewColumn item in dataGridView2.Columns)
-                    {
-                        item.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        if (item.Name == "DataType" || item.Name == "FrameState" || item.Name == "SysFrameNo")
-                        {
-                            item.Visible = false;
-                        }
-                    }
-                });
-
-                //this.Invoke(new EventHandler(delegate
-                //{
-                //    dataGridView2.DataSource = ulist.Where(p => p.DataType == "BK").ToList();
-                //}));
-                //dataGridView2.DataSource = ulist.Where(d => d.DataType == "BK").ToList();
-
-               
-            }
+            string[] ports = SerialPort.GetPortNames();
+            return ports;
         }
 
         private PointF p = new PointF(0, 0);
@@ -316,72 +368,48 @@ namespace UnmannedMonitor
                 MessageBox.Show("请先选择需要打开的串口！");
                 return;
             }
+            SetSerialPortName(selectPort);
             Button btn = sender as Button;
             if (!isStart)
             {
-
+                
                 isStart = true;
                 btn.Text = "Stop";
-                if (!commonHelper.OpenSerial(selectPort))
-                {
-                    MessageBox.Show("串口打开失败！");
-                }
-                else
-                {
-                    MessageBox.Show("串口打开成功，等待接收数据！");
-                    commonHelper.SendData("runtst -1");
-                    commonHelper.SetIsReceiveData(true);
-                    commonHelper.getResultEvent += CommonHelper_getResultEvent;
-                }
+                OpenOrSerialPort();
+                serialPort.DataReceived += new SerialDataReceivedEventHandler(Comm_DataReceived);
+                //if (commonHelper.OpenSerial(selectPort))
+                //{
+                //    commonHelper.SendData("runtst -1");
+                //    commonHelper.SetIsReceiveData(true);
+                //    commonHelper.getResultEvent += CommonHelper_getResultEvent;   
+                //}
+                //else
+                //{
+                //    MessageBox.Show("串口打开失败");
+                //}  
             }
             else
             {
                 isStart = false;
                 btn.Text = "Start";
+                OpenOrSerialPort();
                 //commonHelper.SendData("stptst");
-                commonHelper.SetIsReceiveData(false);
-                commonHelper.CloseSerial();
+                //commonHelper.SetIsReceiveData(false);
+                //commonHelper.CloseSerial();
                 //StopDeviceData();
             }
         }
 
-        ///// <summary>
-        ///// 用于测试的数据
-        ///// </summary>
-        //private SerialPort serialPort = new SerialPort();
-        //public void TestOpenProtGetData()
-        //{
-        //    serialPort.StopBits = StopBits.One;
-        //    serialPort.BaudRate = 115200;
-        //    serialPort.Parity = Parity.None;
-        //    serialPort.DataBits = 8;
-            
-        //    serialPort.PortName = comboBoxPortSelect.Text.ToString();
-        //    serialPort.Open();
-        //    serialPort.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(readDataEvent);
-        //}
+        /// <summary>
+        /// 用于保存已经画过的矩形点
+        /// </summary>
+        Dictionary<Point, Point> dicPoints = new Dictionary<Point, Point>();
 
-        //public void readDataEvent(object sender, EventArgs e)
-        //{
-        //    //Store the read data in a variable
-        //    System.Threading.Thread.Sleep(100);
-        //    if (serialPort.IsOpen)
-        //    {
-        //        byte[] buffer = new byte[serialPort.BytesToRead];
-        //        serialPort.Read(buffer, 0, buffer.Length);
-        //        StringBuilder sb = new StringBuilder();
-
-        //        for (int i = 0; i < buffer.Length; i++)
-        //        {
-        //            sb.AppendFormat("{0:X2}", buffer[i]);
-        //        }
-        //        serialPort.DiscardInBuffer();
-        //        string str = sb.ToString();
-        //    }
-        //}
+        //
 
         void loadPoint()
         {
+            System.Drawing.Pen pen = null;
 
             while (true)
             {
@@ -397,33 +425,50 @@ namespace UnmannedMonitor
                     double r = ulist[i].R;// * changeDistance(distance); //距离 --remove
                     double a = ulist[i].A;//角度 --angle
                     double v = ulist[i].V;
+                    int picture1BoxHeight  = pictureBox1.Height;
+                    int picture1BoxWigth = pictureBox1.Width;
+                    int picture2BoxHeight = pictureBox2.Height;
+                    int picture2BoxWigth = pictureBox2.Width;
                     if (ulist[i].DataType.Equals("AK"))
                     {
                         PointF pointF = getNewPoint(p, a, r);
-                        PointF pointS = getNewSpeedPoint(p, a, r);
+                        PointF pointS = getNewSpeedPoint(p, picture1BoxWigth/2, picture2BoxHeight - v -10);
                         if (v < 0)
                         {
+                            pen = new Pen(Color.Green);
                             //速度为负值 用绿色 --表示靠近目标
                             drawRectangle(pictureBox2, pointF, Brushes.Green);//显示速度 根据V 跟A换算
                             drawRectangle(pictureBox1, pointS, Brushes.Green);//显示每个物体的距离 根据 R 跟 A 换算
+                            
                         }
                         else if (v == 0)
                         {
+                            pen = new Pen(Color.Yellow);
                             //速度为0 用黄色 ---表示目标处于静止状态
                             drawRectangle(pictureBox2, pointF, Brushes.Yellow);
                             drawRectangle(pictureBox1, pointS, Brushes.Yellow);
                         }
                         else if (v > 0)
                         {
+                            pen = new Pen(Color.Red);
                             //速度为正值 用红色 ---表示远离目标
                             drawRectangle(pictureBox2, pointF, Brushes.Red);
                             drawRectangle(pictureBox1, pointS, Brushes.Red);
                         }
                     }             
                 }
+                cleaDrawRectangle(pictureBox2);
+                cleaDrawRectangle(pictureBox1);
                 //Thread.Sleep(500);
             }
         }
+
+        private void drawRectangle()
+        {
+
+        }
+
+
 
         /// <summary>
         /// 距离转换
@@ -468,15 +513,16 @@ namespace UnmannedMonitor
             var radian = angle * Math.PI / 180;
             var xMargin = float.Parse((Math.Cos(radian) * bevel).ToString());
             var yMargin = -float.Parse((Math.Sin(radian) * bevel).ToString());
-            return new PointF(pointB.X + xMargin, pointB.Y + yMargin);
+            return new PointF(pointB.X + xMargin + (pictureBox2.Width / 2), pictureBox2.Height - (pointB.Y + yMargin) - 10);
         }
 
-        private PointF getNewSpeedPoint(PointF pointB, double v, double bevel)
+        private PointF getNewSpeedPoint(PointF pointB, double a, double v)
         {
            //显示Y轴的速度
            //X 轴 始终为 0
             var yMargin = (float)v;
-            return new PointF(pointB.X, pointB.Y + yMargin);
+            var xMargin = (float)a;
+            return new PointF(pointB.X + xMargin, pointB.Y + yMargin);
         }
 
         /// <summary>
@@ -489,6 +535,13 @@ namespace UnmannedMonitor
         {
             Graphics g = control.CreateGraphics();
             g.FillRectangle(brush, new RectangleF(pointF, new Size(10, 20)));
+        }
+
+        private void cleaDrawRectangle(Control control)
+
+        {
+            Graphics g = control.CreateGraphics();
+            g.Clear(Color.White);
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
