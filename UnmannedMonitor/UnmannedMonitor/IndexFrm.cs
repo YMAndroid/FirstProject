@@ -37,6 +37,8 @@ namespace UnmannedMonitor
             txtFilePath.Text = StringUtil.ReadIniData("DataFile", "path");
             InitSerial();
             bindList();
+            updatePictureBox1 = new UpdatePictureBox1(UpdatePictureBoxMethod);
+            updatePictureBox2 = new UpdatePictureBox2(UpdatePictureBoxMethod);
         }
 
 
@@ -150,7 +152,7 @@ namespace UnmannedMonitor
                     {
                         SetDgvDataSourceBk(ulist);
                     }
-
+                    
                     loadPoint();
                     ulist.Clear();
                 }
@@ -376,6 +378,7 @@ namespace UnmannedMonitor
                 isStart = true;
                 btn.Text = "Stop";
                 OpenOrSerialPort();
+                isUpdatePictureBox = true;
                 serialPort.DataReceived += new SerialDataReceivedEventHandler(Comm_DataReceived);
                 //if (commonHelper.OpenSerial(selectPort))
                 //{
@@ -391,6 +394,7 @@ namespace UnmannedMonitor
             else
             {
                 isStart = false;
+                isUpdatePictureBox = false;
                 btn.Text = "Start";
                 OpenOrSerialPort();
                 //commonHelper.SendData("stptst");
@@ -410,8 +414,52 @@ namespace UnmannedMonitor
         void loadPoint()
         {
             System.Drawing.Pen pen = null;
+            if (isUpdatePictureBox)
+            {
+                
+                for (int i = 0; i < ulist.Count; i++)
+                {
+                    double r = ulist[i].R;// * changeDistance(distance); //距离 --remove
+                    double a = ulist[i].A;//角度 --angle
+                    double v = ulist[i].V;
+                    int picture1BoxHeight = pictureBox1.Height;
+                    int picture1BoxWigth = pictureBox1.Width;
+                    int picture2BoxHeight = pictureBox2.Height;
+                    int picture2BoxWigth = pictureBox2.Width;
+                    if (ulist[i].DataType.Equals("AK"))
+                    {
+                        PointF pointF = getNewPoint(p, a, r);
+                        PointF pointS = getNewSpeedPoint(p, picture1BoxWigth / 2, picture2BoxHeight - v - 10);
+                        if (v < 0)
+                        {
+                            pen = new Pen(Color.Green);
+                            //速度为负值 用绿色 --表示靠近目标
+                            StartThreadToUpdatePictureBox(pictureBox2, pointF, Brushes.Green);
+                            StartThreadToUpdatePictureBox(pictureBox1, pointS, Brushes.Green);
 
-            while (true)
+                        }
+                        else if (v == 0)
+                        {
+                            pen = new Pen(Color.Yellow);
+                            //速度为0 用黄色 ---表示目标处于静止状态
+                            StartThreadToUpdatePictureBox(pictureBox2, pointF, Brushes.Yellow);
+                            StartThreadToUpdatePictureBox(pictureBox1, pointS, Brushes.Yellow);
+                        }
+                        else if (v > 0)
+                        {
+                            pen = new Pen(Color.Red);
+                            //速度为正值 用红色 ---表示远离目标
+                            StartThreadToUpdatePictureBox(pictureBox2, pointF, Brushes.Red);
+                            StartThreadToUpdatePictureBox(pictureBox1, pointS, Brushes.Red);
+                        }
+                    }
+                }
+                cleaDrawRectangle(pictureBox2);
+                cleaDrawRectangle(pictureBox1);
+            }
+            
+
+            while (false)
             {
                 //读取数据
 
@@ -523,6 +571,31 @@ namespace UnmannedMonitor
             var yMargin = (float)v;
             var xMargin = (float)a;
             return new PointF(pointB.X + xMargin, pointB.Y + yMargin);
+        }
+
+        public delegate void UpdatePictureBox1(Control control, PointF pointF, Brush brush);
+        public delegate void UpdatePictureBox2(Control control, PointF pointF, Brush brush);
+
+        public UpdatePictureBox1 updatePictureBox1;
+        public UpdatePictureBox2 updatePictureBox2;
+
+        //更新pictureBox 方法
+        public void UpdatePictureBoxMethod(Control control,PointF pointF, Brush brush)
+        {
+            drawRectangle(control,pointF,brush);
+        }
+
+        private Boolean isUpdatePictureBox = false;
+        public void StartThreadToUpdatePictureBox(Control control, PointF pointF, Brush brush)
+        {
+            if (isUpdatePictureBox)
+            {
+                Thread objThread = new Thread(new ThreadStart(delegate
+                {
+                    UpdatePictureBoxMethod(control,pointF,brush);
+                }));
+                objThread.Start();
+            }
         }
 
         /// <summary>
