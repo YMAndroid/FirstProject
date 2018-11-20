@@ -37,8 +37,8 @@ namespace UnmannedMonitor
             txtFilePath.Text = StringUtil.ReadIniData("DataFile", "path");
             InitSerial();
             bindList();
-            updatePictureBox1 = new UpdatePictureBox1(UpdatePictureBoxMethod);
-            updatePictureBox2 = new UpdatePictureBox2(UpdatePictureBoxMethod);
+            //updatePictureBox1 = new UpdatePictureBox1(UpdatePictureBoxMethod);
+            //updatePictureBox2 = new UpdatePictureBox2(UpdatePictureBoxMethod);
         }
 
 
@@ -404,19 +404,15 @@ namespace UnmannedMonitor
             }
         }
 
-        /// <summary>
-        /// 用于保存已经画过的矩形点
-        /// </summary>
-        Dictionary<Point, Point> dicPoints = new Dictionary<Point, Point>();
-
-        //
-
+        //存储每次绘制的矩形图形
+        private List<PointF> pointFList = new List<PointF>();//pictureBox2
+        private List<PointF> pointSList = new List<PointF>();//pictureBox1
         void loadPoint()
         {
-            System.Drawing.Pen pen = null;
             if (isUpdatePictureBox)
             {
-                
+               
+
                 for (int i = 0; i < ulist.Count; i++)
                 {
                     double r = ulist[i].R;// * changeDistance(distance); //距离 --remove
@@ -429,94 +425,54 @@ namespace UnmannedMonitor
                     if (ulist[i].DataType.Equals("AK"))
                     {
                         PointF pointF = getNewPoint(p, a, r);
-                        PointF pointS = getNewSpeedPoint(p, picture1BoxWigth / 2, picture2BoxHeight - v - 10);
+                        PointF pointS = getNewSpeedPoint(p, picture1BoxWigth / 2, picture2BoxHeight - v - 5);
+                        pointFList.Add(pointF);
+                        pointSList.Add(pointS);
                         if (v < 0)
                         {
-                            pen = new Pen(Color.Green);
+                            drawRectangle(pictureBox2, pointF, Brushes.Green);
+                            drawRectangle(pictureBox1, pointS, Brushes.Green);
                             //速度为负值 用绿色 --表示靠近目标
-                            StartThreadToUpdatePictureBox(pictureBox2, pointF, Brushes.Green);
-                            StartThreadToUpdatePictureBox(pictureBox1, pointS, Brushes.Green);
+                            //StartThreadToUpdatePictureBox(gPictureBox2, pointF, Brushes.Green);
+                            //StartThreadToUpdatePictureBox(gPictureBox1, pointS, Brushes.Green);
 
                         }
                         else if (v == 0)
                         {
-                            pen = new Pen(Color.Yellow);
+                            drawRectangle(pictureBox2, pointF, Brushes.Yellow);
+                            drawRectangle(pictureBox1, pointS, Brushes.Yellow);
                             //速度为0 用黄色 ---表示目标处于静止状态
-                            StartThreadToUpdatePictureBox(pictureBox2, pointF, Brushes.Yellow);
-                            StartThreadToUpdatePictureBox(pictureBox1, pointS, Brushes.Yellow);
+                            //StartThreadToUpdatePictureBox(gPictureBox2, pointF, Brushes.Yellow);
+                            //StartThreadToUpdatePictureBox(gPictureBox1, pointS, Brushes.Yellow);
                         }
                         else if (v > 0)
                         {
-                            pen = new Pen(Color.Red);
+                            drawRectangle(pictureBox2, pointF, Brushes.Red);
+                            drawRectangle(pictureBox1, pointS, Brushes.Red);
                             //速度为正值 用红色 ---表示远离目标
-                            StartThreadToUpdatePictureBox(pictureBox2, pointF, Brushes.Red);
-                            StartThreadToUpdatePictureBox(pictureBox1, pointS, Brushes.Red);
+                            //StartThreadToUpdatePictureBox(gPictureBox2, pointF, Brushes.Red);
+                            //StartThreadToUpdatePictureBox(gPictureBox1, pointS, Brushes.Red);
                         }
                     }
                 }
-                cleaDrawRectangle(pictureBox2);
-                cleaDrawRectangle(pictureBox1);
-            }
-            
-
-            while (false)
-            {
-                //读取数据
-
-                //Random rd = new Random();
-                //double a = rd.Next(-90, 90);
-                //double b = rd.Next(0, int.Parse(maxM.ToString())) * changeDistance(distance);
-                //a = 90 - a;
-                //画 角度跟距离 pictureBox2
-                for (int i=0;i<ulist.Count;i++)
+                if (pointFList.Count > 0)
                 {
-                    double r = ulist[i].R;// * changeDistance(distance); //距离 --remove
-                    double a = ulist[i].A;//角度 --angle
-                    double v = ulist[i].V;
-                    int picture1BoxHeight  = pictureBox1.Height;
-                    int picture1BoxWigth = pictureBox1.Width;
-                    int picture2BoxHeight = pictureBox2.Height;
-                    int picture2BoxWigth = pictureBox2.Width;
-                    if (ulist[i].DataType.Equals("AK"))
-                    {
-                        PointF pointF = getNewPoint(p, a, r);
-                        PointF pointS = getNewSpeedPoint(p, picture1BoxWigth/2, picture2BoxHeight - v -10);
-                        if (v < 0)
-                        {
-                            pen = new Pen(Color.Green);
-                            //速度为负值 用绿色 --表示靠近目标
-                            drawRectangle(pictureBox2, pointF, Brushes.Green);//显示速度 根据V 跟A换算
-                            drawRectangle(pictureBox1, pointS, Brushes.Green);//显示每个物体的距离 根据 R 跟 A 换算
-                            
-                        }
-                        else if (v == 0)
-                        {
-                            pen = new Pen(Color.Yellow);
-                            //速度为0 用黄色 ---表示目标处于静止状态
-                            drawRectangle(pictureBox2, pointF, Brushes.Yellow);
-                            drawRectangle(pictureBox1, pointS, Brushes.Yellow);
-                        }
-                        else if (v > 0)
-                        {
-                            pen = new Pen(Color.Red);
-                            //速度为正值 用红色 ---表示远离目标
-                            drawRectangle(pictureBox2, pointF, Brushes.Red);
-                            drawRectangle(pictureBox1, pointS, Brushes.Red);
-                        }
-                    }             
+                    //清除图案
+                    cleaDrawRectangle(pictureBox2);
                 }
-                cleaDrawRectangle(pictureBox2);
-                cleaDrawRectangle(pictureBox1);
-                //Thread.Sleep(500);
+
+                if (pointSList.Count > 0)
+                {
+                    //清除图案
+                    cleaDrawRectangle(pictureBox1);
+                }
+                pointFList.Clear();
+                pointSList.Clear();
+                Thread.Sleep(50);
             }
         }
 
-        private void drawRectangle()
-        {
-
-        }
-
-
+        
 
         /// <summary>
         /// 距离转换
@@ -561,7 +517,8 @@ namespace UnmannedMonitor
             var radian = angle * Math.PI / 180;
             var xMargin = float.Parse((Math.Cos(radian) * bevel).ToString());
             var yMargin = -float.Parse((Math.Sin(radian) * bevel).ToString());
-            return new PointF(pointB.X + xMargin + (pictureBox2.Width / 2), pictureBox2.Height - (pointB.Y + yMargin) - 10);
+            //return new PointF(pointB.X + xMargin + (pictureBox2.Width / 2), pictureBox2.Height - (pointB.Y + yMargin) - 20);
+            return new PointF((pictureBox2.Width / 2) + pointB.X + xMargin, pictureBox2.Height - (pointB.Y + yMargin + 30));
         }
 
         private PointF getNewSpeedPoint(PointF pointB, double a, double v)
@@ -573,30 +530,35 @@ namespace UnmannedMonitor
             return new PointF(pointB.X + xMargin, pointB.Y + yMargin);
         }
 
-        public delegate void UpdatePictureBox1(Control control, PointF pointF, Brush brush);
-        public delegate void UpdatePictureBox2(Control control, PointF pointF, Brush brush);
+        //public delegate void UpdatePictureBox1(Control control, PointF pointF, Brush brush);
+        //public delegate void UpdatePictureBox2(Control control, PointF pointF, Brush brush);
 
-        public UpdatePictureBox1 updatePictureBox1;
-        public UpdatePictureBox2 updatePictureBox2;
+        //public UpdatePictureBox1 updatePictureBox1;
+        //public UpdatePictureBox2 updatePictureBox2;
 
-        //更新pictureBox 方法
-        public void UpdatePictureBoxMethod(Control control,PointF pointF, Brush brush)
-        {
-            drawRectangle(control,pointF,brush);
-        }
+        ////更新pictureBox 方法
+        //public void UpdatePictureBoxMethod(Control control,PointF pointF, Brush brush)
+        //{
+        //    drawRectangle(control, pointF,brush);
+        //}
 
         private Boolean isUpdatePictureBox = false;
-        public void StartThreadToUpdatePictureBox(Control control, PointF pointF, Brush brush)
-        {
-            if (isUpdatePictureBox)
-            {
-                Thread objThread = new Thread(new ThreadStart(delegate
-                {
-                    UpdatePictureBoxMethod(control,pointF,brush);
-                }));
-                objThread.Start();
-            }
-        }
+        //public void StartThreadToUpdatePictureBox(Graphics g, PointF pointF, Brush brush)
+        //{
+        //    if (isUpdatePictureBox)
+        //    {
+        //        Thread objThreadPic1 = new Thread(new ThreadStart(delegate
+        //        {
+        //            UpdatePictureBoxMethod(pictureBox1, pointF,brush);
+        //        }));
+        //        objThreadPic1.Start();
+        //        Thread objThreadPic2 = new Thread(new ThreadStart(delegate
+        //        {
+        //            UpdatePictureBoxMethod(pictureBox1,pointF, brush);
+        //        }));
+        //        objThreadPic2.Start();
+        //    }
+        //}
 
         /// <summary>
         /// 根据坐标点画矩形
@@ -605,16 +567,20 @@ namespace UnmannedMonitor
         /// <param name="pointF"></param>
         /// <param name="brush"></param>
         private void drawRectangle(Control control, PointF pointF, Brush brush)
-        {
+        {   
             Graphics g = control.CreateGraphics();
             g.FillRectangle(brush, new RectangleF(pointF, new Size(10, 20)));
+            //brush.Dispose();
+            g.Dispose();
         }
 
+        /// <summary>
+        /// 清除绘制的矩形图案
+        /// </summary>
+        /// <param name="control"></param>
         private void cleaDrawRectangle(Control control)
-
         {
-            Graphics g = control.CreateGraphics();
-            g.Clear(Color.White);
+            control.Invalidate();
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -663,6 +629,11 @@ namespace UnmannedMonitor
         }
 
         private void comboBoxPortSelect_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tableLayoutPanel2_Paint(object sender, PaintEventArgs e)
         {
 
         }
