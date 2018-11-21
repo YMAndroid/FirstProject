@@ -1,6 +1,7 @@
 ﻿using AForge.Video;
 using AForge.Video.DirectShow;
 using AForge.Video.FFMPEG;
+using Factorys;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -181,6 +182,11 @@ namespace UnmannedMonitor
         private string drawDate = string.Empty;
         private void btnStartVideotape_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(textBox1.Text))
+            {
+                MessageBox.Show("请选择或输入视频存储路径！");
+                return;
+            }
             //开始录像
             if (btnStartVideotape.Text == "Start Camera")
             {
@@ -196,7 +202,7 @@ namespace UnmannedMonitor
             }
         }
 
-        private string videoPath = @"D:\video\"; //视频文件路径
+        private string videoPath = ""; //视频文件路径
         private string videoFileName = string.Empty; //视频文件名
         private string videoFileFullPath = string.Empty; //视频文件全路径
 
@@ -218,6 +224,17 @@ namespace UnmannedMonitor
                 }
                 InitVideoSettings();
             }   
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog path = new FolderBrowserDialog();
+            path.ShowDialog();
+            string selectPath = path.SelectedPath;
+            if (string.IsNullOrEmpty(selectPath)) return;
+            textBox1.Text = path.SelectedPath + "\\";
+            videoPath = textBox1.Text;
+            //StringUtil.Writue("DataFile", "path", path.SelectedPath + "\\");
         }
     }
 }

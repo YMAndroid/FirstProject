@@ -21,6 +21,7 @@ namespace Factorys
         {
             try
             {
+                if (string.IsNullOrEmpty(path)) return;
                 string logname = DateTime.Now.ToString("yyyyMMdd") + "RadarDatalog.txt";
                 FileStream fs = new FileStream(path + "\\" + logname, FileMode.Append);
                 StreamWriter sw = new StreamWriter(fs, Encoding.Default);
@@ -38,12 +39,20 @@ namespace Factorys
         /// <param name="path"></param>
         public static void WriteCSV(UnmannedData logtxt, string path)
         {
-            string strPath = DateTime.Now.ToString("yyyyMMdd") + "RadarDatalog.csv";
-            StreamWriter sw = new StreamWriter(new FileStream(path + "\\" + strPath, FileMode.Append), Encoding.GetEncoding("Windows-1252"));//Windows-1252 \GB2312
-            WriteHeader(sw);
-            string txt = logtxt.V + "," + logtxt.A + "," + logtxt.R + "," + logtxt.P + "," + logtxt.S + "," + logtxt.CH + "," + logtxt.FrameState + "," + logtxt.SysFrameNo;
-            sw.Write(txt);
-            sw.Close();
+            if (string.IsNullOrEmpty(path)) return;
+            try
+            {
+                string strPath = DateTime.Now.ToString("yyyyMMdd") + "RadarDatalog.csv";
+                StreamWriter sw = new StreamWriter(new FileStream(path + "\\" + strPath, FileMode.Append), Encoding.GetEncoding("Windows-1252"));//Windows-1252 \GB2312
+                WriteHeader(sw);
+                string txt = logtxt.V + "," + logtxt.A + "," + logtxt.R + "," + logtxt.P + "," + logtxt.S + "," + logtxt.CH + "," + logtxt.FrameState + "," + logtxt.SysFrameNo;
+                sw.Write(txt);
+                sw.Close();
+            }
+            catch
+            {
+
+            }
         }
 
         private static void WriteHeader(StreamWriter sw)
@@ -319,6 +328,84 @@ namespace Factorys
             }
             return ret.ToString();
         }
+
+        /// <summary>
+        /// 转换为16进制字符串
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="encode"></param>
+        /// <returns></returns>
+        public static string StringToHexString(string input)
+        {
+           
+            char[] values = input.ToCharArray();
+            string strResult = "";
+            foreach (char letter in values)
+            {
+                // Get the integral value of the character.
+                int value = Convert.ToInt32(letter);
+                // Convert the decimal value to a hexadecimal value in string form.
+                string hexOutput = String.Format("{0:X}", value);
+                strResult += hexOutput;
+                Console.WriteLine("Hexadecimal value of {0} is {1}", letter, hexOutput);
+            }
+            return strResult;
+        }
+
+        /// <summary>
+        /// 16进制字符串转换为字符串
+        /// </summary>
+        /// <param name="hs"></param>
+        /// <param name="encode"></param>
+        /// <returns></returns>
+        public static string HexStringToString(string hs, Encoding encode)
+        {
+            //以%分割字符串，并去掉空字符
+            string[] chars = hs.Split(new char[] { '%' }, StringSplitOptions.RemoveEmptyEntries);
+            byte[] b = new byte[chars.Length];
+            //逐个字符变为16进制字节数据
+            for (int i = 0; i < chars.Length; i++)
+            {
+                b[i] = Convert.ToByte(chars[i], 16);
+            }
+            //按照指定编码将字节数组变为字符串
+            return encode.GetString(b);
+        }
+
+        /// <summary>
+        /// 字符串转16进制字节数组
+        /// </summary>
+        /// <param name="hexString"></param>
+        /// <returns></returns>
+        public static byte[] strToHexByte(string hexString)
+        {
+            hexString = hexString.Replace(" ", "");
+            if ((hexString.Length % 2) != 0)
+                hexString += " ";
+            byte[] returnBytes = new byte[hexString.Length / 2];
+            for (int i = 0; i < returnBytes.Length; i++)
+                returnBytes[i] = Convert.ToByte(hexString.Substring(i * 2, 2), 16);
+            return returnBytes;
+        }
+
+        /// <summary>
+        /// 字节数组转16进制字符串
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <returns></returns>
+        public static string byteToHexStr(byte[] bytes)
+        {
+            string returnStr = "";
+            if (bytes != null)
+            {
+                for (int i = 0; i < bytes.Length; i++)
+                {
+                    returnStr += bytes[i].ToString("X2");
+                }
+            }
+            return returnStr;
+        }
+
         #endregion
     }
 

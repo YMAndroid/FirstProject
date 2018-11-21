@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Factorys;
 using System.IO.Ports;
+using System.Text.RegularExpressions;
 
 namespace UnmannedMonitor
 {
@@ -25,6 +26,9 @@ namespace UnmannedMonitor
         /// 解析串口数据存储对象
         /// </summary>
         private List<UnmannedData> ulist = new List<UnmannedData>();
+
+        private string sendStartCmd = "runtst -1";
+        private string sendStopCmd = "stptst";
 
         public IndexFrm()
         {
@@ -49,6 +53,7 @@ namespace UnmannedMonitor
             serialPort.BaudRate = 1000000;
             serialPort.Parity = Parity.None;
             serialPort.DataBits = 8;
+            serialPort.WriteBufferSize = 1024;
         }
 
         public void SetSerialPortName(string portName)
@@ -125,6 +130,12 @@ namespace UnmannedMonitor
         private void Comm_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
             if (!serialPort.IsOpen) return;
+            if (!isReveiveData) return;
+            while (serialPort.BytesToRead == 0)
+            {
+                Thread.Sleep(1);
+            }
+            Thread.Sleep(50); //50毫秒内数据接收完毕，可根据实际情况调
             byte[] buffer = new byte[serialPort.BytesToRead];
             serialPort.Read(buffer, 0, buffer.Length);
             string tempResult = StringUtil.ByteToHex(buffer);
@@ -136,27 +147,29 @@ namespace UnmannedMonitor
             {
                 //存储txt内容
                 StringUtil.WriteLog(data, txtFilePath.Text);
-                //存储CSV数据,并处理
-                Dictionary<string, List<UnmannedData>> listNameData = StringUtil.MultipleDataSegmentation(data);
-                foreach (KeyValuePair<string, List<UnmannedData>> pair in listNameData)
+            }
+            //存储CSV数据,并处理
+            Dictionary<string, List<UnmannedData>> listNameData = StringUtil.MultipleDataSegmentation(data);
+            foreach (KeyValuePair<string, List<UnmannedData>> pair in listNameData)
+            {
+                foreach (UnmannedData u in pair.Value)
                 {
-                    foreach (UnmannedData u in pair.Value)
+                    ulist.Add(u);
+                    if (u.DataType.Equals("BK")) continue;
+                    if (checkBox2.Checked)
                     {
-                        ulist.Add(u);
-                        if (u.DataType.Equals("BK")) continue;
                         StringUtil.WriteCSV(u, txtFilePath.Text);
                     }
-                    SetDgvDataSourceAk(ulist);
-                    //bindList();
-                    if (checkBox1.Checked)
-                    {
-                        SetDgvDataSourceBk(ulist);
-                    }
-                    
-                    loadPoint();
-                    ulist.Clear();
+                }
+                SetDgvDataSourceAk(ulist);
+                //bindList();
+                if (checkBox1.Checked)
+                {
+                    SetDgvDataSourceBk(ulist);
                 }
 
+                loadPoint();
+                ulist.Clear();
             }
         }
 
@@ -180,13 +193,13 @@ namespace UnmannedMonitor
             int x = control.Width - startPoint;
             int y = control.Height - startPoint;
 
+
             Bitmap bitmap = new Bitmap(control.Width, control.Height);
             Graphics g = Graphics.FromImage(bitmap);
             g.Clear(Color.White);
             Point px1 = new Point(startPoint, y);
-            Point px2 = new Point(x, y);
-            g.DrawLine(new Pen(Brushes.Black, 2), px1, px2);
-
+            Point px2 = new Point(x+ 20, y);
+            g.DrawLine(new Pen(Brushes.Black, 2), px1, px2);//绘制X轴
             double num = 0;
             switch ((int)distance)
             {
@@ -216,6 +229,11 @@ namespace UnmannedMonitor
             Point py2 = new Point(startPoint, y);
             g.DrawLine(new Pen(Brushes.Black, 2), py1, py2);
 
+            //测试，坐标系
+            Point py3 = new Point(0, 0);
+            Point py4 = new Point(control.Width, 0);
+            g.DrawLine(new Pen(Brushes.Black, 2), py3, py4);
+
             //速度和角度
             if (control.Name == "pictureBox1")
             {
@@ -225,6 +243,13 @@ namespace UnmannedMonitor
                 g.DrawString("0", new Font("宋体", 10), Brushes.Black, new PointF((ypaddings * 2) + 26, y + 7));
                 g.DrawString("25", new Font("宋体", 10), Brushes.Black, new PointF(ypaddings * 3 + 22, y + 7));
                 g.DrawString("50", new Font("宋体", 10), Brushes.Black, new PointF(ypaddings * 4 + 22, y + 7));
+
+                //画单位
+                g.DrawString("V", new Font("宋体", 10), Brushes.Red, new PointF(x + 5, y));
+                g.DrawString("m/s", new Font("宋体", 8), Brushes.Red, new PointF(x + 10, y + 7));
+
+                g.DrawString("R", new Font("宋体", 10), Brushes.Red, new PointF(3, 0));
+                g.DrawString("m", new Font("宋体", 8), Brushes.Red, new PointF(8, 7));
             }
             else
             {
@@ -252,6 +277,14 @@ namespace UnmannedMonitor
                     g.DrawLine(pen, new Point(105 + temp, 0), new Point(105 + temp, y));
                     temp = i * 26;
                 }
+
+
+                //画单位
+                g.DrawString("X", new Font("宋体", 10), Brushes.Red, new PointF(x + 15, y));
+                g.DrawString("m", new Font("宋体", 8), Brushes.Red, new PointF(x + 20, y + 7));
+
+                g.DrawString("Y", new Font("宋体", 10), Brushes.Red, new PointF(3, 0));
+                g.DrawString("m", new Font("宋体", 8), Brushes.Red, new PointF(8, 7));
             }
             for (int i = 1; i < 5; i++)
             {
@@ -360,7 +393,7 @@ namespace UnmannedMonitor
 
         private PointF p = new PointF(0, 0);
         private Boolean isStart = false;
-
+        private Boolean isReveiveData = false;
         private void btnStart_Click(object sender, EventArgs e)
         {
             //TestOpenProtGetData();
@@ -379,6 +412,8 @@ namespace UnmannedMonitor
                 btn.Text = "Stop";
                 OpenOrSerialPort();
                 isUpdatePictureBox = true;
+                //selectPort.Write()
+                WriteDataToSerial(sendStartCmd,0);
                 serialPort.DataReceived += new SerialDataReceivedEventHandler(Comm_DataReceived);
                 //if (commonHelper.OpenSerial(selectPort))
                 //{
@@ -396,6 +431,7 @@ namespace UnmannedMonitor
                 isStart = false;
                 isUpdatePictureBox = false;
                 btn.Text = "Start";
+                WriteDataToSerial(sendStopCmd,1);
                 OpenOrSerialPort();
                 //commonHelper.SendData("stptst");
                 //commonHelper.SetIsReceiveData(false);
@@ -404,15 +440,45 @@ namespace UnmannedMonitor
             }
         }
 
+        /// <summary>
+        /// 写数据到串口
+        /// </summary>
+        /// <param name="str"></param>
+        /// <param name="type">0:开启发送数据 1：关闭发送数据</param>
+        private void WriteDataToSerial(string str ,int type)
+        {
+            if(serialPort != null && serialPort.IsOpen)
+            {
+               
+                string strHex = StringUtil.StringToHexString(str);
+                byte[] strBytes = StringUtil.strToHexByte(strHex);
+                serialPort.Write(strBytes,0,strBytes.Length);
+                //serialPort.Write("runtst -1");
+                if (type == 0)
+                {
+                    isReveiveData = true;
+                }
+                else
+                {
+                    isReveiveData = false;
+                }
+            }
+        }
+
         //存储每次绘制的矩形图形
         private List<PointF> pointFList = new List<PointF>();//pictureBox2
         private List<PointF> pointSList = new List<PointF>();//pictureBox1
         void loadPoint()
         {
+            var screenLocation = pictureBox1.Location;
+            var screenLocation1 = pictureBox2.Location;
+            var p1w = pictureBox1.Width;
+            var p2w = pictureBox2.Width;
+            var p1H = pictureBox1.Height;
+            var p2H = pictureBox2.Height;
             if (isUpdatePictureBox)
             {
                
-
                 for (int i = 0; i < ulist.Count; i++)
                 {
                     double r = ulist[i].R;// * changeDistance(distance); //距离 --remove
@@ -425,13 +491,13 @@ namespace UnmannedMonitor
                     if (ulist[i].DataType.Equals("AK"))
                     {
                         PointF pointF = getNewPoint(p, a, r);
-                        PointF pointS = getNewSpeedPoint(p, picture1BoxWigth / 2, picture2BoxHeight - v - 5);
+                        PointF pointS = getNewSpeedPoint(p, picture1BoxWigth / 2, picture2BoxHeight - 30 - v);
                         pointFList.Add(pointF);
                         pointSList.Add(pointS);
                         if (v < 0)
                         {
-                            drawRectangle(pictureBox2, pointF, Brushes.Green);
-                            drawRectangle(pictureBox1, pointS, Brushes.Green);
+                            drawRectangle(pictureBox2, pointF, Brushes.Green,new Size(10,20),r,v,1);
+                            drawRectangle(pictureBox1, pointS, Brushes.Green, new Size(10, 10),r,v,0);
                             //速度为负值 用绿色 --表示靠近目标
                             //StartThreadToUpdatePictureBox(gPictureBox2, pointF, Brushes.Green);
                             //StartThreadToUpdatePictureBox(gPictureBox1, pointS, Brushes.Green);
@@ -439,16 +505,16 @@ namespace UnmannedMonitor
                         }
                         else if (v == 0)
                         {
-                            drawRectangle(pictureBox2, pointF, Brushes.Yellow);
-                            drawRectangle(pictureBox1, pointS, Brushes.Yellow);
+                            drawRectangle(pictureBox2, pointF, Brushes.Yellow,new Size(10, 20),r,v,1);
+                            drawRectangle(pictureBox1, pointS, Brushes.Yellow, new Size(10, 10),r,v,0);
                             //速度为0 用黄色 ---表示目标处于静止状态
                             //StartThreadToUpdatePictureBox(gPictureBox2, pointF, Brushes.Yellow);
                             //StartThreadToUpdatePictureBox(gPictureBox1, pointS, Brushes.Yellow);
                         }
                         else if (v > 0)
                         {
-                            drawRectangle(pictureBox2, pointF, Brushes.Red);
-                            drawRectangle(pictureBox1, pointS, Brushes.Red);
+                            drawRectangle(pictureBox2, pointF, Brushes.Red, new Size(10, 20),r,v,1);
+                            drawRectangle(pictureBox1, pointS, Brushes.Red, new Size(10, 10),r,v,0);
                             //速度为正值 用红色 ---表示远离目标
                             //StartThreadToUpdatePictureBox(gPictureBox2, pointF, Brushes.Red);
                             //StartThreadToUpdatePictureBox(gPictureBox1, pointS, Brushes.Red);
@@ -457,22 +523,18 @@ namespace UnmannedMonitor
                 }
                 if (pointFList.Count > 0)
                 {
-                    //清除图案
                     cleaDrawRectangle(pictureBox2);
                 }
 
                 if (pointSList.Count > 0)
                 {
-                    //清除图案
                     cleaDrawRectangle(pictureBox1);
                 }
                 pointFList.Clear();
                 pointSList.Clear();
-                Thread.Sleep(50);
+                Thread.Sleep(100);
             }
         }
-
-        
 
         /// <summary>
         /// 距离转换
@@ -515,10 +577,10 @@ namespace UnmannedMonitor
             //在Flash中顺时针角度为正，逆时针角度为负
             //换算过程中先将角度转为弧度
             var radian = angle * Math.PI / 180;
-            var xMargin = float.Parse((Math.Cos(radian) * bevel).ToString());
-            var yMargin = -float.Parse((Math.Sin(radian) * bevel).ToString());
+            var yMargin = float.Parse((Math.Cos(radian) * bevel).ToString());
+            var xMargin = float.Parse((Math.Sin(radian) * bevel).ToString());
             //return new PointF(pointB.X + xMargin + (pictureBox2.Width / 2), pictureBox2.Height - (pointB.Y + yMargin) - 20);
-            return new PointF((pictureBox2.Width / 2) + pointB.X + xMargin, pictureBox2.Height - (pointB.Y + yMargin + 30));
+            return new PointF((pictureBox2.Width / 2) + pointB.X + xMargin, pictureBox2.Height - (pointB.Y + yMargin) - 30);
         }
 
         private PointF getNewSpeedPoint(PointF pointB, double a, double v)
@@ -527,7 +589,7 @@ namespace UnmannedMonitor
            //X 轴 始终为 0
             var yMargin = (float)v;
             var xMargin = (float)a;
-            return new PointF(pointB.X + xMargin, pointB.Y + yMargin);
+            return new PointF(pointB.X + xMargin, pointB.Y + yMargin - 15);
         }
 
         //public delegate void UpdatePictureBox1(Control control, PointF pointF, Brush brush);
@@ -566,10 +628,22 @@ namespace UnmannedMonitor
         /// <param name="control"></param>
         /// <param name="pointF"></param>
         /// <param name="brush"></param>
-        private void drawRectangle(Control control, PointF pointF, Brush brush)
+        private void drawRectangle(Control control, PointF pointF, Brush brush, Size size,double r,double v,int type)
         {   
             Graphics g = control.CreateGraphics();
-            g.FillRectangle(brush, new RectangleF(pointF, new Size(10, 20)));
+            pointF.Y -= 20;
+            g.FillRectangle(brush, new RectangleF(pointF, size));//new Size(10, 20)
+            //g.DrawString((i * num).ToString(), new Font("宋体", 10), Brushes.Black, new PointF(0, y - (i * xpaddings) - 6));
+            double x = 0;
+            double y = 0; 
+            if(type == 0)
+            {
+                y = v;
+            } else
+            {
+                y = r;
+            }
+            g.DrawString("(" + x + "," + y + ")", new Font("宋体", 8), Brushes.Blue, new PointF(pointF.X + size.Width, pointF.Y));
             //brush.Dispose();
             g.Dispose();
         }
@@ -580,7 +654,10 @@ namespace UnmannedMonitor
         /// <param name="control"></param>
         private void cleaDrawRectangle(Control control)
         {
-            control.Invalidate();
+            if (isUpdatePictureBox)
+            {
+                control.Invalidate();
+            }
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -628,14 +705,37 @@ namespace UnmannedMonitor
             cameraFrm.Show();
         }
 
-        private void comboBoxPortSelect_SelectedIndexChanged(object sender, EventArgs e)
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
         {
-
-        }
-
-        private void tableLayoutPanel2_Paint(object sender, PaintEventArgs e)
-        {
-
+            if (checkBox2.Checked)
+            {
+                if (string.IsNullOrEmpty(txtFilePath.Text))
+                {
+                    MessageBox.Show("请选择或输入文件存储目录！");
+                }
+                ////检测是否输入文件路径
+                //if (!string.IsNullOrEmpty(txtFilePath.Text))
+                //{
+                //    Regex regex = new Regex(@"^([a-zA-Z]:\\)?[^\/\:\*\?\""\<\>\|\,]*$");
+                //    Match m = regex.Match(txtFilePath.Text);
+                //    if (!m.Success)
+                //    {
+                //        MessageBox.Show("非法的文件保存路径，请重新选择或输入！");
+                //        return;
+                //    }
+                //    regex = new Regex(@"^[^\/\:\*\?\""\<\>\|\,]+$");
+                //    m = regex.Match(txtFilePath.Text);
+                //    if (!m.Success)
+                //    {
+                //        MessageBox.Show("请勿在文件名中包含\\ / : * ？ \" < > |等字符，请重新输入有效文件名！");
+                //        return;
+                //    }
+                //}
+                //else
+                //{
+                //    MessageBox.Show("请选择或输入文件存储目录！");
+                //}
+            }  
         }
     }
 }
