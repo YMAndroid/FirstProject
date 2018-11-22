@@ -27,8 +27,8 @@ namespace UnmannedMonitor
         /// </summary>
         private List<UnmannedData> ulist = new List<UnmannedData>();
 
-        private string sendStartCmd = "runtst -1";
-        private string sendStopCmd = "stptst";
+        private string sendStartCmd = " runtst -1";
+        private string sendStopCmd = " stptst";
 
         public IndexFrm()
         {
@@ -53,7 +53,7 @@ namespace UnmannedMonitor
             serialPort.BaudRate = 1000000;
             serialPort.Parity = Parity.None;
             serialPort.DataBits = 8;
-            serialPort.WriteBufferSize = 1024;
+            //serialPort.WriteBufferSize = 1024;
         }
 
         public void SetSerialPortName(string portName)
@@ -74,6 +74,7 @@ namespace UnmannedMonitor
             {
                 serialPort.Close();
             }
+            //Thread.Sleep(100);
         }
 
         /// <summary>
@@ -129,48 +130,67 @@ namespace UnmannedMonitor
 
         private void Comm_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
-            if (!serialPort.IsOpen) return;
-            if (!isReveiveData) return;
-            while (serialPort.BytesToRead == 0)
+            try
             {
-                Thread.Sleep(1);
-            }
-            Thread.Sleep(50); //50毫秒内数据接收完毕，可根据实际情况调
-            byte[] buffer = new byte[serialPort.BytesToRead];
-            serialPort.Read(buffer, 0, buffer.Length);
-            string tempResult = StringUtil.ByteToHex(buffer);
-            string data = Encoding.Default.GetString(buffer);
-
-            ulist.Clear();
-            if (!isStart) return;
-            if (checkBox2.Checked)
-            {
-                //存储txt内容
-                StringUtil.WriteLog(data, txtFilePath.Text);
-            }
-            //存储CSV数据,并处理
-            Dictionary<string, List<UnmannedData>> listNameData = StringUtil.MultipleDataSegmentation(data);
-            foreach (KeyValuePair<string, List<UnmannedData>> pair in listNameData)
-            {
-                foreach (UnmannedData u in pair.Value)
+                if (!serialPort.IsOpen) return;
+                //if (!isReveiveData) return;
+                if (serialPort.IsOpen)
                 {
-                    ulist.Add(u);
-                    if (u.DataType.Equals("BK")) continue;
+                    //string datas = serialPort.ReadLine();
+                    byte[] buffer = new byte[serialPort.BytesToRead];
+                    serialPort.Read(buffer, 0, buffer.Length);
+                    string tempResult = StringUtil.ByteToHex(buffer);
+                    string data = Encoding.Default.GetString(buffer);
+                   
+                    //对返回的数据进行解析
+                    //runst-1
+
+                    //Command Error...
+                    //#>
+                    //if (data.Contains("Command Error..."))
+                    //{
+                    //    WriteDataToSerial(sendStartCmd,0);
+                    //    return;
+                    //}
+
+                    ulist.Clear();
+                    if (!isStart) return;
                     if (checkBox2.Checked)
                     {
-                        StringUtil.WriteCSV(u, txtFilePath.Text);
+                        //存储txt内容
+                        StringUtil.WriteLog(data, txtFilePath.Text);
+                    }
+                    //存储CSV数据,并处理
+                    Dictionary<string, List<UnmannedData>> listNameData = StringUtil.MultipleDataSegmentation(data);
+                    foreach (KeyValuePair<string, List<UnmannedData>> pair in listNameData)
+                    {
+                        foreach (UnmannedData u in pair.Value)
+                        {
+                            ulist.Add(u);
+                            if (u.DataType.Equals("BK")) continue;
+                            if (checkBox2.Checked)
+                            {
+                                StringUtil.WriteCSV(u, txtFilePath.Text);
+                            }
+                        }
+                        SetDgvDataSourceAk(ulist);
+                        //bindList();
+                        if (checkBox1.Checked)
+                        {
+                            SetDgvDataSourceBk(ulist);
+                        }
+
+                        loadPoint();
+                        ulist.Clear();
                     }
                 }
-                SetDgvDataSourceAk(ulist);
-                //bindList();
-                if (checkBox1.Checked)
-                {
-                    SetDgvDataSourceBk(ulist);
-                }
-
-                loadPoint();
-                ulist.Clear();
             }
+            catch
+            {
+
+            }
+            
+            
         }
 
         private int distance = 2;
@@ -411,10 +431,11 @@ namespace UnmannedMonitor
                 isStart = true;
                 btn.Text = "Stop";
                 OpenOrSerialPort();
-                isUpdatePictureBox = true;
-                //selectPort.Write()
-                WriteDataToSerial(sendStartCmd,0);
                 serialPort.DataReceived += new SerialDataReceivedEventHandler(Comm_DataReceived);
+                isUpdatePictureBox = true;
+                //selectPort.Write() 
+                //WriteDataToSerial(sendStartCmd,0);
+                
                 //if (commonHelper.OpenSerial(selectPort))
                 //{
                 //    commonHelper.SendData("runtst -1");
@@ -431,7 +452,7 @@ namespace UnmannedMonitor
                 isStart = false;
                 isUpdatePictureBox = false;
                 btn.Text = "Start";
-                WriteDataToSerial(sendStopCmd,1);
+                //WriteDataToSerial(sendStopCmd,1);
                 OpenOrSerialPort();
                 //commonHelper.SendData("stptst");
                 //commonHelper.SetIsReceiveData(false);
@@ -450,10 +471,14 @@ namespace UnmannedMonitor
             if(serialPort != null && serialPort.IsOpen)
             {
                
-                string strHex = StringUtil.StringToHexString(str);
-                byte[] strBytes = StringUtil.strToHexByte(strHex);
-                serialPort.Write(strBytes,0,strBytes.Length);
-                //serialPort.Write("runtst -1");
+                //string strHex = StringUtil.StringToHexString(str);
+                //byte[] strBytes = StringUtil.strToHexByte(strHex);
+                //serialPort.Write(strBytes,0,strBytes.Length);
+                //char[] c = str.ToCharArray();
+                //serialPort.Write(c, 0, c.Count());
+                //serialPort.Write("run ts t - 1");
+                serialPort.Write(str);
+                //serialPort.WriteLine("runn");
                 if (type == 0)
                 {
                     isReveiveData = true;

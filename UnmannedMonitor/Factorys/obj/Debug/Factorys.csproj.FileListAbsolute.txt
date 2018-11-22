@@ -15,6 +15,5 @@ D:\上位机代码\上位机\上位机\UnmannedMonitor\Factorys\obj\Debug\Factor
 D:\上位机代码\上位机\上位机\UnmannedMonitor\Factorys\obj\Debug\Factorys.csprojResolveAssemblyReference.cache
 D:\C#_projcet\Local_Git_Project\UnmannedMonitor\Factorys\bin\Debug\Factorys.dll
 D:\C#_projcet\Local_Git_Project\UnmannedMonitor\Factorys\bin\Debug\Factorys.pdb
-D:\C#_projcet\Local_Git_Project\UnmannedMonitor\Factorys\obj\Debug\Factorys.csprojResolveAssemblyReference.cache
 D:\C#_projcet\Local_Git_Project\UnmannedMonitor\Factorys\obj\Debug\Factorys.dll
 D:\C#_projcet\Local_Git_Project\UnmannedMonitor\Factorys\obj\Debug\Factorys.pdb
