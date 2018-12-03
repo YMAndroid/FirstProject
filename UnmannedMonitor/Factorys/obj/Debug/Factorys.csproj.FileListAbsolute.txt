@@ -17,3 +17,4 @@ D:\C#_projcet\Local_Git_Project\UnmannedMonitor\Factorys\bin\Debug\Factorys.dll
 D:\C#_projcet\Local_Git_Project\UnmannedMonitor\Factorys\bin\Debug\Factorys.pdb
 D:\C#_projcet\Local_Git_Project\UnmannedMonitor\Factorys\obj\Debug\Factorys.dll
 D:\C#_projcet\Local_Git_Project\UnmannedMonitor\Factorys\obj\Debug\Factorys.pdb
+D:\C#_projcet\Local_Git_Project\UnmannedMonitor\Factorys\obj\Debug\Factorys.csprojResolveAssemblyReference.cache

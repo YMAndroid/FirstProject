@@ -158,17 +158,6 @@ namespace Factorys
                     }
                 } 
             }
-            //for (int i = 0; i < tempListAk.Count; i++)
-            //{
-            //    tempListAk[i].CH = i;
-            //    tempList.Add(tempListAk[i]);
-            //}
-            //for (int i = 0; i < tempListBk.Count; i++)
-            //{
-            //    tempListBk[i].CH = i;
-            //    tempList.Add(tempListBk[i]);
-            //}
-
             return dictionary;
         }
 
@@ -409,7 +398,7 @@ namespace Factorys
         #endregion
     }
 
-    public class UnmannedData
+    public class UnmannedData : IComparable
     {
         public int CH { get; set; }
         public double R { get; set; }
@@ -423,5 +412,11 @@ namespace Factorys
         /// BK   AK
         /// </summary>
         public string DataType { get; set; }
+
+        public int CompareTo(object obj)
+        {
+
+            throw new NotImplementedException();
+        }
     }
 }
