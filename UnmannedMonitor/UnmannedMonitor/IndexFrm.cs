@@ -109,7 +109,7 @@ namespace UnmannedMonitor
                     {
                         ulist.Add(u);
                         if (u.DataType.Equals("BK")) continue;
-                        StringUtil.WriteCSV(u, txtFilePath.Text);       
+                        //StringUtil.WriteCSV(u, txtFilePath.Text);       
                     }
                     //DataSort();
                     SetDgvDataSourceAk(ulist);
@@ -123,6 +123,7 @@ namespace UnmannedMonitor
             }
         }
 
+        private Boolean isFirstWritesCsv = true;
 
         private void Comm_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
@@ -166,10 +167,11 @@ namespace UnmannedMonitor
                             if (u.DataType.Equals("BK")) continue;
                             if (checkBox2.Checked)
                             {
-                                StringUtil.WriteCSV(u, txtFilePath.Text);
+                                StringUtil.WriteCSV(u, txtFilePath.Text, isFirstWritesCsv);
+                                isFirstWritesCsv = false;
                             }
                         }
-                        //DataSort();
+                        DataSort();
                         SetDgvDataSourceAk(ulist);
                         //bindList();
                         if (checkBox1.Checked)
@@ -213,7 +215,7 @@ namespace UnmannedMonitor
             Graphics g = Graphics.FromImage(bitmap);
             g.Clear(Color.White);
             Point px1 = new Point(startPoint, y);
-            Point px2 = new Point(x+ 20, y);
+            Point px2 = new Point(x + 20, y);
             g.DrawLine(new Pen(Brushes.Black, 2), px1, px2);//绘制X轴
             double num = 0;
             switch ((int)distance)
@@ -339,12 +341,12 @@ namespace UnmannedMonitor
             else
             {
                 dataGridView1.DataSource = table.Where(d => d.DataType == "AK").ToList();
-                
+                dataGridView1.Refresh();
             }
 
             foreach (DataGridViewColumn item in dataGridView2.Columns)
             {
-                item.SortMode = DataGridViewColumnSortMode.NotSortable;
+                //item.SortMode = DataGridViewColumnSortMode.NotSortable;
                 if (item.Name == "DataType" || item.Name == "FrameState" || item.Name == "SysFrameNo")
                 {
                     item.Visible = false;
@@ -363,11 +365,12 @@ namespace UnmannedMonitor
             else
             {
                 dataGridView2.DataSource = table.Where(d => d.DataType == "BK").ToList();
-               
+                dataGridView2.Refresh();
+
             }
             foreach (DataGridViewColumn item in dataGridView2.Columns)
             {
-                item.SortMode = DataGridViewColumnSortMode.NotSortable;
+                //item.SortMode = DataGridViewColumnSortMode.NotSortable;
                 if (item.Name == "DataType" || item.Name == "FrameState" || item.Name == "SysFrameNo")
                 {
                     item.Visible = false;
@@ -502,30 +505,38 @@ namespace UnmannedMonitor
             var p2w = pictureBox2.Width;
             var p1H = pictureBox1.Height;
             var p2H = pictureBox2.Height;
+            p.X = (p1w - 20) / 2;
+            p.Y = p1H - 20; 
             if (isUpdatePictureBox)
             {
                
                 for (int i = 0; i < ulist.Count; i++)
                 {
-                    double r = ulist[i].R * changeDistance(distance);// * changeDistance(distance); //距离 --remove
+                    double r = ulist[i].R;// * changeDistance(distance); //距离 --remove
                     double a = ulist[i].A;//角度 --angle
+                    double rNew = r * changeDistance(distance);
                     double v = ulist[i].V;
+                    double vNew = ulist[i].V * changeDistance(distance);
+                    if (r > distanceValue) continue;
                     int picture1BoxHeight = pictureBox1.Height;
                     int picture1BoxWigth = pictureBox1.Width;
                     int picture2BoxHeight = pictureBox2.Height;
                     int picture2BoxWigth = pictureBox2.Width;
                     if (ulist[i].DataType.Equals("AK"))
                     {
-                        PointF pointF = getNewPoint(p, a, r);
-                        PointF pointS = getNewSpeedPoint(p, picture1BoxWigth / 2, picture2BoxHeight - 30 - v);
+                        PointF pointFEx = getNewPointEx(a, rNew);
+                        PointF pointF = getNewPoint(p, a, rNew);
+                        PointF pointS = getNewSpeedPoint(p, rNew, v);
                         pointFList.Add(pointF);
                         pointSList.Add(pointS);
                         
 
                         if (v < 0)
                         {
-                            drawRectangle(pictureBox2, pointF, Brushes.Green, GetRectSize(GetDistance()), r,v,1);
-                            drawRectangle(pictureBox1, pointS, Brushes.Green, GetRectSize(GetDistance()), r,v,0);
+                            drawRectangle(pictureBox2, pointF, Brushes.Green, GetRectSize(distanceValue));
+                            drawRectangle(pictureBox1, pointS, Brushes.Green, GetRectSize(distanceValue));
+                            drawCoordinatePoints(pictureBox2,pointF, r,pointFEx.X, 0);
+                            drawCoordinatePoints(pictureBox1, pointS,r,v,1);
                             //速度为负值 用绿色 --表示靠近目标
                             //StartThreadToUpdatePictureBox(gPictureBox2, pointF, Brushes.Green);
                             //StartThreadToUpdatePictureBox(gPictureBox1, pointS, Brushes.Green);
@@ -533,22 +544,28 @@ namespace UnmannedMonitor
                         }
                         else if (v == 0)
                         {
-                            drawRectangle(pictureBox2, pointF, Brushes.Yellow, GetRectSize(GetDistance()), r,v,1);
-                            drawRectangle(pictureBox1, pointS, Brushes.Yellow, GetRectSize(GetDistance()), r,v,0);
+                            drawRectangle(pictureBox2, pointF, Brushes.Yellow, GetRectSize(distanceValue));
+                            drawRectangle(pictureBox1, pointS, Brushes.Yellow, GetRectSize(distanceValue));
+                            drawCoordinatePoints(pictureBox2, pointF, r, pointFEx.X, 0);
+                            drawCoordinatePoints(pictureBox1, pointS, r, v, 1);
                             //速度为0 用黄色 ---表示目标处于静止状态
                             //StartThreadToUpdatePictureBox(gPictureBox2, pointF, Brushes.Yellow);
                             //StartThreadToUpdatePictureBox(gPictureBox1, pointS, Brushes.Yellow);
                         }
                         else if (v > 0)
                         {
-                            drawRectangle(pictureBox2, pointF, Brushes.Red, GetRectSize(GetDistance()), r,v,1);
-                            drawRectangle(pictureBox1, pointS, Brushes.Red, GetRectSize(GetDistance()), r,v,0);
+                            drawRectangle(pictureBox2, pointF, Brushes.Red, GetRectSize(distanceValue));
+                            drawRectangle(pictureBox1, pointS, Brushes.Red, GetRectSize(distanceValue));
+                            drawCoordinatePoints(pictureBox2, pointF, r, pointFEx.X, 0);
+                            drawCoordinatePoints(pictureBox1, pointS, r, v, 1);
                             //速度为正值 用红色 ---表示远离目标
                             //StartThreadToUpdatePictureBox(gPictureBox2, pointF, Brushes.Red);
                             //StartThreadToUpdatePictureBox(gPictureBox1, pointS, Brushes.Red);
                         }
                     }
                 }
+
+
                 if (pointFList.Count > 0)
                 {
                     cleaDrawRectangle(pictureBox2);
@@ -560,7 +577,7 @@ namespace UnmannedMonitor
                 }
                 pointFList.Clear();
                 pointSList.Clear();
-                Thread.Sleep(100);
+                Thread.Sleep(200);
             }
         }
 
@@ -577,13 +594,13 @@ namespace UnmannedMonitor
             int num = 0;
             switch ((int)distance)
             {
-                case 15: num = 20; break;//30、30
-                case 30: num = 15; break;//20、20
-                case 70: num = 10; break;//10、10
-                case 100: num = 7; break;//7、7
-                case 150: num = 5; break;//5、5
-                case 200: num = 3; break;//3、3
-                case 250: num = 1; break;//1、1
+                case 15: num = 30; break;//30、30
+                case 30: num = 20; break;//20、20
+                case 70: num = 15; break;//10、10
+                case 100: num = 10; break;//7、7
+                case 150: num = 8; break;//5、5
+                case 200: num = 5; break;//3、3
+                case 250: num = 3; break;//1、1
             }
             size.Width = num;
             size.Height = num;
@@ -628,22 +645,38 @@ namespace UnmannedMonitor
         /// <returns></returns>
         private PointF getNewPoint(PointF pointB, double angle, double bevel)
         {
+            PointF p = getNewPointEx(angle,bevel);
+            //return new PointF(pointB.X + xMargin + (pictureBox2.Width / 2), pictureBox2.Height - (pointB.Y + yMargin) - 20);
+            //return new PointF(((pictureBox2.Width - 20) / 2) + pointB.X + xMargin, pictureBox2.Height - (pointB.Y + yMargin) - 30);
+            return new PointF(pointB.X - p.X, pointB.Y - p.Y - 10);
+        }
+
+        /// <summary>
+        /// 计算x,y需要显示的坐标点
+        /// </summary>
+        /// <param name="angle">角度</param>
+        /// <param name="bevel">等级</param>
+        /// <returns></returns>
+        private PointF getNewPointEx(double angle, double bevel)
+        {
             //在Flash中顺时针角度为正，逆时针角度为负
             //换算过程中先将角度转为弧度
             var radian = angle * Math.PI / 180;
             var yMargin = float.Parse((Math.Cos(radian) * bevel).ToString());
-            var xMargin = float.Parse((Math.Sin(radian) * bevel).ToString());
-            //return new PointF(pointB.X + xMargin + (pictureBox2.Width / 2), pictureBox2.Height - (pointB.Y + yMargin) - 20);
-            return new PointF((pictureBox2.Width / 2) + pointB.X + xMargin, pictureBox2.Height - (pointB.Y + yMargin) - 30);
+            var xMargin = -float.Parse((Math.Sin(radian)).ToString());//备注
+            return new PointF((float)xMargin,(float)yMargin);
         }
 
-        private PointF getNewSpeedPoint(PointF pointB, double a, double v)
+        private PointF getNewSpeedPoint(PointF pointB, double r, double v)
         {
            //显示Y轴的速度
            //X 轴 始终为 0
-            var yMargin = (float)v;
-            var xMargin = (float)a;
-            return new PointF(pointB.X + xMargin, pointB.Y + yMargin - 15);
+            var yMargin = (float)r;
+            var xMargin = (float)v;
+            PointF p = new PointF();
+            p.X = pointB.X + xMargin;
+            p.Y = pointB.Y - yMargin - 10;
+            return p;
         }
 
       
@@ -656,23 +689,26 @@ namespace UnmannedMonitor
         /// <param name="control"></param>
         /// <param name="pointF"></param>
         /// <param name="brush"></param>
-        private void drawRectangle(Control control, PointF pointF, Brush brush, Size size,double r,double v,int type)
+        private void drawRectangle(Control control, PointF pointF, Brush brush, Size size)
         {   
             Graphics g = control.CreateGraphics();
-            pointF.Y -= 20;
+            pointF.Y -= size.Height;
             g.FillRectangle(brush, new RectangleF(pointF, size));//new Size(10, 20)
             //g.DrawString((i * num).ToString(), new Font("宋体", 10), Brushes.Black, new PointF(0, y - (i * xpaddings) - 6));
-            double x = 0;
-            double y = 0; 
-            if(type == 0)
-            {
-                y = v;
-            } else
-            {
-                y = r;
-            }
-            g.DrawString("(" + x + "," + y + ")", new Font("宋体", 8), Brushes.Blue, new PointF(pointF.X + size.Width, pointF.Y));
+            
             //brush.Dispose();
+            g.Dispose();
+        }
+
+        private void drawCoordinatePoints(Control control, PointF pointF,double r, double v,int type)
+        {
+            Graphics g = control.CreateGraphics();
+            pointF.Y -= 25;
+            pointF.X += 15;
+            //pointF.Y -= ;
+            double x = Math.Round(v, 2);
+            double y = Math.Round(r, 2);
+            g.DrawString("(" + Math.Round(v, 2) + "," + Math.Round(r, 2) + ")", new Font("宋体", 8), Brushes.Blue, pointF);
             g.Dispose();
         }
 
@@ -687,12 +723,13 @@ namespace UnmannedMonitor
                 control.Invalidate();
             }
         }
-
+        private double distanceValue = 0;
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             distance = comboBox1.SelectedIndex;
 
             double db = double.Parse(comboBox1.SelectedItem.ToString().Substring(0, comboBox1.SelectedItem.ToString().Length - 1));
+            distanceValue = db;
             pictureBox1.Image = drawXY(db, pictureBox1);
             pictureBox2.Image = drawXY(db, pictureBox2);
             maxM = db;
@@ -704,15 +741,6 @@ namespace UnmannedMonitor
             //p = new PointF((ypaddings * 2) + 16, y - startPoint);
 
             //drawRectangle(panel2, p, Brushes.Blue);
-        }
-
-        /// <summary>
-        /// 返回选择的距离值
-        /// </summary>
-        /// <returns></returns>
-        private double GetDistance()
-        {
-            return double.Parse(comboBox1.SelectedItem.ToString().Substring(0, comboBox1.SelectedItem.ToString().Length - 1));
         }
 
         private void btnSelectFile_Click(object sender, EventArgs e)

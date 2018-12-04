@@ -32,21 +32,26 @@ namespace Factorys
             catch { }
         }
 
+
         /// <summary>
         /// 生成csv文件
         /// </summary>
         /// <param name="logtxt"></param>
         /// <param name="path"></param>
-        public static void WriteCSV(UnmannedData logtxt, string path)
+        public static void WriteCSV(UnmannedData logtxt, string path, Boolean isFirstWriteCsv)
         {
             if (string.IsNullOrEmpty(path)) return;
             try
             {
                 string strPath = DateTime.Now.ToString("yyyyMMdd") + "RadarDatalog.csv";
                 StreamWriter sw = new StreamWriter(new FileStream(path + "\\" + strPath, FileMode.Append), Encoding.GetEncoding("Windows-1252"));//Windows-1252 \GB2312
-                WriteHeader(sw);
+                if (isFirstWriteCsv)
+                {
+                    WriteHeader(sw);
+                }
                 string txt = logtxt.V + "," + logtxt.A + "," + logtxt.R + "," + logtxt.P + "," + logtxt.S + "," + logtxt.CH + "," + logtxt.FrameState + "," + logtxt.SysFrameNo;
-                sw.Write(txt);
+                //sw.Write();
+                sw.WriteLine(txt);
                 sw.Close();
             }
             catch
