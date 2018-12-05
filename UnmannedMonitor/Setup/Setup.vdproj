@@ -21,8 +21,20 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_085CF9AC547B4C45B195481C5199BFA9"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_09B2B0DE2E712EF4A81E5B4848161102"
         "OwnerKey" = "8:_700E8A5E87C744A7BCB653DE8D1C325A"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_09B2B0DE2E712EF4A81E5B4848161102"
+        "OwnerKey" = "8:_A125371045F447FAA87A3CD42994268C"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -39,6 +51,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_0A13738199B04E43A1321939744FCD54"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_0ABD5022507E4BE7BF9D211E8D161E9E"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -46,6 +64,18 @@
         "Entry"
         {
         "MsmKey" = "8:_14319D48717F4DC1BDB096965B9A4745"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_15E133DF57334B63978B7A07A4219E7E"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_1A514F171E0A4BB6864D4CA9C375277C"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -70,6 +100,12 @@
         "Entry"
         {
         "MsmKey" = "8:_1EB108293D33B22AEEB759D87A37BF11"
+        "OwnerKey" = "8:_A125371045F447FAA87A3CD42994268C"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_1EB108293D33B22AEEB759D87A37BF11"
         "OwnerKey" = "8:_E837484B668F43BF81FB2A0DE6CFC244"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -77,6 +113,12 @@
         {
         "MsmKey" = "8:_1EB108293D33B22AEEB759D87A37BF11"
         "OwnerKey" = "8:_B4E2A9EFDEFD4CCAA6D3B2BF49B8AD54"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_2042A71FC4E3494B8830E4BBC14B6DA9"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -89,6 +131,30 @@
         {
         "MsmKey" = "8:_295983C64594F7FDF41441B7136118FF"
         "OwnerKey" = "8:_A3E890F069B8A49949D930F78ECDA55E"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_295983C64594F7FDF41441B7136118FF"
+        "OwnerKey" = "8:_A125371045F447FAA87A3CD42994268C"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_295983C64594F7FDF41441B7136118FF"
+        "OwnerKey" = "8:_86A777CE7B8445FD904F126865396F1A"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_295983C64594F7FDF41441B7136118FF"
+        "OwnerKey" = "8:_AA5CD7F34C084D2594CAE447B8252E5D"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_295983C64594F7FDF41441B7136118FF"
+        "OwnerKey" = "8:_9725A03620FD4321BC3FF43D3362C3E9"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -159,6 +225,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_2C31F1E1E49444E4BDB675DD75BB0FF1"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_3090F2EF4DE4407F9A413CF29D4ECA29"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -166,6 +238,18 @@
         "Entry"
         {
         "MsmKey" = "8:_31AF22DFC0164177AB050F6235113FAE"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_3F9AE6C8674B417A8EEBD4D5D39AFD47"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_42234D0F5C9B4418904A39BA8B0817B1"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -184,6 +268,18 @@
         "Entry"
         {
         "MsmKey" = "8:_50A40753D7554E6EA425F7A933C3C615"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_50E7EA4FA7EE47F6B599F35622CBE86C"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_534BF3FBF3A64A8FA6270368F8400856"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -237,6 +333,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_6EDEE8BD7D964536B82C635B6461637F"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_700E8A5E87C744A7BCB653DE8D1C325A"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -244,6 +346,12 @@
         "Entry"
         {
         "MsmKey" = "8:_72B7BF1220F842F18C08E496EEE754DC"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_7946AE7E604C4A86B60599454E1A1980"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -261,8 +369,20 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_7ED9FA46185D46CDB701783FC7DF55FB"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_80FA2674497C0A992B45AD16BCF638BE"
         "OwnerKey" = "8:_D12C05C0FAB648BFBF5D753C4708A52B"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_80FA2674497C0A992B45AD16BCF638BE"
+        "OwnerKey" = "8:_15E133DF57334B63978B7A07A4219E7E"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -275,6 +395,12 @@
         {
         "MsmKey" = "8:_82C4A951D820054DAF9B155CF165DBA9"
         "OwnerKey" = "8:_700E8A5E87C744A7BCB653DE8D1C325A"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_86A777CE7B8445FD904F126865396F1A"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -293,6 +419,18 @@
         {
         "MsmKey" = "8:_8F92EE780F076C323F7488F206CF1ECE"
         "OwnerKey" = "8:_A3E890F069B8A49949D930F78ECDA55E"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_8F92EE780F076C323F7488F206CF1ECE"
+        "OwnerKey" = "8:_1A514F171E0A4BB6864D4CA9C375277C"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_8F92EE780F076C323F7488F206CF1ECE"
+        "OwnerKey" = "8:_9725A03620FD4321BC3FF43D3362C3E9"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -339,13 +477,49 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_9410D531581241B4890D71191B488CC5"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_947A842868364B378AC036E50F33849B"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
+        "MsmKey" = "8:_9725A03620FD4321BC3FF43D3362C3E9"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_973DFE1747DE4A088105768C9A6243DE"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_98EA99649D3341CCB71A341AAA04A886"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_9FF5C79425874BD698DFD7B85740D11C"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_A0461836C3D64036B97ABB14A843E916"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_A125371045F447FAA87A3CD42994268C"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -369,7 +543,19 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_AA5CD7F34C084D2594CAE447B8252E5D"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_AC60C8D80D95499AA9489B607959EF8D"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_AD6ADC7ABE2845DC9D7036180645A119"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -399,6 +585,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_BE8472D08FA0236BA94934550C159728"
+        "OwnerKey" = "8:_A125371045F447FAA87A3CD42994268C"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_BF13F1F63E444427AA3AFFD718DB317A"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -406,6 +598,12 @@
         "Entry"
         {
         "MsmKey" = "8:_C2674CA9DFCB4F528FBB58C150CCC2A5"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_C30E8BB2D2664154BB1C666980578993"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -429,6 +627,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_CB6AEE146EA1486D9DAD9D56756D8D00"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_D12C05C0FAB648BFBF5D753C4708A52B"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -437,6 +641,12 @@
         {
         "MsmKey" = "8:_D721CF858FDD5A6E445F07D3DB7F6C2C"
         "OwnerKey" = "8:_700E8A5E87C744A7BCB653DE8D1C325A"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_D721CF858FDD5A6E445F07D3DB7F6C2C"
+        "OwnerKey" = "8:_2C31F1E1E49444E4BDB675DD75BB0FF1"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -489,6 +699,18 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_E340C494F4AC43B1B848629ED00A2D7E"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_E4C35C46307A401682B74E6CDD24CBE6"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_E5207BDEBCE14FC6A21415A3A50DA585"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -519,6 +741,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_ECFFE5A270A44FA1943B164289651158"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_EF9CADF7D798461CA178DD3480D0C10C"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -537,6 +765,18 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_F4AC55CE48BF466CB6F8B0E4284B38F5"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_F4E4F545A96C4963B83745E1B4FC6155"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_FEEDB6C8000F4D4597F3E61F9F94228F"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -545,6 +785,78 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_3090F2EF4DE4407F9A413CF29D4ECA29"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_F4E4F545A96C4963B83745E1B4FC6155"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_2C31F1E1E49444E4BDB675DD75BB0FF1"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_15E133DF57334B63978B7A07A4219E7E"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_A125371045F447FAA87A3CD42994268C"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_BE8472D08FA0236BA94934550C159728"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_CB6AEE146EA1486D9DAD9D56756D8D00"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_973DFE1747DE4A088105768C9A6243DE"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_86A777CE7B8445FD904F126865396F1A"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_1A514F171E0A4BB6864D4CA9C375277C"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_AA5CD7F34C084D2594CAE447B8252E5D"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_E4C35C46307A401682B74E6CDD24CBE6"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_9725A03620FD4321BC3FF43D3362C3E9"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -864,6 +1176,26 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_085CF9AC547B4C45B195481C5199BFA9"
+            {
+            "SourcePath" = "8:..\\Factorys\\bin\\Release\\Factorys.pdb"
+            "TargetName" = "8:Factorys.pdb"
+            "Tag" = "8:"
+            "Folder" = "8:_93635A94EA5642B79E4784EF2FE22ECE"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_09B2B0DE2E712EF4A81E5B4848161102"
             {
             "AssemblyRegister" = "3:1"
@@ -893,6 +1225,26 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_0A13738199B04E43A1321939744FCD54"
+            {
+            "SourcePath" = "8:..\\UnmannedMonitor\\bin\\Release\\Factorys.pdb"
+            "TargetName" = "8:Factorys.pdb"
+            "Tag" = "8:"
+            "Folder" = "8:_93635A94EA5642B79E4784EF2FE22ECE"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_0ABD5022507E4BE7BF9D211E8D161E9E"
@@ -940,6 +1292,68 @@
                     }
                 }
             "SourcePath" = "8:..\\UnmannedMonitor\\bin\\Release\\AForge.Video.FFMPEG.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_93635A94EA5642B79E4784EF2FE22ECE"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_15E133DF57334B63978B7A07A4219E7E"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:vshost32, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=x86"
+                "ScatterAssemblies"
+                {
+                    "_15E133DF57334B63978B7A07A4219E7E"
+                    {
+                    "Name" = "8:UnmannedMonitor.vshost.exe"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:..\\UnmannedMonitor\\bin\\Release\\UnmannedMonitor.vshost.exe"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_93635A94EA5642B79E4784EF2FE22ECE"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_1A514F171E0A4BB6864D4CA9C375277C"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:AForge.Video, Version=2.2.5.0, Culture=neutral, PublicKeyToken=cbfb6e07d173c401, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_1A514F171E0A4BB6864D4CA9C375277C"
+                    {
+                    "Name" = "8:AForge.Video.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:..\\UnmannedMonitor\\bin\\Release\\AForge.Video.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_93635A94EA5642B79E4784EF2FE22ECE"
@@ -1039,6 +1453,26 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_2042A71FC4E3494B8830E4BBC14B6DA9"
+            {
+            "SourcePath" = "8:..\\UnmannedMonitor\\bin\\Release\\UnmannedMonitor.vshost.exe.config"
+            "TargetName" = "8:UnmannedMonitor.vshost.exe.config"
+            "Tag" = "8:"
+            "Folder" = "8:_93635A94EA5642B79E4784EF2FE22ECE"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_2512195FCEF543C98018E96215E03FA0"
             {
             "SourcePath" = "8:..\\UnmannedMonitor\\bin\\Release\\UnmannedMonitor.vshost.exe.manifest"
@@ -1090,6 +1524,37 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_2C31F1E1E49444E4BDB675DD75BB0FF1"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Wisdom.Utils, Version=1.0.9.0, Culture=neutral, PublicKeyToken=7735f452a0972076, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_2C31F1E1E49444E4BDB675DD75BB0FF1"
+                    {
+                    "Name" = "8:Wisdom.Utils.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:..\\UnmannedMonitor\\bin\\Release\\Wisdom.Utils.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_93635A94EA5642B79E4784EF2FE22ECE"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_3090F2EF4DE4407F9A413CF29D4ECA29"
             {
             "AssemblyRegister" = "3:1"
@@ -1125,6 +1590,46 @@
             {
             "SourcePath" = "8:C:\\Users\\67560\\Desktop\\Radar.ico"
             "TargetName" = "8:Radar.ico"
+            "Tag" = "8:"
+            "Folder" = "8:_93635A94EA5642B79E4784EF2FE22ECE"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_3F9AE6C8674B417A8EEBD4D5D39AFD47"
+            {
+            "SourcePath" = "8:..\\UnmannedMonitor\\bin\\Release\\UnmannedMonitor.exe.config"
+            "TargetName" = "8:UnmannedMonitor.exe.config"
+            "Tag" = "8:"
+            "Folder" = "8:_93635A94EA5642B79E4784EF2FE22ECE"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_42234D0F5C9B4418904A39BA8B0817B1"
+            {
+            "SourcePath" = "8:..\\UnmannedMonitor\\bin\\Release\\avformat-53.dll"
+            "TargetName" = "8:avformat-53.dll"
             "Tag" = "8:"
             "Folder" = "8:_93635A94EA5642B79E4784EF2FE22ECE"
             "Condition" = "8:"
@@ -1185,6 +1690,46 @@
             {
             "SourcePath" = "8:..\\UnmannedMonitor\\bin\\Release\\Wisdom.Utils.xml"
             "TargetName" = "8:Wisdom.Utils.xml"
+            "Tag" = "8:"
+            "Folder" = "8:_93635A94EA5642B79E4784EF2FE22ECE"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_50E7EA4FA7EE47F6B599F35622CBE86C"
+            {
+            "SourcePath" = "8:..\\UnmannedMonitor\\bin\\Release\\UnmannedMonitor.vshost.exe.manifest"
+            "TargetName" = "8:UnmannedMonitor.vshost.exe.manifest"
+            "Tag" = "8:"
+            "Folder" = "8:_93635A94EA5642B79E4784EF2FE22ECE"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_534BF3FBF3A64A8FA6270368F8400856"
+            {
+            "SourcePath" = "8:..\\UnmannedMonitor\\bin\\Release\\swscale-2.dll"
+            "TargetName" = "8:swscale-2.dll"
             "Tag" = "8:"
             "Folder" = "8:_93635A94EA5642B79E4784EF2FE22ECE"
             "Condition" = "8:"
@@ -1376,10 +1921,50 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_6EDEE8BD7D964536B82C635B6461637F"
+            {
+            "SourcePath" = "8:..\\UnmannedMonitor\\bin\\Release\\log4net.xml"
+            "TargetName" = "8:log4net.xml"
+            "Tag" = "8:"
+            "Folder" = "8:_93635A94EA5642B79E4784EF2FE22ECE"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_72B7BF1220F842F18C08E496EEE754DC"
             {
             "SourcePath" = "8:..\\UnmannedMonitor\\bin\\Release\\UnmannedMonitor.vshost.exe.config"
             "TargetName" = "8:UnmannedMonitor.vshost.exe.config"
+            "Tag" = "8:"
+            "Folder" = "8:_93635A94EA5642B79E4784EF2FE22ECE"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7946AE7E604C4A86B60599454E1A1980"
+            {
+            "SourcePath" = "8:..\\UnmannedMonitor\\bin\\Release\\avcodec-53.dll"
+            "TargetName" = "8:avcodec-53.dll"
             "Tag" = "8:"
             "Folder" = "8:_93635A94EA5642B79E4784EF2FE22ECE"
             "Condition" = "8:"
@@ -1420,6 +2005,26 @@
             {
             "SourcePath" = "8:..\\UnmannedMonitor\\bin\\Release\\Factorys.pdb"
             "TargetName" = "8:Factorys.pdb"
+            "Tag" = "8:"
+            "Folder" = "8:_93635A94EA5642B79E4784EF2FE22ECE"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7ED9FA46185D46CDB701783FC7DF55FB"
+            {
+            "SourcePath" = "8:..\\UnmannedMonitor\\bin\\Release\\postproc-52.dll"
+            "TargetName" = "8:postproc-52.dll"
             "Tag" = "8:"
             "Folder" = "8:_93635A94EA5642B79E4784EF2FE22ECE"
             "Condition" = "8:"
@@ -1496,6 +2101,37 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_86A777CE7B8445FD904F126865396F1A"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:AForge.Video.FFMPEG, Version=2.2.5.0, Culture=neutral, PublicKeyToken=03563089b1be05dd, processorArchitecture=x86"
+                "ScatterAssemblies"
+                {
+                    "_86A777CE7B8445FD904F126865396F1A"
+                    {
+                    "Name" = "8:AForge.Video.FFMPEG.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:..\\UnmannedMonitor\\bin\\Release\\AForge.Video.FFMPEG.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_93635A94EA5642B79E4784EF2FE22ECE"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_889C1FCF9AAD4594B758FF290C98639C"
@@ -1611,6 +2247,26 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_9410D531581241B4890D71191B488CC5"
+            {
+            "SourcePath" = "8:..\\UnmannedMonitor\\bin\\Release\\Default.ini"
+            "TargetName" = "8:Default.ini"
+            "Tag" = "8:"
+            "Folder" = "8:_93635A94EA5642B79E4784EF2FE22ECE"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_947A842868364B378AC036E50F33849B"
             {
             "SourcePath" = "8:..\\UnmannedMonitor\\bin\\Release\\Factorys.pdb"
@@ -1631,10 +2287,143 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_9725A03620FD4321BC3FF43D3362C3E9"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:AForge.Controls, Version=2.2.5.0, Culture=neutral, PublicKeyToken=a8ac264d1dc6b9d9, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_9725A03620FD4321BC3FF43D3362C3E9"
+                    {
+                    "Name" = "8:AForge.Controls.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:..\\UnmannedMonitor\\bin\\Release\\AForge.Controls.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_93635A94EA5642B79E4784EF2FE22ECE"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_973DFE1747DE4A088105768C9A6243DE"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Factorys, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_973DFE1747DE4A088105768C9A6243DE"
+                    {
+                    "Name" = "8:Factorys.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:..\\UnmannedMonitor\\bin\\Release\\Factorys.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_93635A94EA5642B79E4784EF2FE22ECE"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_98EA99649D3341CCB71A341AAA04A886"
+            {
+            "SourcePath" = "8:..\\UnmannedMonitor\\bin\\Release\\Wisdom.Utils.xml"
+            "TargetName" = "8:Wisdom.Utils.xml"
+            "Tag" = "8:"
+            "Folder" = "8:_93635A94EA5642B79E4784EF2FE22ECE"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_9FF5C79425874BD698DFD7B85740D11C"
+            {
+            "SourcePath" = "8:..\\UnmannedMonitor\\bin\\Release\\UnmannedMonitor.pdb"
+            "TargetName" = "8:UnmannedMonitor.pdb"
+            "Tag" = "8:"
+            "Folder" = "8:_93635A94EA5642B79E4784EF2FE22ECE"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A0461836C3D64036B97ABB14A843E916"
             {
             "SourcePath" = "8:..\\UnmannedMonitor\\bin\\Release\\UnmannedMonitor.vshost.exe.manifest"
             "TargetName" = "8:UnmannedMonitor.vshost.exe.manifest"
+            "Tag" = "8:"
+            "Folder" = "8:_93635A94EA5642B79E4784EF2FE22ECE"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_A125371045F447FAA87A3CD42994268C"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:UnmannedMonitor, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_A125371045F447FAA87A3CD42994268C"
+                    {
+                    "Name" = "8:UnmannedMonitor.exe"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:..\\UnmannedMonitor\\bin\\Release\\UnmannedMonitor.exe"
+            "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_93635A94EA5642B79E4784EF2FE22ECE"
             "Condition" = "8:"
@@ -1733,6 +2522,37 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_AA5CD7F34C084D2594CAE447B8252E5D"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:AForge.Video.DirectShow, Version=2.2.5.0, Culture=neutral, PublicKeyToken=61ea4348d43881b7, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_AA5CD7F34C084D2594CAE447B8252E5D"
+                    {
+                    "Name" = "8:AForge.Video.DirectShow.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:..\\UnmannedMonitor\\bin\\Release\\AForge.Video.DirectShow.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_93635A94EA5642B79E4784EF2FE22ECE"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_AC60C8D80D95499AA9489B607959EF8D"
             {
             "AssemblyRegister" = "3:1"
@@ -1748,6 +2568,26 @@
                 }
             "SourcePath" = "8:..\\UnmannedMonitor\\bin\\Release\\AForge.Video.DirectShow.dll"
             "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_93635A94EA5642B79E4784EF2FE22ECE"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_AD6ADC7ABE2845DC9D7036180645A119"
+            {
+            "SourcePath" = "8:..\\UnmannedMonitor\\bin\\Release\\avutil-51.dll"
+            "TargetName" = "8:avutil-51.dll"
             "Tag" = "8:"
             "Folder" = "8:_93635A94EA5642B79E4784EF2FE22ECE"
             "Condition" = "8:"
@@ -1855,6 +2695,37 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_BE8472D08FA0236BA94934550C159728"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Factorys, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_BE8472D08FA0236BA94934550C159728"
+                    {
+                    "Name" = "8:Factorys.DLL"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Factorys.DLL"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_93635A94EA5642B79E4784EF2FE22ECE"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_BF13F1F63E444427AA3AFFD718DB317A"
             {
             "SourcePath" = "8:..\\UnmannedMonitor\\bin\\Release\\avutil-51.dll"
@@ -1890,6 +2761,26 @@
                 }
             "SourcePath" = "8:..\\UnmannedMonitor\\bin\\Release\\AForge.Video.dll"
             "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_93635A94EA5642B79E4784EF2FE22ECE"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_C30E8BB2D2664154BB1C666980578993"
+            {
+            "SourcePath" = "8:..\\UnmannedMonitor\\bin\\Release\\Wisdom.Utils.dll.log4net"
+            "TargetName" = "8:Wisdom.Utils.dll.log4net"
             "Tag" = "8:"
             "Folder" = "8:_93635A94EA5642B79E4784EF2FE22ECE"
             "Condition" = "8:"
@@ -1960,6 +2851,37 @@
                     }
                 }
             "SourcePath" = "8:..\\UnmannedMonitor\\bin\\Release\\Factorys.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_93635A94EA5642B79E4784EF2FE22ECE"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_CB6AEE146EA1486D9DAD9D56756D8D00"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_CB6AEE146EA1486D9DAD9D56756D8D00"
+                    {
+                    "Name" = "8:log4net.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:..\\UnmannedMonitor\\bin\\Release\\log4net.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_93635A94EA5642B79E4784EF2FE22ECE"
@@ -2150,6 +3072,57 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E340C494F4AC43B1B848629ED00A2D7E"
+            {
+            "SourcePath" = "8:..\\UnmannedMonitor\\bin\\Release\\avfilter-2.dll"
+            "TargetName" = "8:avfilter-2.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_93635A94EA5642B79E4784EF2FE22ECE"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E4C35C46307A401682B74E6CDD24CBE6"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:AForge, Version=2.2.5.0, Culture=neutral, PublicKeyToken=c1db6ff4eaa06aeb, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_E4C35C46307A401682B74E6CDD24CBE6"
+                    {
+                    "Name" = "8:AForge.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:..\\UnmannedMonitor\\bin\\Release\\AForge.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_93635A94EA5642B79E4784EF2FE22ECE"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E5207BDEBCE14FC6A21415A3A50DA585"
             {
             "SourcePath" = "8:..\\UnmannedMonitor\\bin\\Release\\Wisdom.Utils.xml"
@@ -2272,6 +3245,26 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_ECFFE5A270A44FA1943B164289651158"
+            {
+            "SourcePath" = "8:..\\UnmannedMonitor\\bin\\Release\\avdevice-53.dll"
+            "TargetName" = "8:avdevice-53.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_93635A94EA5642B79E4784EF2FE22ECE"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_EF9CADF7D798461CA178DD3480D0C10C"
             {
             "SourcePath" = "8:..\\UnmannedMonitor\\bin\\Release\\UnmannedMonitor.pdb"
@@ -2326,6 +3319,57 @@
                     }
                 }
             "SourcePath" = "8:..\\UnmannedMonitor\\bin\\Release\\Wisdom.Utils.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_93635A94EA5642B79E4784EF2FE22ECE"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F4AC55CE48BF466CB6F8B0E4284B38F5"
+            {
+            "SourcePath" = "8:..\\UnmannedMonitor\\bin\\Release\\swresample-0.dll"
+            "TargetName" = "8:swresample-0.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_93635A94EA5642B79E4784EF2FE22ECE"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_F4E4F545A96C4963B83745E1B4FC6155"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Factorys, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_F4E4F545A96C4963B83745E1B4FC6155"
+                    {
+                    "Name" = "8:Factorys.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:..\\Factorys\\bin\\Release\\Factorys.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_93635A94EA5642B79E4784EF2FE22ECE"

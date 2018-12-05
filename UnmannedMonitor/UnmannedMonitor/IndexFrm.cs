@@ -73,6 +73,26 @@ namespace UnmannedMonitor
             }
         }
 
+        const int WM_SYSCOMMAND = 0x112;
+        const int SC_CLOSE = 0xF060;
+        const int SC_MINIMIZE = 0xF020;
+        const int SC_MAXIMIZE = 0xF030;
+        protected override void WndProc(ref Message m)
+        {
+            
+            base.WndProc(ref m);
+            if (m.Msg == WM_SYSCOMMAND)
+            {
+                //点击窗体最大化
+                if (m.WParam.ToInt32() == SC_MAXIMIZE || m.WParam.ToInt32() == SC_MINIMIZE)
+                {
+                    //重新绘制坐标系
+                    pictureBox1.Image = drawXY(maxM, pictureBox1);
+                    pictureBox2.Image = drawXY(maxM, pictureBox2);
+                }
+            }
+        }
+
         /// <summary>
         /// 初始化串口选择Combox
         /// </summary>
@@ -199,24 +219,123 @@ namespace UnmannedMonitor
             comboBox1.SelectedIndex = distance;
         }
 
+
+        private int xLength = 0;//X轴的长度 
+        private int yLength = 0;//Y轴长度
+        private int xPerLength = 0;//X轴每份的长度
+        private int yPerLength = 0;//y轴每份的长度
+        private int xCenterPoint = 0;//x轴中心开始点位置
+        private int yCenterPoint = 0;//y轴开始点位置
         /// <summary>
         /// 画坐标轴
         /// </summary>
         private Bitmap drawXY(double distance, Control control)
         {
-            int xpaddings = 60;
-            int ypaddings = 70;
             int startPoint = 30;
             int x = control.Width - startPoint;
             int y = control.Height - startPoint;
-
 
             Bitmap bitmap = new Bitmap(control.Width, control.Height);
             Graphics g = Graphics.FromImage(bitmap);
             g.Clear(Color.White);
             Point px1 = new Point(startPoint, y);
-            Point px2 = new Point(x + 20, y);
+            Point px2 = new Point(x, y);
             g.DrawLine(new Pen(Brushes.Black, 2), px1, px2);//绘制X轴
+
+            Point py1 = new Point(startPoint, 0);
+            Point py2 = new Point(startPoint, y);
+            g.DrawLine(new Pen(Brushes.Black, 2), py1, py2); //绘制Y轴
+
+            xLength = x - startPoint;
+            yLength = y;
+
+            //X轴分割为4份
+            //Y轴分割为7份
+            xPerLength = xLength / 4;
+            yPerLength = yLength / 7;
+
+            xCenterPoint = startPoint + xPerLength * 2;
+            yCenterPoint = y;
+
+            int pictureBox1XValue = -50;
+            double num = getNumMultiple(distance);
+            double useNum = -2 * num; 
+            //绘制X轴相关信息
+            for (int i=0;i < 5; i++)
+            {
+                //画X轴刻度值
+                if (control.Name == "pictureBox1")
+                {
+                    g.DrawString(Convert.ToString(pictureBox1XValue + (i * 25)), new Font("宋体", 10), Brushes.Black, new PointF(startPoint + (i * xPerLength) - 10, y + 6));
+                } else
+                {
+                    g.DrawString((useNum + i * num).ToString(), new Font("宋体", 10), Brushes.Black, new PointF(startPoint + (i * xPerLength) - 10, y + 6));
+                }
+                //绘制X轴刻度
+                g.DrawLine(new Pen(Brushes.Black, 2), new Point(startPoint + (i * xPerLength), y), new Point(startPoint + (i * xPerLength), y + 6));
+                //绘制竖向的网格线
+                g.DrawLine(new Pen(Brushes.Gainsboro, 1), new Point(startPoint + (i * xPerLength), 0), new Point(startPoint + (i * xPerLength), y));
+            }
+
+            
+            //绘制Y轴相关信息
+            for ( int i=0; i < 8; i++)
+            {   
+                if (i == 0) continue;
+                //绘制Y轴刻度
+                g.DrawLine(new Pen(Brushes.Black,2), new Point(startPoint,y - (i*yPerLength)),new Point(startPoint - 6, y - (i * yPerLength)));
+                //绘制横向的网格线
+                g.DrawLine(new Pen(Brushes.Gainsboro, 1), new Point(startPoint, y - (i * yPerLength)), new Point(x, y - (i * yPerLength)));
+                //画Y轴数值
+                g.DrawString(((i) * num).ToString(), new Font("宋体", 10), Brushes.Black, new PointF(5, y - (i * yPerLength) - 5));
+            }
+
+            if (control.Name == "pictureBox1")
+            {
+
+                //画单位
+                g.DrawString("V", new Font("宋体", 10), Brushes.Red, new PointF(x + 5, y));
+                g.DrawString("m/s", new Font("宋体", 8), Brushes.Red, new PointF(x + 10, y + 7));
+
+                g.DrawString("R", new Font("宋体", 10), Brushes.Red, new PointF(3, 0));
+                g.DrawString("m", new Font("宋体", 8), Brushes.Red, new PointF(8, 7));
+            }
+            else
+            {
+                //画辅助线
+                g.DrawLine(new Pen(Brushes.Yellow, 1), new Point(startPoint, 30), new Point(startPoint + xPerLength * 2, y));
+                g.DrawLine(new Pen(Brushes.Yellow, 1), new Point(startPoint + xPerLength, 0), new Point(startPoint + xPerLength * 2, y));
+                g.DrawLine(new Pen(Brushes.Yellow, 1), new Point(startPoint + xPerLength * 3, 0), new Point(startPoint + xPerLength * 2, y));
+                g.DrawLine(new Pen(Brushes.Yellow, 1), new Point(startPoint + xPerLength * 4, 30), new Point(startPoint + xPerLength * 2, y));
+
+                //画虚线
+                //均分为5份，6条线
+                int dashedLinesDistance = (xPerLength * 2) / 5;
+                Pen pen = new Pen(Color.Gray, 2);
+                pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Custom;
+                pen.DashPattern = new float[] { 6, 6 };
+                for (int i = 0; i < 6;i++)
+                {
+                    g.DrawLine(pen, new Point((startPoint + xPerLength) + i* dashedLinesDistance, 0), new Point(startPoint + xPerLength + i * dashedLinesDistance, y));
+                }
+
+                //画单位
+                g.DrawString("X", new Font("宋体", 10), Brushes.Red, new PointF(x + 15, y));
+                g.DrawString("m", new Font("宋体", 8), Brushes.Red, new PointF(x + 20, y + 7));
+
+                g.DrawString("Y", new Font("宋体", 10), Brushes.Red, new PointF(3, 0));
+                g.DrawString("m", new Font("宋体", 8), Brushes.Red, new PointF(8, 7));
+            }
+            g.Save();
+            return bitmap;
+        }   
+        
+        /// <summary>
+        /// 获取倍数
+        /// </summary>
+        /// <returns></returns>
+        private double getNumMultiple(double distance)
+        {
             double num = 0;
             switch ((int)distance)
             {
@@ -228,93 +347,8 @@ namespace UnmannedMonitor
                 case 200: num = 25; break;
                 case 250: num = 33; break;
             }
-
-            for (int i = 1; i < 8; i++)
-            {
-                double temp = i * num;
-                double temp1 = y - (i * xpaddings);
-                //double 
-                //画数值
-                g.DrawString((i * num).ToString(), new Font("宋体", 10), Brushes.Black, new PointF(0, y - (i * xpaddings) - 6));
-                //画刻度
-                g.DrawLine(new Pen(Brushes.Black, 2), new Point(26, y - (i * xpaddings)), new Point(startPoint, y - (i * xpaddings)));
-                //画表格线
-                g.DrawLine(new Pen(Brushes.Gainsboro, 1), new Point(startPoint, y - (i * xpaddings)), new Point(x, y - (i * xpaddings)));
-            }
-
-            Point py1 = new Point(startPoint, 0);
-            Point py2 = new Point(startPoint, y);
-            g.DrawLine(new Pen(Brushes.Black, 2), py1, py2);
-
-            //测试，坐标系
-            Point py3 = new Point(0, 0);
-            Point py4 = new Point(control.Width, 0);
-            g.DrawLine(new Pen(Brushes.Black, 2), py3, py4);
-
-            //速度和角度
-            if (control.Name == "pictureBox1")
-            {
-                //画数值
-                g.DrawString("-50", new Font("宋体", 10), Brushes.Black, new PointF(10, y + 7));
-                g.DrawString("-25", new Font("宋体", 10), Brushes.Black, new PointF((ypaddings * 1) + 15, y + 7));
-                g.DrawString("0", new Font("宋体", 10), Brushes.Black, new PointF((ypaddings * 2) + 26, y + 7));
-                g.DrawString("25", new Font("宋体", 10), Brushes.Black, new PointF(ypaddings * 3 + 22, y + 7));
-                g.DrawString("50", new Font("宋体", 10), Brushes.Black, new PointF(ypaddings * 4 + 22, y + 7));
-
-                //画单位
-                g.DrawString("V", new Font("宋体", 10), Brushes.Red, new PointF(x + 5, y));
-                g.DrawString("m/s", new Font("宋体", 8), Brushes.Red, new PointF(x + 10, y + 7));
-
-                g.DrawString("R", new Font("宋体", 10), Brushes.Red, new PointF(3, 0));
-                g.DrawString("m", new Font("宋体", 8), Brushes.Red, new PointF(8, 7));
-            }
-            else
-            {
-                //距离和角度
-                //画数值
-                g.DrawString((-num * 2).ToString(), new Font("宋体", 10), Brushes.Black, new PointF(15, y + 7));
-                g.DrawString((-num).ToString(), new Font("宋体", 10), Brushes.Black, new PointF((ypaddings * 1) + 15, y + 7));
-                g.DrawString("0", new Font("宋体", 10), Brushes.Black, new PointF((ypaddings * 2) + 26, y + 7));
-                g.DrawString((num).ToString(), new Font("宋体", 10), Brushes.Black, new PointF(ypaddings * 3 + 22, y + 7));
-                g.DrawString((num * 2).ToString(), new Font("宋体", 10), Brushes.Black, new PointF(ypaddings * 4 + 22, y + 7));
-
-                //画辅助线
-                g.DrawLine(new Pen(Brushes.Yellow, 1), new Point(0, 30), new Point((ypaddings * 2) + startPoint, y));
-                g.DrawLine(new Pen(Brushes.Yellow, 1), new Point(100, 0), new Point((ypaddings * 2) + startPoint, y));
-                g.DrawLine(new Pen(Brushes.Yellow, 1), new Point(240, 0), new Point((ypaddings * 2) + startPoint, y));
-                g.DrawLine(new Pen(Brushes.Yellow, 1), new Point(x, 30), new Point((ypaddings * 2) + startPoint, y));
-
-                //画虚线
-                Pen pen = new Pen(Color.Gray, 2);
-                pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Custom;
-                pen.DashPattern = new float[] { 6, 6 };
-                int temp = 0;
-                for (int i = 1; i < 7;i++)
-                {
-                    g.DrawLine(pen, new Point(105 + temp, 0), new Point(105 + temp, y));
-                    temp = i * 26;
-                }
-
-
-                //画单位
-                g.DrawString("X", new Font("宋体", 10), Brushes.Red, new PointF(x + 15, y));
-                g.DrawString("m", new Font("宋体", 8), Brushes.Red, new PointF(x + 20, y + 7));
-
-                g.DrawString("Y", new Font("宋体", 10), Brushes.Red, new PointF(3, 0));
-                g.DrawString("m", new Font("宋体", 8), Brushes.Red, new PointF(8, 7));
-            }
-            for (int i = 1; i < 5; i++)
-            {
-                //画表格线
-                g.DrawLine(new Pen(Brushes.Gainsboro, 1), new Point((i * ypaddings) + startPoint, 0), new Point(startPoint + (i * ypaddings), y));
-                //画刻度
-                g.DrawLine(new Pen(Brushes.Black, 2), new Point(startPoint + 1 + (i * ypaddings), y), new Point(startPoint + 1 + (i * ypaddings), y + 7));
-            }
-
-            g.Save();
-
-            return bitmap;
-        }      
+            return num;
+        }   
 
         /// <summary>
         /// 根据距离R 与 速度 进行数据排序
@@ -499,69 +533,43 @@ namespace UnmannedMonitor
         private List<PointF> pointSList = new List<PointF>();//pictureBox1
         void loadPoint()
         {
-            var screenLocation = pictureBox1.Location;
-            var screenLocation1 = pictureBox2.Location;
-            var p1w = pictureBox1.Width;
-            var p2w = pictureBox2.Width;
-            var p1H = pictureBox1.Height;
-            var p2H = pictureBox2.Height;
-            p.X = (p1w - 20) / 2;
-            p.Y = p1H - 20; 
+            p.X = xCenterPoint;
+            p.Y = yCenterPoint;
             if (isUpdatePictureBox)
             {
                
                 for (int i = 0; i < ulist.Count; i++)
                 {
-                    double r = ulist[i].R;// * changeDistance(distance); //距离 --remove
-                    double a = ulist[i].A;//角度 --angle
-                    double rNew = r * changeDistance(distance);
+                    double r = ulist[i].R;
+                    double a = ulist[i].A;
                     double v = ulist[i].V;
-                    double vNew = ulist[i].V * changeDistance(distance);
                     if (r > distanceValue) continue;
-                    int picture1BoxHeight = pictureBox1.Height;
-                    int picture1BoxWigth = pictureBox1.Width;
-                    int picture2BoxHeight = pictureBox2.Height;
-                    int picture2BoxWigth = pictureBox2.Width;
                     if (ulist[i].DataType.Equals("AK"))
                     {
-                        PointF pointFEx = getNewPointEx(a, rNew);
-                        PointF pointF = getNewPoint(p, a, rNew);
-                        PointF pointS = getNewSpeedPoint(p, rNew, v);
+                        PointF pointFEx = getNewPointEx(a, r);
+                        PointF pointF = getNewPoint(a, r);
+                        PointF pointS = getNewSpeedPoint(r, v);
                         pointFList.Add(pointF);
                         pointSList.Add(pointS);
-                        
+
+                        Brush brush = null;
 
                         if (v < 0)
                         {
-                            drawRectangle(pictureBox2, pointF, Brushes.Green, GetRectSize(distanceValue));
-                            drawRectangle(pictureBox1, pointS, Brushes.Green, GetRectSize(distanceValue));
-                            drawCoordinatePoints(pictureBox2,pointF, r,pointFEx.X, 0);
-                            drawCoordinatePoints(pictureBox1, pointS,r,v,1);
-                            //速度为负值 用绿色 --表示靠近目标
-                            //StartThreadToUpdatePictureBox(gPictureBox2, pointF, Brushes.Green);
-                            //StartThreadToUpdatePictureBox(gPictureBox1, pointS, Brushes.Green);
-
+                            brush = Brushes.Green;
                         }
                         else if (v == 0)
                         {
-                            drawRectangle(pictureBox2, pointF, Brushes.Yellow, GetRectSize(distanceValue));
-                            drawRectangle(pictureBox1, pointS, Brushes.Yellow, GetRectSize(distanceValue));
-                            drawCoordinatePoints(pictureBox2, pointF, r, pointFEx.X, 0);
-                            drawCoordinatePoints(pictureBox1, pointS, r, v, 1);
-                            //速度为0 用黄色 ---表示目标处于静止状态
-                            //StartThreadToUpdatePictureBox(gPictureBox2, pointF, Brushes.Yellow);
-                            //StartThreadToUpdatePictureBox(gPictureBox1, pointS, Brushes.Yellow);
+                            brush = Brushes.Yellow;
                         }
                         else if (v > 0)
                         {
-                            drawRectangle(pictureBox2, pointF, Brushes.Red, GetRectSize(distanceValue));
-                            drawRectangle(pictureBox1, pointS, Brushes.Red, GetRectSize(distanceValue));
-                            drawCoordinatePoints(pictureBox2, pointF, r, pointFEx.X, 0);
-                            drawCoordinatePoints(pictureBox1, pointS, r, v, 1);
-                            //速度为正值 用红色 ---表示远离目标
-                            //StartThreadToUpdatePictureBox(gPictureBox2, pointF, Brushes.Red);
-                            //StartThreadToUpdatePictureBox(gPictureBox1, pointS, Brushes.Red);
+                            brush = Brushes.Red;
                         }
+                        drawRectangle(pictureBox2, pointF, brush, GetRectSize(distanceValue));
+                        drawRectangle(pictureBox1, pointS, brush, GetRectSize(distanceValue));
+                        drawCoordinatePoints(pictureBox2, pointF, r, pointFEx.X, 0);
+                        drawCoordinatePoints(pictureBox1, pointS, r, v, 1);
                     }
                 }
 
@@ -636,6 +644,37 @@ namespace UnmannedMonitor
             return db;
         }
 
+        private double changeDistanceNew(double d, int length)
+        {
+            //15m:29倍  30m:11倍  60m:5.7倍   100m:3.6倍   150m:2.3倍
+            double db = 0.0;
+            switch ((int)d)
+            {
+                case 15:
+                    db = length / 2;
+                    break;
+                case 30:
+                    db = length / 5;
+                    break;
+                case 70:
+                    db = length / 10;
+                    break;
+                case 100:
+                    db = length / 15;
+                    break;
+                case 150:
+                    db = length / 20;
+                    break;
+                case 200:
+                    db = length / 25;
+                    break;
+                case 250:
+                    db = length / 33;
+                    break;
+            }
+            return db;
+        }
+
         /// <summary>
         /// 新坐标点
         /// </summary>
@@ -643,12 +682,12 @@ namespace UnmannedMonitor
         /// <param name="angle">角度</param>
         /// <param name="bevel">距离</param>
         /// <returns></returns>
-        private PointF getNewPoint(PointF pointB, double angle, double bevel)
+        private PointF getNewPoint(double angle, double bevel)
         {
             PointF p = getNewPointEx(angle,bevel);
-            //return new PointF(pointB.X + xMargin + (pictureBox2.Width / 2), pictureBox2.Height - (pointB.Y + yMargin) - 20);
-            //return new PointF(((pictureBox2.Width - 20) / 2) + pointB.X + xMargin, pictureBox2.Height - (pointB.Y + yMargin) - 30);
-            return new PointF(pointB.X - p.X, pointB.Y - p.Y - 10);
+            p.X = p.X * (float)changeDistanceNew(distanceValue,xPerLength);
+            p.Y = p.Y * (float)changeDistanceNew(distanceValue, yPerLength);
+            return new PointF(xCenterPoint + p.X, yCenterPoint - p.Y);
         }
 
         /// <summary>
@@ -663,19 +702,17 @@ namespace UnmannedMonitor
             //换算过程中先将角度转为弧度
             var radian = angle * Math.PI / 180;
             var yMargin = float.Parse((Math.Cos(radian) * bevel).ToString());
-            var xMargin = -float.Parse((Math.Sin(radian)).ToString());//备注
+            var xMargin = -float.Parse((Math.Sin(radian) * bevel ).ToString());//备注
             return new PointF((float)xMargin,(float)yMargin);
         }
 
-        private PointF getNewSpeedPoint(PointF pointB, double r, double v)
+        private PointF getNewSpeedPoint(double r, double v)
         {
-           //显示Y轴的速度
-           //X 轴 始终为 0
-            var yMargin = (float)r;
-            var xMargin = (float)v;
+            var yMargin = (float)r * (float)changeDistanceNew(distanceValue, yPerLength);
+            var xMargin = (float)v * (float)changeDistanceNew(200, xPerLength);
             PointF p = new PointF();
-            p.X = pointB.X + xMargin;
-            p.Y = pointB.Y - yMargin - 10;
+            p.X = xCenterPoint + xMargin;  
+            p.Y = yCenterPoint - yMargin;
             return p;
         }
 
@@ -692,20 +729,17 @@ namespace UnmannedMonitor
         private void drawRectangle(Control control, PointF pointF, Brush brush, Size size)
         {   
             Graphics g = control.CreateGraphics();
-            pointF.Y -= size.Height;
+            //pointF.Y -= size.Height;
+            //pointF.X -= size.Width;
             g.FillRectangle(brush, new RectangleF(pointF, size));//new Size(10, 20)
-            //g.DrawString((i * num).ToString(), new Font("宋体", 10), Brushes.Black, new PointF(0, y - (i * xpaddings) - 6));
-            
-            //brush.Dispose();
             g.Dispose();
         }
 
         private void drawCoordinatePoints(Control control, PointF pointF,double r, double v,int type)
         {
             Graphics g = control.CreateGraphics();
-            pointF.Y -= 25;
-            pointF.X += 15;
-            //pointF.Y -= ;
+            pointF.Y -= GetRectSize(distanceValue).Height;
+            pointF.X += GetRectSize(distanceValue).Width;
             double x = Math.Round(v, 2);
             double y = Math.Round(r, 2);
             g.DrawString("(" + Math.Round(v, 2) + "," + Math.Round(r, 2) + ")", new Font("宋体", 8), Brushes.Blue, pointF);
