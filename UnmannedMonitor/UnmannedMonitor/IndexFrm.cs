@@ -38,11 +38,21 @@ namespace UnmannedMonitor
 
         private void IndexFrm_Load(object sender, EventArgs e)
         {
+            this.WindowState = FormWindowState.Maximized;
+            this.Resize += new System.EventHandler(this.Form_Resize);
             txtFilePath.Text = StringUtil.ReadIniData("DataFile", "path");
             InitSerial();
             bindList();
         }
 
+        private void Form_Resize(object sender, System.EventArgs e)
+        {
+            // Write your code at here
+            //Console.Write(e.ToString());
+            //重新绘制坐标系
+            pictureBox1.Image = drawXY(maxM, pictureBox1);
+            pictureBox2.Image = drawXY(maxM, pictureBox2);
+        }
 
         private SerialPort serialPort = new SerialPort();
         public void InitSerial()
@@ -73,25 +83,25 @@ namespace UnmannedMonitor
             }
         }
 
-        const int WM_SYSCOMMAND = 0x112;
-        const int SC_CLOSE = 0xF060;
-        const int SC_MINIMIZE = 0xF020;
-        const int SC_MAXIMIZE = 0xF030;
-        protected override void WndProc(ref Message m)
-        {
+        //const int WM_SYSCOMMAND = 0x112;
+        //const int SC_CLOSE = 0xF060;
+        //const int SC_MINIMIZE = 0xF020;
+        //const int SC_MAXIMIZE = 0xF030;
+        //protected override void WndProc(ref Message m)
+        //{
             
-            base.WndProc(ref m);
-            if (m.Msg == WM_SYSCOMMAND)
-            {
-                //点击窗体最大化
-                if (m.WParam.ToInt32() == SC_MAXIMIZE || m.WParam.ToInt32() == SC_MINIMIZE)
-                {
-                    //重新绘制坐标系
-                    pictureBox1.Image = drawXY(maxM, pictureBox1);
-                    pictureBox2.Image = drawXY(maxM, pictureBox2);
-                }
-            }
-        }
+        //    base.WndProc(ref m);
+        //    if (m.Msg == WM_SYSCOMMAND)
+        //    {
+        //        //点击窗体最大化
+        //        if (m.WParam.ToInt32() == SC_MAXIMIZE || m.WParam.ToInt32() == SC_MINIMIZE)
+        //        {
+        //            //重新绘制坐标系
+        //            pictureBox1.Image = drawXY(maxM, pictureBox1);
+        //            pictureBox2.Image = drawXY(maxM, pictureBox2);
+        //        }
+        //    }
+        //}
 
         /// <summary>
         /// 初始化串口选择Combox
@@ -568,8 +578,8 @@ namespace UnmannedMonitor
                         }
                         drawRectangle(pictureBox2, pointF, brush, GetRectSize(distanceValue));
                         drawRectangle(pictureBox1, pointS, brush, GetRectSize(distanceValue));
-                        drawCoordinatePoints(pictureBox2, pointF, r, pointFEx.X, 0);
-                        drawCoordinatePoints(pictureBox1, pointS, r, v, 1);
+                        drawCoordinatePoints(pictureBox2, pointF, r, pointFEx.X);
+                        drawCoordinatePoints(pictureBox1, pointS, r, v);
                     }
                 }
 
@@ -602,13 +612,13 @@ namespace UnmannedMonitor
             int num = 0;
             switch ((int)distance)
             {
-                case 15: num = 30; break;//30、30
-                case 30: num = 20; break;//20、20
-                case 70: num = 15; break;//10、10
-                case 100: num = 10; break;//7、7
-                case 150: num = 8; break;//5、5
-                case 200: num = 5; break;//3、3
-                case 250: num = 3; break;//1、1
+                case 15: num = 40; break;
+                case 30: num = 30; break;
+                case 70: num = 20; break;
+                case 100: num = 15; break;
+                case 150: num = 12; break;
+                case 200: num = 10; break;
+                case 250: num = 5; break;
             }
             size.Width = num;
             size.Height = num;
@@ -646,7 +656,6 @@ namespace UnmannedMonitor
 
         private double changeDistanceNew(double d, int length)
         {
-            //15m:29倍  30m:11倍  60m:5.7倍   100m:3.6倍   150m:2.3倍
             double db = 0.0;
             switch ((int)d)
             {
@@ -729,21 +738,34 @@ namespace UnmannedMonitor
         private void drawRectangle(Control control, PointF pointF, Brush brush, Size size)
         {   
             Graphics g = control.CreateGraphics();
-            //pointF.Y -= size.Height;
-            //pointF.X -= size.Width;
-            g.FillRectangle(brush, new RectangleF(pointF, size));//new Size(10, 20)
+            pointF.Y -= size.Height / 2;
+            pointF.X -= size.Width / 2;
+            g.FillRectangle(brush, new RectangleF(pointF, size));
             g.Dispose();
         }
 
-        private void drawCoordinatePoints(Control control, PointF pointF,double r, double v,int type)
+        /// <summary>
+        /// 绘制坐标点
+        /// </summary>
+        /// <param name="control"></param>
+        /// <param name="pointF"></param>
+        /// <param name="r"></param>
+        /// <param name="v"></param>
+        private void drawCoordinatePoints(Control control, PointF pointF,double r, double v)
         {
+            //Bitmap bitmap = new Bitmap(control.Width, control.Height);
+            //Graphics g = Graphics.FromImage(bitmap);
+            //g.Clear(Color.White);
             Graphics g = control.CreateGraphics();
             pointF.Y -= GetRectSize(distanceValue).Height;
-            pointF.X += GetRectSize(distanceValue).Width;
-            double x = Math.Round(v, 2);
-            double y = Math.Round(r, 2);
+            pointF.X += GetRectSize(distanceValue).Width - 5;
             g.DrawString("(" + Math.Round(v, 2) + "," + Math.Round(r, 2) + ")", new Font("宋体", 8), Brushes.Blue, pointF);
+            //if (!isStart)
+            //{
+            //    g.Save();
+            //}
             g.Dispose();
+            //return bitmap; 
         }
 
         /// <summary>
@@ -767,14 +789,6 @@ namespace UnmannedMonitor
             pictureBox1.Image = drawXY(db, pictureBox1);
             pictureBox2.Image = drawXY(db, pictureBox2);
             maxM = db;
-
-            //雷达位置
-            //int ypaddings = 70;
-            //int startPoint = 20;
-            //int y = this.panel2.Height - startPoint;
-            //p = new PointF((ypaddings * 2) + 16, y - startPoint);
-
-            //drawRectangle(panel2, p, Brushes.Blue);
         }
 
         private void btnSelectFile_Click(object sender, EventArgs e)
