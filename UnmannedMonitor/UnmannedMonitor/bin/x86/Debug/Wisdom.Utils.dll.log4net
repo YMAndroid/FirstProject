@@ -1,0 +1,28 @@
+﻿<log4net>
+  <appender name="console" type="log4net.Appender.ConsoleAppender">
+    <target value="Console.Out" />
+    <layout type="log4net.Layout.PatternLayout">
+      <conversionPattern value="●%d [%2t] %-5level %m%n" />
+    </layout>
+  </appender>
+  <appender name="rollingFile" type="log4net.Appender.RollingFileAppender,log4net">
+    <param name="File" value="Log\" />
+    <param name="AppendToFile" value="true" />
+    <param name="RollingStyle" value="Composite" />
+    <param name="MaximumFileSize" value="20MB" />
+    <param name="CountDirection" value="1" />
+    <param name="MaxSizeRollBackups" value="-1" />
+    <param name="DatePattern" value="yyyyMMdd\\&quot;utils.log&quot;" />
+    <param name="StaticLogFileName" value="false" />
+    <lockingModel type="log4net.Appender.FileAppender+MinimalLock" />
+    <preserveLogFileNameExtension value="true" />
+    <layout type="log4net.Layout.PatternLayout,log4net">
+      <param name="ConversionPattern" value="●%d [%2t] %-5level %m%n" />
+    </layout>
+  </appender>
+  <root>
+    <level value="DEBUG" />
+    <appender-ref ref="rollingFile" />
+    <appender-ref ref="console" />
+  </root>
+</log4net>

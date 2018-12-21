@@ -1,0 +1,626 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Wisdom.Utils</name>
+    </assembly>
+    <members>
+        <member name="M:Wisdom.Utils.ByteHelper.GetSumCheck(System.Collections.Generic.IEnumerable{System.Byte})">
+            <summary>
+            计算校验和
+            </summary>
+            <param name="datas"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Wisdom.Utils.ByteHelper.GetXorCheck(System.Collections.Generic.IEnumerable{System.Byte})">
+            <summary>
+            计算异或
+            </summary>
+            <param name="datas"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Wisdom.Utils.ByteHelper.GetCrc16Check(System.Collections.Generic.IEnumerable{System.Byte})">
+            <summary>
+            计算CRC16 
+            </summary>
+            <param name="datas">要进行计算的数组</param>
+            <returns>计算后的数组</returns>
+        </member>
+        <member name="M:Wisdom.Utils.ByteHelper.ToHexBytes(System.String)">
+            <summary>
+            字符串转16进制字节数组
+            </summary>
+            <param name="hexString"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Wisdom.Utils.ByteHelper.ToHexString(System.Collections.Generic.IEnumerable{System.Byte},System.String)">
+            <summary>
+            将byte集合转换成16进制字符串
+            </summary>
+            <param name="bytes">byte集合</param>
+            <param name="seperator">分隔符，默认是空格</param>
+            <returns></returns>
+        </member>
+        <member name="M:Wisdom.Utils.ByteHelper.CheckLength(System.Int32,System.Byte,System.String)">
+            <summary>截断
+            
+            </summary>
+            <param name="data"></param>
+            <param name="length"></param>
+            <param name="description"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Wisdom.Utils.ByteHelper.ToUInt32(System.Byte[],System.Boolean)">
+            <summary>
+            byte数组转化为uint32
+            </summary>
+            <param name="bytes"></param>
+            <param name="reverse">false:bytes数组内高位在前，true:bytes数组内低位在前</param>
+            <returns></returns>
+        </member>
+        <member name="M:Wisdom.Utils.ByteHelper.GetBcdValue(System.Byte)">
+            <summary>
+            BCD码转换为数字（例如：0x23转换为23）
+            </summary>
+            <param name="bcd"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Wisdom.Utils.ByteHelper.ToInt(System.String)">
+            <summary>
+            字符串转换为整数
+            </summary>
+            <param name="str"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Wisdom.Utils.ByteHelper.UnionBitArray(System.Collections.BitArray,System.Collections.BitArray)">
+            <summary>
+            合并两个BitArray，BitArray中用不到的bit要置0（false）
+            </summary>
+            <param name="bitArray1"></param>
+            <param name="bitArray2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Wisdom.Utils.ByteHelper.UnionBitArray(System.Collections.BitArray,System.UInt16)">
+            <summary>
+            合并两个BitArray，BitArray中用不到的bit要置0（false）
+            </summary>
+            <param name="bitArray1"></param>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Wisdom.Utils.AsyncTcpServer">
+            <summary>
+            TcpListener实现异步TCP服务器
+            </summary>
+        </member>
+        <member name="F:Wisdom.Utils.AsyncTcpServer._listener">
+            <summary>
+            服务器使用的异步TcpListener
+            </summary>
+        </member>
+        <member name="F:Wisdom.Utils.AsyncTcpServer._clients">
+            <summary>
+            客户端会话列表
+            </summary>
+        </member>
+        <member name="P:Wisdom.Utils.AsyncTcpServer.IsRunning">
+            <summary>
+            服务器是否正在运行
+            </summary>
+        </member>
+        <member name="P:Wisdom.Utils.AsyncTcpServer.Address">
+            <summary>
+            监听的IP地址
+            </summary>
+        </member>
+        <member name="P:Wisdom.Utils.AsyncTcpServer.Port">
+            <summary>
+            监听的端口
+            </summary>
+        </member>
+        <member name="P:Wisdom.Utils.AsyncTcpServer.Encoding">
+            <summary>
+            通信使用的编码
+            </summary>
+        </member>
+        <member name="M:Wisdom.Utils.AsyncTcpServer.#ctor(System.Int32)">
+            <summary>
+            异步TCP服务器
+            </summary>
+            <param name="listenPort">监听的端口</param>
+        </member>
+        <member name="M:Wisdom.Utils.AsyncTcpServer.#ctor(System.Net.IPEndPoint)">
+            <summary>
+            异步TCP服务器
+            </summary>
+            <param name="localEp">监听的终结点</param>
+        </member>
+        <member name="M:Wisdom.Utils.AsyncTcpServer.#ctor(System.Net.IPAddress,System.Int32)">
+            <summary>
+            异步TCP服务器
+            </summary>
+            <param name="localIpAddress">监听的IP地址</param>
+            <param name="listenPort">监听的端口</param>
+        </member>
+        <member name="M:Wisdom.Utils.AsyncTcpServer.Start">
+            <summary>
+            启动服务器
+            </summary>
+        </member>
+        <member name="M:Wisdom.Utils.AsyncTcpServer.Start(System.Int32)">
+            <summary>
+            启动服务器
+            </summary>
+            <param name="backlog">
+            服务器所允许的挂起连接序列的最大长度
+            </param>
+        </member>
+        <member name="M:Wisdom.Utils.AsyncTcpServer.Stop">
+            <summary>
+            停止服务器
+            </summary>
+        </member>
+        <member name="M:Wisdom.Utils.AsyncTcpServer.HandleTcpClientAccepted(System.IAsyncResult)">
+            <summary>
+            处理客户端连接的函数
+            </summary>
+            <param name="ar"></param>
+        </member>
+        <member name="M:Wisdom.Utils.AsyncTcpServer.HandleDataReceived(System.IAsyncResult)">
+            <summary>
+            数据接受回调函数
+            </summary>
+            <param name="ar"></param>
+        </member>
+        <member name="M:Wisdom.Utils.AsyncTcpServer.Send(Wisdom.Utils.TcpClientState,System.Byte[])">
+            <summary>
+            发送数据
+            </summary>
+            <param name="state">接收数据的客户端会话</param>
+            <param name="data">数据报文</param>
+        </member>
+        <member name="M:Wisdom.Utils.AsyncTcpServer.Send(System.Net.Sockets.TcpClient,System.Byte[])">
+            <summary>
+            异步发送数据至指定的客户端
+            </summary>
+            <param name="client">客户端</param>
+            <param name="data">报文</param>
+        </member>
+        <member name="M:Wisdom.Utils.AsyncTcpServer.SendDataEnd(System.IAsyncResult)">
+            <summary>
+            发送数据完成处理函数
+            </summary>
+            <param name="ar">目标客户端Socket</param>
+        </member>
+        <member name="E:Wisdom.Utils.AsyncTcpServer.ClientConnected">
+            <summary>
+            与客户端的连接已建立事件
+            </summary>
+        </member>
+        <member name="E:Wisdom.Utils.AsyncTcpServer.ClientDisconnected">
+            <summary>
+            与客户端的连接已断开事件
+            </summary>
+        </member>
+        <member name="M:Wisdom.Utils.AsyncTcpServer.RaiseClientConnected(Wisdom.Utils.TcpClientState)">
+            <summary>
+            触发客户端连接事件
+            </summary>
+            <param name="state"></param>
+        </member>
+        <member name="M:Wisdom.Utils.AsyncTcpServer.RaiseClientDisconnected(Wisdom.Utils.TcpClientState)">
+            <summary>
+            触发客户端连接断开事件
+            </summary>
+            <param name="state"></param>
+        </member>
+        <member name="E:Wisdom.Utils.AsyncTcpServer.DataReceived">
+            <summary>
+            接收到数据事件
+            </summary>
+        </member>
+        <member name="E:Wisdom.Utils.AsyncTcpServer.PrepareSend">
+            <summary>
+            发送数据前的事件
+            </summary>
+        </member>
+        <member name="M:Wisdom.Utils.AsyncTcpServer.RaisePrepareSend(Wisdom.Utils.TcpClientState)">
+            <summary>
+            触发发送数据前的事件
+            </summary>
+            <param name="state"></param>
+        </member>
+        <member name="E:Wisdom.Utils.AsyncTcpServer.CompletedSend">
+            <summary>
+            数据发送完毕事件
+            </summary>
+        </member>
+        <member name="M:Wisdom.Utils.AsyncTcpServer.RaiseCompletedSend(Wisdom.Utils.TcpClientState)">
+            <summary>
+            触发数据发送完毕的事件
+            </summary>
+            <param name="state"></param>
+        </member>
+        <member name="E:Wisdom.Utils.AsyncTcpServer.NetError">
+            <summary>
+            网络错误事件
+            </summary>
+        </member>
+        <member name="M:Wisdom.Utils.AsyncTcpServer.RaiseNetError(Wisdom.Utils.TcpClientState)">
+            <summary>
+            触发网络错误事件
+            </summary>
+            <param name="state"></param>
+        </member>
+        <member name="E:Wisdom.Utils.AsyncTcpServer.OtherException">
+            <summary>
+            异常事件
+            </summary>
+        </member>
+        <member name="M:Wisdom.Utils.AsyncTcpServer.RaiseOtherException(Wisdom.Utils.TcpClientState,System.String)">
+            <summary>
+            触发异常事件
+            </summary>
+            <param name="state"></param>
+            <param name="descrip"></param>
+        </member>
+        <member name="M:Wisdom.Utils.AsyncTcpServer.Close(Wisdom.Utils.TcpClientState)">
+            <summary>
+            关闭一个与客户端之间的会话
+            </summary>
+            <param name="state">需要关闭的客户端会话对象</param>
+        </member>
+        <member name="M:Wisdom.Utils.AsyncTcpServer.CloseAllClient">
+            <summary>
+            关闭所有的客户端会话,与所有的客户端连接会断开
+            </summary>
+        </member>
+        <member name="M:Wisdom.Utils.AsyncTcpServer.Dispose">
+            <summary>
+            Performs application-defined tasks associated with freeing, 
+            releasing, or resetting unmanaged resources.
+            </summary>
+        </member>
+        <member name="M:Wisdom.Utils.AsyncTcpServer.Dispose(System.Boolean)">
+            <summary>
+            Releases unmanaged and - optionally - managed resources
+            </summary>
+            <param name="disposing"><c>true</c> to release 
+            both managed and unmanaged resources; <c>false</c> 
+            to release only unmanaged resources.</param>
+        </member>
+        <member name="P:Wisdom.Utils.TcpClientState.TcpClient">
+            <summary>
+            与客户端相关的TcpClient
+            </summary>
+        </member>
+        <member name="P:Wisdom.Utils.TcpClientState.Buffer">
+            <summary>
+            获取缓冲区
+            </summary>
+        </member>
+        <member name="P:Wisdom.Utils.TcpClientState.NetworkStream">
+            <summary>
+            获取网络流
+            </summary>
+        </member>
+        <member name="M:Wisdom.Utils.TcpClientState.Close">
+            <summary>
+            关闭
+            </summary>
+        </member>
+        <member name="T:Wisdom.Utils.AsyncEventArgs">
+            <summary>
+            异步TcpListener TCP服务器事件参数类 
+            </summary>
+        </member>
+        <member name="P:Wisdom.Utils.AsyncEventArgs.Msg">
+            <summary>
+            提示信息
+            </summary>
+        </member>
+        <member name="P:Wisdom.Utils.AsyncEventArgs.State">
+            <summary>
+            客户端状态封装类
+            </summary>
+        </member>
+        <member name="P:Wisdom.Utils.AsyncEventArgs.IsHandled">
+            <summary>
+            是否已经处理过了
+            </summary>
+        </member>
+        <member name="P:Wisdom.Utils.DataReceivedArgs.State">
+            <summary>
+            客户端状态封装类
+            </summary>
+        </member>
+        <member name="T:Wisdom.Utils.EventQueue`1">
+            <summary>事件队列
+            </summary>
+            <typeparam name="T">事件参数</typeparam>
+        </member>
+        <member name="F:Wisdom.Utils.EventQueue`1._queue">
+            <summary>存储事件的队列
+            </summary>
+        </member>
+        <member name="F:Wisdom.Utils.EventQueue`1._name">
+            <summary>队列名称
+            </summary>
+        </member>
+        <member name="F:Wisdom.Utils.EventQueue`1._maxCount">
+            <summary>队列最大数量
+            
+            </summary>
+        </member>
+        <member name="E:Wisdom.Utils.EventQueue`1.OnDequeue">
+            <summary>处理队列里项时Raise该事件。
+            </summary>
+        </member>
+        <member name="M:Wisdom.Utils.MethodHelper.Invoke(log4net.ILog,System.String,System.Action,Wisdom.Utils.IParameter[])">
+            <summary>
+            在方法首尾和异常加日志
+            </summary>
+            <param name="log"></param>
+            <param name="name"></param>
+            <param name="method"></param>
+            <param name="args"></param>
+        </member>
+        <member name="M:Wisdom.Utils.MethodHelper.Invoke``1(log4net.ILog,System.String,System.Func{``0},System.Func{``0,System.String},Wisdom.Utils.IParameter[])">
+            <summary>
+            在方法首尾和异常加日志
+            </summary>
+            <typeparam name="TResult"></typeparam>
+            <param name="log"></param>
+            <param name="name"></param>
+            <param name="method"></param>
+            <param name="retConverter">将结果解析成字符串用于日志输出，比如返回的是集合，可以转换成逗号分隔的形式</param>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Wisdom.Utils.MathHelper.CalcRate(System.Double,System.Double)">
+            <summary>
+            计算比率：(实际值-标准值)/标准值。
+            </summary>
+            <param name="standard"></param>
+            <param name="real"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Wisdom.Utils.MathHelper.Cos(System.Double)">
+            <summary>
+            返回指定角度的余弦值，例如Cos(60)将返回0.5。
+            </summary>
+            <param name="angle">以角度为单位</param>
+            <returns></returns>
+            <remarks>
+            System.Math.Cos是以弧度为单位
+            </remarks>
+        </member>
+        <member name="M:Wisdom.Utils.MathHelper.Sin(System.Double)">
+            <summary>
+            返回指定角度的正弦值，例如Sin(30)将返回0.5。
+            </summary>
+            <param name="angle">以角度为单位</param>
+            <returns></returns>
+            <remarks>
+            System.Math.Sin是以弧度为单位
+            </remarks>
+        </member>
+        <member name="M:Wisdom.Utils.MathHelper.ToArc(System.Double)">
+            <summary>
+            将角度转换为弧度，例如ToArc(180)将返回π。
+            </summary>
+            <param name="angle">角度</param>
+            <returns></returns>
+        </member>
+        <member name="M:Wisdom.Utils.MathHelper.Acos(System.Double)">
+            <summary>
+            返回余弦值为指定数字的角度，例如Acos(0.5)将返回60。
+            </summary>
+            <param name="d">余弦值</param>
+            <returns></returns>
+            <remarks>
+            System.Math.Acos的返回是以弧度为单位
+            </remarks>
+        </member>
+        <member name="M:Wisdom.Utils.MathHelper.Asin(System.Double)">
+            <summary>
+            返回正弦值为指定数字的角度，例如Asin(0.5)将返回30。
+            </summary>
+            <param name="d">正弦值</param>
+            <returns></returns>
+            <remarks>
+            System.Math.Asin的返回是以弧度为单位
+            </remarks>
+        </member>
+        <member name="M:Wisdom.Utils.MathHelper.ToAngle(System.Double)">
+            <summary>
+            将弧度转换为角度，例如ToAngle(π)将返回180。
+            </summary>
+            <param name="arc">角度</param>
+            <returns></returns>
+        </member>
+        <member name="M:Wisdom.Utils.MathHelper.CalcHeight(System.Double)">
+            <summary>
+            根据气压计算海拔
+            </summary>
+            <param name="kpa"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Wisdom.Utils.SafeBackgroundWorker">
+            <summary>线程安全的BackgroundWorker，提供SafeRunWorkerAsync方法，同时调用不会抛出异常，不会同时DoWork
+            
+            </summary>
+        </member>
+        <member name="M:Wisdom.Utils.SafeBackgroundWorker.SafeRunWorkerAsync">
+            <summary>安全启动后台线程（如果线程已经在运行，不会抛出异常）
+            
+            </summary>
+            <returns>如果线程成功启动则返回true，如果线程已经在运行返回false</returns>
+        </member>
+        <member name="M:Wisdom.Utils.SafeBackgroundWorker.SafeRunWorkerAsync(System.Object)">
+            <summary>安全启动后台线程（如果线程已经在运行，不会抛出异常）
+            
+            </summary>
+            <returns>如果线程成功启动则返回true，如果线程已经在运行返回false</returns>
+        </member>
+        <member name="M:Wisdom.Utils.EventExtension.SafeInvoke``1(System.EventHandler{``0},System.Object,``0)">
+            <summary>安全调用事件（避免空委托和多线程委托被移除的问题）
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="handler"></param>
+            <param name="sender"></param>
+            <param name="args"></param>
+        </member>
+        <member name="M:Wisdom.Utils.EventExtension.SafeInvoke``1(System.EventHandler{``0},``0)">
+            <summary>安全调用事件（避免空委托和多线程委托被移除的问题）
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="handler"></param>
+            <param name="args"></param>
+        </member>
+        <member name="M:Wisdom.Utils.EventExtension.SafeInvoke(System.EventHandler,System.Object)">
+            <summary>安全调用事件（避免空委托和多线程委被托移除的问题）
+            
+            </summary>
+            <param name="handler"></param>
+            <param name="sender"></param>
+        </member>
+        <member name="T:Wisdom.Utils.LoggedException">
+            <summary>
+            带日志记录的异常
+            </summary>
+        </member>
+        <member name="T:Wisdom.Utils.LongTcpClient">
+            <summary>能够保持长连接的TcpClient（断开后自动重连）
+            
+            </summary>
+        </member>
+        <member name="F:Wisdom.Utils.LongTcpClient._length">
+            <summary>接收缓冲区最大字节数
+            
+            </summary>
+        </member>
+        <member name="F:Wisdom.Utils.LongTcpClient._receiveBytes">
+            <summary>接收缓冲区
+            
+            </summary>
+        </member>
+        <member name="P:Wisdom.Utils.LongTcpClient.Encoding">
+            <summary>编码方式
+            
+            </summary>
+        </member>
+        <member name="E:Wisdom.Utils.LongTcpClient.OnReceive">
+            <summary>当收到数据时，触发该事件
+            
+            </summary>
+        </member>
+        <member name="E:Wisdom.Utils.LongTcpClient.OnConnectionChanged">
+            <summary>当连接状态变化（断开或重连）时，触发该事件
+            
+            </summary>
+        </member>
+        <member name="M:Wisdom.Utils.LongTcpClient.Init(System.String,System.Int32)">
+            <summary>设置服务器IP和端口号（不会开始连接）
+            
+            </summary>
+            <param name="host"></param>
+            <param name="port"></param>
+        </member>
+        <member name="M:Wisdom.Utils.LongTcpClient.Start(System.String,System.Int32)">
+            <summary>设置服务器IP和端口号，并开始连接
+            
+            </summary>
+            <param name="host"></param>
+            <param name="port"></param>
+        </member>
+        <member name="M:Wisdom.Utils.LongTcpClient.Start">
+            <summary>开始连接服务器
+            
+            </summary>
+        </member>
+        <member name="M:Wisdom.Utils.LongTcpClient.Stop">
+            <summary>断开和服务器的连接
+            
+            </summary>
+        </member>
+        <member name="M:Wisdom.Utils.LongTcpClient.Start(System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="isManual"></param>
+            <exception cref="T:System.ArgumentNullException">没有配置host地址</exception>
+        </member>
+        <member name="M:Wisdom.Utils.LongTcpClient.Send(System.Byte[])">
+            <summary>发送消息
+            
+            </summary>
+            <param name="bytes"></param>
+        </member>
+        <member name="M:Wisdom.Utils.LongTcpClient.ConnectCallback(System.IAsyncResult)">
+            <summary>连接的回调
+            
+            </summary>
+            <param name="ar"></param>
+        </member>
+        <member name="M:Wisdom.Utils.LongTcpClient.ReceiveCallback(System.IAsyncResult)">
+            <summary>接收的回调
+            
+            </summary>
+            <param name="ar"></param>
+        </member>
+        <member name="M:Wisdom.Utils.LongTcpClient.Reconnect">
+            <summary>关闭并重新打开连接（该方法不会抛出任何异常）
+            
+            </summary>
+        </member>
+        <member name="M:Wisdom.Utils.Repeater.#ctor(System.TimeSpan,System.Func{System.Threading.CancellationToken,System.Boolean},System.Nullable{System.Int32})">
+            <summary>
+            构造函数
+            </summary>
+            <param name="interval">轮询时间间隔</param>
+            <param name="loopMethod">参与轮询的方法，返回false时退出循环</param>
+            <param name="retryTimes">重试次数</param>
+        </member>
+        <member name="M:Wisdom.Utils.Repeater.#ctor(System.TimeSpan,System.Action{System.Threading.CancellationToken},System.Nullable{System.Int32})">
+            <summary>
+            构造函数
+            </summary>
+            <param name="interval">轮询时间间隔</param>
+            <param name="loopMethod">参与轮询的方法</param>
+            <param name="retryTimes">重试次数</param>
+        </member>
+        <member name="M:Wisdom.Utils.Repeater.#ctor(System.TimeSpan,System.Action,System.Nullable{System.Int32})">
+            <summary>
+            构造函数
+            </summary>
+            <param name="interval">轮询时间间隔</param>
+            <param name="loopMethod">参与轮询的方法</param>
+            <param name="retryTimes">重试次数</param>
+        </member>
+        <member name="M:Wisdom.Utils.SocketExtention.SetSocketKeepAliveValues(System.Net.Sockets.TcpClient,System.Int32,System.Int32)">
+            <summary>
+            Using IOControl code to configue socket KeepAliveValues for line disconnection detection(because default is toooo slow) 
+            </summary>
+            <param name="tcpc">TcpClient</param>
+            <param name="KeepAliveTime">The keep alive time. (ms)</param>
+            <param name="KeepAliveInterval">The keep alive interval. (ms)</param>
+        </member>
+        <member name="T:Wisdom.Utils.MessageLevel">
+            <summary>
+            消息等级
+            </summary>
+        </member>
+        <member name="F:Wisdom.Utils.MessageLevel.Info">
+            <summary>
+            普通消息
+            </summary>
+        </member>
+        <member name="F:Wisdom.Utils.MessageLevel.Error">
+            <summary>
+            错误消息
+            </summary>
+        </member>
+    </members>
+</doc>

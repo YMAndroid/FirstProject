@@ -1,0 +1,4 @@
+D:\C#_projcet\Local_Git_Project\UnmannedMonitor\Factorys\bin\x86\Release\Factorys.dll
+D:\C#_projcet\Local_Git_Project\UnmannedMonitor\Factorys\bin\x86\Release\Factorys.pdb
+D:\C#_projcet\Local_Git_Project\UnmannedMonitor\Factorys\obj\x86\Release\Factorys.dll
+D:\C#_projcet\Local_Git_Project\UnmannedMonitor\Factorys\obj\x86\Release\Factorys.pdb

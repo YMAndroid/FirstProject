@@ -553,7 +553,11 @@ namespace UnmannedMonitor
                     double r = ulist[i].R;
                     double a = ulist[i].A;
                     double v = ulist[i].V;
-                    if (r > distanceValue) continue;
+                    if(ulist[i].FrameState == 0 || r > distanceValue)
+                    {
+                        continue;
+                    }
+                    //if (r > distanceValue) continue;
                     if (ulist[i].DataType.Equals("AK"))
                     {
                         PointF pointFEx = getNewPointEx(a, r);
@@ -595,7 +599,7 @@ namespace UnmannedMonitor
                 }
                 pointFList.Clear();
                 pointSList.Clear();
-                Thread.Sleep(200);
+                Thread.Sleep(50);
             }
         }
 
