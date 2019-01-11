@@ -32,6 +32,25 @@ namespace Factorys
             catch { }
         }
 
+        //需要添加固定的头数据
+
+
+        public static void WritePcanLog(string logtxt, string path)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(path)) return;
+                string logname = DateTime.Now.ToString("yyyyMMdd") + "RadarPcanDatalog.trc";
+                FileStream fs = new FileStream(path + "\\" + logname, FileMode.Append);
+                StreamWriter sw = new StreamWriter(fs, Encoding.Default);
+                sw.WriteLine(logtxt);
+                sw.Close();
+                fs.Close();
+            }
+            catch { }
+        }
+
+
 
         /// <summary>
         /// 生成csv文件
@@ -401,6 +420,101 @@ namespace Factorys
         }
 
         #endregion
+
+        #region  解析PCAN 数据
+        public static int flag = 1;//用来表示当前的显示是标量模式还是向量模式
+        public static String FrameEnd = "0600";//帧开始
+        public static String FrameStart = "0500";//帧结尾
+
+        /// <summary>
+        /// 解析PCAN数据
+        /// </summary>
+        /// <param name="strData"></param>
+        /// <returns></returns>
+        public static List<UnmannedData> AnalyticalPcanData(List<String> strData)
+        {
+            if (strData.Count <= 0) return null;
+            List<UnmannedData> listUd = new List<UnmannedData>();
+            uint[] DataBuf = new uint[9];
+            int j = 0;
+            foreach(String temp in strData)
+            {
+                j++;
+                string[] strArray = temp.Split(' ');
+                for(int i=0;i < strArray.Length -1 ;i++)
+                {
+                    DataBuf[i] = Convert.ToUInt32(strArray[i],16);
+                }
+              
+                if (((DataBuf[0] << 8 | DataBuf[1]) & 0xFFFF) == 0xFFFF)
+                {
+                    flag = 1;//当前报文是标量报文
+                }
+                else
+                {
+                    flag = 0;//当前报文为矢量报文
+                }
+                UnmannedData ud = new UnmannedData();
+                //当前报文是标量报文时按照标量报文格式进行解析
+                if (flag == 1)
+                {
+                    float R = (float)(((DataBuf[2] << 8) | DataBuf[3]) / 10.0);
+                    float V = (float)((((DataBuf[4] << 8) | DataBuf[5]) / 100.0) - 81.9);
+                    float angle1 = (float)(((DataBuf[6] << 8) | DataBuf[7]) / 10.0 - 180.0);
+                    ud.A = angle1;
+                    ud.R = R;
+                    ud.V = V;
+                    ud.DataType = "AK";
+                    ud.CH = j;
+                    ud.FrameState = 1;
+                }
+                else if (flag == 0)
+                {
+
+                    //当前的报文是矢量报文时按照矢量报文的格式解析
+                    float Rx = (float)((((DataBuf[0] & 0x7f) << 8) | DataBuf[1]) / 100.0);//不算最高位的符号位
+                    if ((DataBuf[0] & 0x80) > 0)//Rx是负数的情况
+                    {
+                        Rx = -Rx;
+                    }
+                    float Ry = (float)(((DataBuf[2] & 0x7f) << 8 | DataBuf[3]) / 100.0);//不算最高位的符号位
+                    if ((DataBuf[2] & 0x80) > 0)
+                    {
+                        Ry = -Ry;
+                    }
+                    float Vx = (float)(((DataBuf[4] & 0x7f) << 2 | (DataBuf[5] & 0xc0) >> 6) / 10.0);//不算最高位的符号位
+                    if ((DataBuf[4] & 0x80) > 0)
+                    {
+                        Vx = -Vx;
+                    }
+                    float Vy = (float)((((DataBuf[5] & 0x1f) << 4) | (DataBuf[6] & 0xf0) >> 4) / 10.0);
+                    if ((DataBuf[5] & 0x20) > 0)
+                    {
+                        Vy = -Vy;
+                    }
+                    float angle = (float)((((DataBuf[6] & 0x07) << 8) | DataBuf[7]) / 10.0);
+                    if ((DataBuf[6] & 0x8) > 0)//angle是负数
+                    {
+                        angle = -angle;
+                    }
+
+                    //暂时不做处理
+                    //return null;
+                    ud.A = Math.Round(angle, 2);
+                    //ud.A = Convert.ToSingle(Convert.ToDecimal(angle).ToString("f2"));
+                    //ud.R = Math.Sqrt(Rx * Rx + Ry * Ry);
+                    ud.R = Math.Round(Rx, 2);
+                    ud.V = Math.Round(Ry, 2);
+                    ud.CH = j;
+                    ud.DataType = "AK";
+                    ud.FrameState = 1;
+                    Console.WriteLine("ud.R = " + ud.R + " ;ud.V = " + ud.V + " ;ud.A = " + ud.A);
+                }
+                listUd.Add(ud);
+            }
+            return listUd;
+        }
+        #endregion
     }
 
     public class UnmannedData : IComparable
@@ -424,4 +538,5 @@ namespace Factorys
             throw new NotImplementedException();
         }
     }
+
 }

@@ -107,6 +107,7 @@
     <Compile Include="IndexFrm.Designer.cs">
       <DependentUpon>IndexFrm.cs</DependentUpon>
     </Compile>
+    <Compile Include="PCANBasic.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="CameraFrm.resx">
